@@ -1,4 +1,5 @@
 <template>
+  <div v-atomicattr="props.atomicAttrs">
   <draggable
     :list="props.children"
     :disabled="!enabled"
@@ -19,6 +20,7 @@
       </div>
     </template>
   </draggable>
+  </div>
 </template>
 
 <script>
@@ -28,7 +30,6 @@ import metaStore from '@store/meta.js';
 import canvasStore from '@store/canvas.js';
 import uuid from '@util/uuid';
 import BasicComponents from '../index';
-
 export default {
   name: "ColumnList",
   components: {
@@ -51,7 +52,8 @@ export default {
       dragging: false,
       currentPanel: currentPanelStore(),
       meta: metaStore(),
-      canvas: canvasStore()
+      canvas: canvasStore(),
+      gap: ''
     };
   },
   created() {
@@ -65,28 +67,28 @@ export default {
   watch: {
     props: {
       handler(newVal) {
-        let {children, column} = newVal
+        let {children, column, gap} = newVal
         // console.log('props', this.eid, children)
         column = column ? column: 1
-        const n = column
         children = children ? children: []
-        if (n === 0) {
-          return
-        }
 
         const l = children.length
-        if (l > n) {
+        if (l > column) {
           let removedChildren = new Set()
-          for (let i = l - 1; i >= n; i--) {
+          for (let i = l - 1; i >= column; i--) {
             removedChildren.add(children[i].id)
           }
           this.meta.removeChildren(this.eid, removedChildren)
-        } else if (l < n) {
+        } else if (l < column) {
           let newChildren = []
-          for (let i = l; i < n ; i++) {
+          for (let i = l; i < column ; i++) {
             newChildren.push({id: uuid(), name: 'Blank', props: {id: uuid(), element: '', props: {}}})
           }
           this.meta.addChildren(this.eid, newChildren)
+        }
+
+        if (gap) {
+          this.gap = gap + 'px'
         }
       },
       deep: true,
@@ -110,6 +112,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   padding: 10px 0px;
+  column-gap: v-bind("gap");
 }
 
 .list-group:hover {
@@ -120,6 +123,7 @@ export default {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  column-gap: v-bind("gap");
 }
 
 .list-group-item {
