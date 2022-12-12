@@ -5,6 +5,7 @@ import { VantResolver } from 'unplugin-vue-components/resolvers'
 
 import AutoImport from 'unplugin-auto-import/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -16,5 +17,11 @@ export default defineConfig({
     Components({
       resolvers: [VantResolver(), ElementPlusResolver()],
     }),
-  ]
+  ],
+  resolve: {
+    alias: {
+      '@store': path.join(__dirname, 'src/store'),
+      '@util': path.join(__dirname, 'src/utils')
+    }
+  },
 })

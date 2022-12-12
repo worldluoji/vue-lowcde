@@ -23,21 +23,17 @@
 
 <script>
 import draggable from 'vuedraggable';
-import Offer from './Offer.vue';
-import Image from './Image.vue';
-import NavBar from './NavBar.vue';
-import currentPanelStore from '../store/currentPanel.js';
-import metaStore from '../store/meta.js';
-import canvasStore from '../store/canvas.js';
-import uuid from '../utils/uuid';
+import currentPanelStore from '@store/currentPanel.js';
+import metaStore from '@store/meta.js';
+import canvasStore from '@store/canvas.js';
+import uuid from '@util/uuid';
+import BasicComponents from '../index';
 
 export default {
-  name: "List",
+  name: "ColumnList",
   components: {
     draggable,
-    Offer,
-    Image,
-    NavBar
+    ...BasicComponents
   },
   props: {
     props: {

@@ -17,8 +17,8 @@
 <script setup>
 import { defineAsyncComponent, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import metaStore from '../store/meta.js'
-import currentPanelStore from '../store/currentPanel.js'
+import metaStore from '@store/meta.js'
+import currentPanelStore from '@store/currentPanel.js'
 import Box from '../panel/sub/Box.vue'
 
 const meta = metaStore()

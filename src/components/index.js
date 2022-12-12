@@ -1,11 +1,9 @@
-import Image from './Image.vue'
-import NavBar from './NavBar.vue'
-import Offer from './Offer.vue'
-import List from './List.vue'
+import Image from './Image//Image.vue'
+import NavBar from './NavBar/NavBar.vue'
+import Offer from './Offer/Offer.vue'
 
 export default {
     Image,
     NavBar,
-    Offer,
-    List,
+    Offer
 }

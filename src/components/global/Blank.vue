@@ -8,18 +8,12 @@
 </template>
 
 <script>
-import Image from '../Image.vue'
-import Offer from '../Offer.vue'
-import NavBar from '../NavBar.vue'
-import List from '../List.vue'
+import BasicComponents from '../index'
 import currentPanelStore from '../../store/currentPanel.js'
 import canvasStore from '../../store/canvas.js';
 export default {
     components: {
-        Image,
-        Offer,
-        NavBar,
-        List
+        ...BasicComponents
     },
     props: {
         props: { 
