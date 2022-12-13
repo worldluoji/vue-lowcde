@@ -6,6 +6,7 @@ import AtomicAttributeManager from './atomicmanager.js'
 import router from './router/router'
 import { createPinia } from 'pinia'
 import globalComponents from './components/global/global.js'
+import request from './plugins/request.js'
 
 const pinia = createPinia()
 
@@ -31,4 +32,5 @@ createApp(App)
     .use(router)
     .use(pinia)
     .use(globalComponents)
+    .use(request)
     .mount('#app')

@@ -7,6 +7,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/sync/errgroup"
 )
@@ -75,6 +76,19 @@ func (u *productHandler) GetByCateGory(c *gin.Context) {
 // 路由
 func router() http.Handler {
 	router := gin.Default()
+
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"*"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "http://localhost"
+		},
+		MaxAge: 12 * time.Hour,
+	}))
+
 	productHandler := newProductHandler()
 	productHandler.initProducts()
 
@@ -94,7 +108,6 @@ func router() http.Handler {
 func main() {
 	var eg errgroup.Group
 
-	// 一进程多端口
 	server := &http.Server{
 		Addr:         ":8098",
 		Handler:      router(),
