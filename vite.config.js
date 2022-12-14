@@ -24,4 +24,12 @@ export default defineConfig({
       '@util': path.join(__dirname, 'src/utils')
     }
   },
+  build: {
+    rollupOptions: {
+      input: {
+        index: path.resolve(__dirname, 'index.html'),
+        packer: path.resolve(__dirname, 'packer.html'),
+      },
+    }
+  }
 })
