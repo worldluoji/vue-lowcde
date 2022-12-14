@@ -28,7 +28,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: path.resolve(__dirname, 'index.html'),
-        packer: path.resolve(__dirname, 'packer.html'),
+        packer: path.resolve(__dirname, 'app/index.html')
       },
     }
   }

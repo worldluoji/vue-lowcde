@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import Render from '../render/Render.vue'
+import Render from '../src/render/Render.vue'
 defineProps({
     content: Array
 })

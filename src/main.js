@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import './style.css'
-import App from './App.vue'
+import App from './PlantForm.vue'
 import DragManager from './dragmanager.js'
 import AtomicAttributeManager from './atomicmanager.js'
 import router from './router/router'
