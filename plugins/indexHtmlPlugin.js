@@ -9,12 +9,11 @@ function indexHtmlPlugin(appMode) {
                 let transformCode;
                 switch (appMode) {
                     case 'APP':
-                        transformCode = code.replace(/__MAIN__/, '/src/main-apppacker.js');
+                        transformCode = code.replace(/__MAIN__/, '/src/packer.js');
                         break;
                     default:
-                        transformCode =  code.replace(/__MAIN__/, '/src/main-platform.js');
+                        transformCode =  code.replace(/__MAIN__/, '/src/main.js');
                 }
-                console.log(transformCode)
                 return { code: transformCode, map: null };
             }
         },

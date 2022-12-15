@@ -13,7 +13,7 @@ const routes = [
 // 你可以在这里输入更多的配置，但我们在这里暂时保持简单
 const router = createRouter({
     // 内部提供了 history 模式的实现。
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes, // `routes: routes` 的缩写
 });
 
