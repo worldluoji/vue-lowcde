@@ -1,0 +1,26 @@
+{
+  "name": "packer",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.2.45",
+    "element-plus": "^2.2.26",
+    "pinia": "^2.0.27",
+    "throttle-debounce": "^5.0.0",
+    "vant": "^3.6.5",
+    "vue-router": "^4.1.6",
+    "vuedraggable": "^4.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "vite": "^4.0.0",
+    "unplugin-auto-import": "^0.12.0",
+    "unplugin-vue-components": "^0.22.11"
+  }
+}
