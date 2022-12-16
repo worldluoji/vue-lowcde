@@ -4,25 +4,25 @@ const canvasStore = defineStore("canvas", {
   state: () => {
     return {
       canvasWidth: '',
-      design: true
+      design: false
     }
   },
   getters: {
     getWidth(state) {
-      return state.canvasWidth
+      return state.canvasWidth;
     },
     isDesign(state) {
-        return state.design
+      return state.design;
     }
   },
   actions: {
     setWidth(c) {
-      this.canvasWidth = c
+      this.canvasWidth = c;
     },
     setDesign(d) {
-        this.design = d
+      this.design = d;
     }
   }
 });
 
-export default canvasStore
+export default canvasStore;

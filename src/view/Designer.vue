@@ -42,6 +42,7 @@
   import LeftSide from './LeftSide.vue'
   import metaStore from '../store/meta.js'
   import currentPanelStore from '../store/currentPanel.js'
+  import canvasStore from "../store/canvas.js"
 
   export default {
     name: 'Designer',
@@ -59,11 +60,13 @@
         content: [],
         meta: metaStore(),
         currentPanel: currentPanelStore(),
+        canvasStore: canvasStore(),
         canvasWidth: '987px'
       }
     },
     beforeMount() {
       this.content = this.meta.get
+      this.canvasStore.setDesign(true)
     },
     methods: {
       cancelPanel() {
