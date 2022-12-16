@@ -3,12 +3,25 @@
 # pre-end
 ## install
 ```
-yarn
+npm install
 ```
 
 ## start
+平台启动
 ```
-yarn dev
+npm run dev --workspace=platform
+```
+
+## build
+平台打包
+```
+npm run build --workspace=platform
+```
+
+## preview
+平台打包后预览
+```
+npm run preview --workspace=platform
 ```
 
 ## TODOS

@@ -1,22 +1,33 @@
 {
-  "name": "vue-lowcode",
-  "private": true,
-  "version": "0.0.1",
+  "name": "vue-lowcde",
+  "version": "1.0.0",
+  "description": "",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "build:app": "vite build --mode app"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/worldluoji/vue-lowcde.git"
+  },
+  "workspaces": [
+    "packages/platform",
+    "packages/packer"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/worldluoji/vue-lowcde/issues"
+  },
+  "homepage": "https://github.com/worldluoji/vue-lowcde#readme",
   "dependencies": {
     "vue": "^3.2.45",
     "element-plus": "^2.2.26",
     "pinia": "^2.0.27",
     "throttle-debounce": "^5.0.0",
     "vant": "^3.6.5",
-    "vue-router": "^4.1.6",
-    "vuedraggable": "^4.1.0"
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
