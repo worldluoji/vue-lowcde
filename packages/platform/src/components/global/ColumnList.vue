@@ -30,6 +30,8 @@ import metaStore from '@store/meta.js';
 import canvasStore from '@store/canvas.js';
 import uuid from '@util/uuid';
 import BasicComponents from '../index';
+import { ref } from 'vue';
+
 export default {
   name: "ColumnList",
   components: {
@@ -56,6 +58,12 @@ export default {
       gap: ''
     };
   },
+  setup(props) {
+    const templateColumns = ref('repeat(auto-fit, minmax(100px, 1fr))')
+    return {
+      templateColumns
+    }
+  },
   created() {
     this.enabled = this.canvas.isDesign
   },
@@ -67,7 +75,7 @@ export default {
   watch: {
     props: {
       handler(newVal) {
-        let {children, column, gap} = newVal
+        let {children, column, gap, templateColumns} = newVal
         // console.log('props', this.eid, children)
         column = column ? column: 1
         children = children ? children: []
@@ -90,6 +98,10 @@ export default {
         if (gap) {
           this.gap = gap + 'px'
         }
+
+        if (templateColumns) {
+          this.templateColumns = templateColumns
+        }
       },
       deep: true,
       immediate: true
@@ -110,7 +122,7 @@ export default {
 .list-group {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: v-bind(templateColumns);
   padding: 10px 0px;
   column-gap: v-bind("gap");
 }
@@ -122,7 +134,7 @@ export default {
 .list-groupr {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: v-bind(templateColumns);
   column-gap: v-bind("gap");
 }
 
