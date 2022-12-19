@@ -4,7 +4,7 @@
         <Operation :content="content"  @changeWidth="changeWidth"/>
         <div class="container">
           <LeftSide />
-          <div class="drag-content" v-dragcontent="content">
+          <div class="drag-content" v-dragcontent="content" v-deps="depMap">
             <div class="top-white"></div>
             <draggable 
               class="list-group" 
@@ -58,6 +58,7 @@
         enabled: true,
         dragging: false,
         content: [],
+        depMap: new Map(),
         meta: metaStore(),
         currentPanel: currentPanelStore(),
         canvasStore: canvasStore(),
@@ -66,6 +67,7 @@
     },
     beforeMount() {
       this.content = this.meta.get
+      this.depMap = this.meta.getDepMap
       this.canvasStore.setDesign(true)
     },
     methods: {
@@ -73,11 +75,9 @@
         this.currentPanel.set({})
       },
       showPanel(element) {
-        // console.log('showPanel out', element)
         this.currentPanel.set(element)
       },
       changeWidth(val) {
-        // console.log('changeWidth', val)
         this.canvasWidth = `${val}px`
       }
     }
@@ -107,7 +107,7 @@
   }
   
   .top-white {
-    height: 15px;
+    height: 20px;
   }
   
   .list-group {

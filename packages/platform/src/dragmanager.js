@@ -4,6 +4,7 @@ export default class DragManager {
     constructor() {
         this.current = null
         this.ref = null
+        this.depMap = null
         this.op = null
         this.opData = null
         this.calPos = throttle(200, (e) => {
@@ -33,7 +34,6 @@ export default class DragManager {
     }
 
     _calPos(e) {
-        const target = e.target
         const { value } = this.ref
         // console.log('pos', e)
         if (e.target.isDragContent) {
@@ -44,11 +44,13 @@ export default class DragManager {
                 // 没有就加入进去
                 if (Object.keys(this.opData).length > 0) {
                     this.ref.value.push(this.opData)
+                    this.depMap.value.set(this.opData.id, this.opData)
                 }
             } else if (index !== value.length - 1) {
                 // 如果不是最后一个，就把前面的那个删了，再加入
                 this.ref.value.splice(index, 1)
                 this.ref.value.push(this.opData)
+                this.depMap.value.set(this.opData.id, this.opData)
             }
         }
     }
@@ -59,6 +61,10 @@ export default class DragManager {
         el.isDragContent = true
         el.addEventListener('dragover', (e) => this.dragover(e))
         el.addEventListener('drop', (e) => this.drop(e))
+    }
+
+    setDepMap(binding) {
+        this.depMap = binding
     }
 
     // 拖拉到当前节点上方时，在当前节点上持续触发（相隔几百毫秒），该事件的target属性是当前节点
@@ -78,7 +84,11 @@ export default class DragManager {
             let i = this.ref.value.indexOf(this.opData)
             if (i > -1) {
                 this.ref.value[i].state = 1
+            } else {
+                this.depMap.value.delete(this.opData.id)
             }
+        } else {
+            this.depMap.value.delete(this.opData.id)
         }
 
         // console.log('drop', this.ref.value)

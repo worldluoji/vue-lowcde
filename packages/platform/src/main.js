@@ -25,8 +25,10 @@ createApp(App)
         // 监听了dragover 和 drop
         dragManager.setContainer(el, binding)
     })
+    .directive('deps', (el, binding) => {
+        dragManager.setDepMap(binding)
+    })
     .directive('atomicattr', (el, binding)=> {
-        // console.log(222, el, binding.value)
         automitAttrManager.setMargin(el, binding)
     })
     .use(router)
