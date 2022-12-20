@@ -28,7 +28,7 @@ import draggable from 'vuedraggable';
 import currentPanelStore from '@store/currentPanel.js';
 import metaStore from '@store/meta.js';
 import canvasStore from '@store/canvas.js';
-import uuid from '@util/uuid';
+import { uuid } from '@lowcode/helper'
 import { ref } from 'vue';
 
 export default {

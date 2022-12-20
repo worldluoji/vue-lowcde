@@ -1,18 +1,16 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './PlantForm.vue'
-import DragManager from './dragmanager.js'
-import AtomicAttributeManager from './atomicmanager.js'
 import router from './router/router'
 import { createPinia } from 'pinia'
 import globalComponents from './components/global/global.js'
-import request from './plugins/request.js'
 import elements from '@lowcode/elements'
+import { DragManager, AtomicManager, request } from '@lowcode/helper'
 
 const pinia = createPinia()
 
 const dragManager = new DragManager()
-const automitAttrManager = new AtomicAttributeManager()
+const atomicManager = new AtomicManager()
 
 createApp(App)
     .directive('draggable', (el) => {
@@ -30,7 +28,7 @@ createApp(App)
         dragManager.setDepMap(binding)
     })
     .directive('atomicattr', (el, binding)=> {
-        automitAttrManager.setMargin(el, binding)
+        atomicManager.setMargin(el, binding)
     })
     .use(router)
     .use(pinia)

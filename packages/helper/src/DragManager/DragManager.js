@@ -1,5 +1,5 @@
 import { throttle } from 'throttle-debounce'
-import uuid from './utils/uuid'
+import uuid from '../UUID/uuid'
 export default class DragManager {
     constructor() {
         this.current = null
