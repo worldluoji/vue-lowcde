@@ -7,7 +7,7 @@
             @change="change"
         ></component>
         <hr>
-        <Box @change="change" :props="panelProps.atomicAttrs"/>
+        <AtomicAttributeBox @change="change" :props="panelProps.atomicAttrs"/>
         <hr>
         <el-button @click="save">保存</el-button>
         <el-button @click="cancel">取消</el-button>
@@ -19,7 +19,6 @@ import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import metaStore from '@store/meta.js'
 import currentPanelStore from '@store/currentPanel.js'
-import Box from '../panel/sub/Box.vue'
 
 const meta = metaStore()
 const currentPanel = storeToRefs(currentPanelStore())

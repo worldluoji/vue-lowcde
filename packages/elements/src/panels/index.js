@@ -5,6 +5,7 @@ import OfferListPanel from './OfferList/OfferListPanel.vue';
 import BlankPanel from './Blank/BlankPanel.vue';
 import ColumnListPanel from './ColumnList/ColumnListPanel.vue';
 import RowListPanel from './RowList/RowListPanel.vue';
+import AtomicAttributeBox from './AtomicAttribute/AtomicAttributeBox.vue';
 
 export default (Vue)=>{
     Vue.component("ImagePanel", ImagePanel);
@@ -14,4 +15,5 @@ export default (Vue)=>{
     Vue.component("BlankPanel", BlankPanel);
     Vue.component("ColumnListPanel", ColumnListPanel);
     Vue.component("RowListPanel", RowListPanel);
+    Vue.component("AtomicAttributeBox", AtomicAttributeBox);
 }
