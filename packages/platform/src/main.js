@@ -7,6 +7,7 @@ import router from './router/router'
 import { createPinia } from 'pinia'
 import globalComponents from './components/global/global.js'
 import request from './plugins/request.js'
+import elements from '@lowcode/elements'
 
 const pinia = createPinia()
 
@@ -34,5 +35,7 @@ createApp(App)
     .use(router)
     .use(pinia)
     .use(globalComponents)
+    .use(elements.BasicComponents)
+    .use(elements.Panels)
     .use(request)
     .mount('#app')

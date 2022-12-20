@@ -29,14 +29,12 @@ import currentPanelStore from '@store/currentPanel.js';
 import metaStore from '@store/meta.js';
 import canvasStore from '@store/canvas.js';
 import uuid from '@util/uuid';
-import BasicComponents from '../index';
 import { ref } from 'vue';
 
 export default {
   name: "ColumnList",
   components: {
     draggable,
-    ...BasicComponents
   },
   props: {
     props: {

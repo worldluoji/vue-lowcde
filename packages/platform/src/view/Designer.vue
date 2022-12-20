@@ -37,7 +37,6 @@
   <script>
   import draggable from 'vuedraggable'
   import Operation from './Operation.vue' 
-  import BasicComponents from '../components'
   import Panel from './Panel.vue'
   import LeftSide from './LeftSide.vue'
   import metaStore from '../store/meta.js'
@@ -51,7 +50,6 @@
       Operation,
       Panel,
       LeftSide,
-      ...BasicComponents
     },
     data() {
       return {

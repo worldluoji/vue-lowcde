@@ -12,7 +12,8 @@
   },
   "workspaces": [
     "packages/platform",
-    "packages/packer"
+    "packages/packer",
+    "packages/elements"
   ],
   "keywords": [],
   "author": "",
@@ -33,6 +34,7 @@
     "@vitejs/plugin-vue": "^4.0.0",
     "vite": "^4.0.0",
     "unplugin-auto-import": "^0.12.0",
-    "unplugin-vue-components": "^0.22.11"
+    "unplugin-vue-components": "^0.22.11",
+    "@lowcode/elements": "workspace:*"
   }
 }

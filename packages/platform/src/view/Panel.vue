@@ -1,7 +1,7 @@
 <template>
     <div class="panel" v-if="current && current.id">
         <component 
-            :is="defineAsyncComponent(() => import(`../panel/${current.name}Panel.vue`))"
+            :is="`${current.name}Panel`"
             :key="current.id"
             :props="panelProps"
             @change="change"
@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { defineAsyncComponent, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import metaStore from '@store/meta.js'
 import currentPanelStore from '@store/currentPanel.js'

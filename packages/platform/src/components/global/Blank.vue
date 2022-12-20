@@ -8,12 +8,10 @@
 </template>
 
 <script>
-import BasicComponents from '../index'
 import currentPanelStore from '../../store/currentPanel.js'
 import canvasStore from '../../store/canvas.js';
 export default {
     components: {
-        ...BasicComponents
     },
     props: {
         props: { 
