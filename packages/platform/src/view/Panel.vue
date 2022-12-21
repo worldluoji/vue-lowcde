@@ -17,8 +17,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import metaStore from '@store/meta.js'
-import currentPanelStore from '@store/currentPanel.js'
+import { metaStore, currentPanelStore } from '@lowcode/elements'
 
 const meta = metaStore()
 const currentPanel = storeToRefs(currentPanelStore())

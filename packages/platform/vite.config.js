@@ -7,9 +7,6 @@ import AutoImport from 'unplugin-auto-import/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import path from 'path'
 
-import indexHtmlPlugin from './plugins/indexHtmlPlugin'
-import htmlPlugin from './plugins/htmlPlugin'
-
 // https://vitejs.dev/config/
 export default ({ mode }) => defineConfig({
   plugins: [
@@ -19,9 +16,7 @@ export default ({ mode }) => defineConfig({
     }),
     Components({
       resolvers: [VantResolver(), ElementPlusResolver()],
-    }),
-    indexHtmlPlugin(loadEnv(mode, process.cwd()).VITE_APP_MODE),
-    htmlPlugin()
+    })
   ],
   resolve: {
     alias: {

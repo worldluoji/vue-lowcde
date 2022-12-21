@@ -3,7 +3,6 @@ import './style.css'
 import App from './PlantForm.vue'
 import router from './router/router'
 import { createPinia } from 'pinia'
-import globalComponents from './components/global/global.js'
 import elements from '@lowcode/elements'
 import { DragManager, AtomicManager, request } from '@lowcode/helper'
 
@@ -32,8 +31,8 @@ createApp(App)
     })
     .use(router)
     .use(pinia)
-    .use(globalComponents)
     .use(elements.BasicComponents)
+    .use(elements.ContainerComponents)
     .use(elements.Panels)
     .use(request)
     .mount('#app')

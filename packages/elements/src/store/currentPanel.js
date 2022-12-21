@@ -18,4 +18,4 @@ const currentPanelStore = defineStore("currentPanel", {
   },
 });
 
-export default currentPanelStore
+export default currentPanelStore;

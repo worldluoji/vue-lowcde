@@ -8,8 +8,7 @@
 </template>
 
 <script>
-import currentPanelStore from '../../store/currentPanel.js'
-import canvasStore from '../../store/canvas.js';
+import {canvasStore, currentPanelStore} from '@lowcode/elements';
 export default {
     components: {
     },

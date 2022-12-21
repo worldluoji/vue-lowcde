@@ -39,9 +39,7 @@
   import Operation from './Operation.vue' 
   import Panel from './Panel.vue'
   import LeftSide from './LeftSide.vue'
-  import metaStore from '../store/meta.js'
-  import currentPanelStore from '../store/currentPanel.js'
-  import canvasStore from "../store/canvas.js"
+  import { metaStore, canvasStore, currentPanelStore } from '@lowcode/elements'
 
   export default {
     name: 'Designer',

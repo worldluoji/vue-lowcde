@@ -42,8 +42,7 @@
 </template>
 
 <script setup>
-import metaStore from '../store/meta.js';
-import CanvasStore from '../store/canvas.js';
+import { metaStore, canvasStore } from '@lowcode/elements'
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import MetaData from './MetaData.vue'
@@ -55,7 +54,7 @@ const props = defineProps({
 const pcWidth = '987'
 const padWidth = '768'
 const mobileWidth = '375'
-const canvas = CanvasStore()
+const canvas = canvasStore()
 const canvasWidth = ref(canvas.getWidth || pcWidth)
 const emits = defineEmits(['changeWidth'])
 emits('changeWidth', canvasWidth.value)

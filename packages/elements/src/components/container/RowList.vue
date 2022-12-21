@@ -25,14 +25,12 @@
 
 <script>
 import draggable from 'vuedraggable';
-import currentPanelStore from '@store/currentPanel.js';
-import metaStore from '@store/meta.js';
-import canvasStore from '@store/canvas.js';
+import {metaStore, canvasStore, currentPanelStore} from '@lowcode/elements';
 import { uuid } from '@lowcode/helper'
 import { ref } from 'vue';
 
 export default {
-  name: "ColumnList",
+  name: "RowList",
   components: {
     draggable,
   },
@@ -57,9 +55,9 @@ export default {
     };
   },
   setup(props) {
-    const templateColumns = ref('repeat(auto-fit, minmax(100px, 1fr))')
+    const templateRows = ref('repeat(auto-fit, minmax(100px, 1fr))')
     return {
-      templateColumns
+      templateRows
     }
   },
   created() {
@@ -73,21 +71,21 @@ export default {
   watch: {
     props: {
       handler(newVal) {
-        let {children, column, gap, templateColumns} = newVal
+        let {children, row, gap, templateRows} = newVal
         // console.log('props', this.eid, children)
-        column = column ? column: 1
+        row = row ? row: 1
         children = children ? children: []
 
         const l = children.length
-        if (l > column) {
+        if (l > row) {
           let removedChildren = new Set()
-          for (let i = l - 1; i >= column; i--) {
+          for (let i = l - 1; i >= row; i--) {
             removedChildren.add(children[i].id)
           }
           this.meta.removeChildren(this.eid, removedChildren)
-        } else if (l < column) {
+        } else if (l < row) {
           let newChildren = []
-          for (let i = l; i < column ; i++) {
+          for (let i = l; i < row ; i++) {
             newChildren.push({id: uuid(), name: 'Blank', props: {id: uuid(), element: '', props: {}}})
           }
           this.meta.addChildren(this.eid, newChildren)
@@ -97,8 +95,8 @@ export default {
           this.gap = gap + 'px'
         }
 
-        if (templateColumns) {
-          this.templateColumns = templateColumns
+        if (templateRows) {
+          this.templateRows = templateRows
         }
       },
       deep: true,
@@ -120,9 +118,9 @@ export default {
 .list-group {
   width: 100%;
   display: grid;
-  grid-template-columns: v-bind(templateColumns);
+  grid-template-rows: v-bind(templateRows);
   padding: 10px 0px;
-  column-gap: v-bind("gap");
+  row-gap: v-bind("gap");
 }
 
 .list-group:hover {
@@ -132,8 +130,8 @@ export default {
 .list-groupr {
   width: 100%;
   display: grid;
-  grid-template-columns: v-bind(templateColumns);
-  column-gap: v-bind("gap");
+  grid-template-rows: v-bind(templateRows);
+  row-gap: v-bind("gap");
 }
 
 .list-group-item {
