@@ -39,10 +39,7 @@ export default {
       type: Object,
       required: true
     },
-    eid: {
-      type: String,
-      required: true
-    }
+    eid: String
   },
   data() {
     return {
