@@ -2,13 +2,11 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router/router'
 import { createPinia } from 'pinia'
-import globalComponents from './components/global/global.js'
-import request from './plugins/request'
-import AtomicAttributeManager from './atomicmanager'
+import elements from '@lowcode/elements'
+import { AtomicManager, request } from '@lowcode/helper'
 
 const pinia = createPinia()
-
-const atomicManager = new AtomicAttributeManager()
+const atomicManager = new AtomicManager()
 
 createApp(App)
     .directive('atomicattr', (el, binding)=> {
@@ -17,6 +15,7 @@ createApp(App)
     })
     .use(router)
     .use(pinia)
-    .use(globalComponents)
+    .use(elements.BasicComponents)
+    .use(elements.ContainerComponents)
     .use(request)
     .mount('#app')

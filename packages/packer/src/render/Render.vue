@@ -14,13 +14,9 @@
 </template>
 
 <script>
-import Cards from '../components'
 export default {
     props: {
         content: Array
-    },
-    components: {
-        ...Cards
     }
 }
 </script>
