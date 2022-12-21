@@ -27,7 +27,7 @@ const emit = defineEmits(['change']);
 
 const templateRows = computed(() => {
     let t = new Array(data.row);
-    t.fill('auto');
+    t.fill('1fr');
     return t;
 })
 

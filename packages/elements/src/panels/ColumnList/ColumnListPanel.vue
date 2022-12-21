@@ -27,7 +27,7 @@ const emit = defineEmits(['change']);
 
 const templateColumns = computed(() => {
     let t = new Array(data.column);
-    t.fill('auto');
+    t.fill('1fr');
     return t;
 })
 
