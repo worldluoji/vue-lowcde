@@ -8,7 +8,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { onBeforeMount, ref} from 'vue'
-import Render from '../render/Render.vue'
+import { Render } from '@lowcode/helper'
 import { metaStore, canvasStore } from '@lowcode/elements'
 
 let content = ref()
