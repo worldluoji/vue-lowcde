@@ -1,36 +1,47 @@
 <template>
     <div>
-      <div class="wrapper">
-        <Operation :content="content"  @changeWidth="changeWidth"/>
-        <div class="container">
-          <LeftSide />
-          <div class="drag-content" v-dragcontent="content" v-deps="depMap">
-            <div class="top-white"></div>
-            <draggable 
-              class="list-group" 
-              v-dragcontent="content"
-              :list="content"
-              :disabled="!enabled"
-              item-key="id"
-              ghost-class="ghost"
-              @start="dragging = true"
-              @end="dragging = false">
-              <template #item="{ element, index }" class="list-group-item">
-                <component 
-                  :is="element.name"
-                  :key="index"
-                  :props="element.props"
-                  :eid="element.id"
-                  :data-index="index"
-                  @click="showPanel(element)"
-                ></component>
-              </template>
-            </draggable>
-            <div class="top-white"></div>
-          </div>
-          <Panel @cancel="cancelPanel"/>
-        </div>
-      </div>
+      <el-container>
+        <el-header>
+          <Operation :content="content"  @changeWidth="changeWidth"/>
+        </el-header>
+        <el-container>
+          <el-aside>
+            <LeftSide />
+          </el-aside>
+          <el-container>
+            <el-main>
+              <div class="drag-content" v-dragcontent="content" v-deps="depMap">
+                <div class="top-white"></div>
+                <draggable 
+                  class="list-group" 
+                  v-dragcontent="content"
+                  :list="content"
+                  :disabled="!enabled"
+                  item-key="id"
+                  ghost-class="ghost"
+                  @start="dragging = true"
+                  @end="dragging = false">
+                  <template #item="{ element, index }" class="list-group-item">
+                    <component 
+                      :is="element.name"
+                      :key="index"
+                      :props="element.props"
+                      :eid="element.id"
+                      :data-index="index"
+                      @click="showPanel(element)"
+                    ></component>
+                  </template>
+                </draggable>
+                <div class="top-white"></div>
+              </div>
+              <el-aside>
+                <Panel @cancel="cancelPanel"/>
+              </el-aside>
+            </el-main>
+            <!-- <el-footer>Footer</el-footer> -->
+          </el-container>
+        </el-container>
+      </el-container>
     </div>
   </template>
   
@@ -81,6 +92,16 @@
   </script>
   
 <style>
+  .el-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .el-aside {
+    width: 300px;
+  }
+
   .drag-content {
     width: v-bind(canvasWidth);
     min-height: 500px;
@@ -90,20 +111,8 @@
     margin-top: 10px;
   }
   
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    background-color: #f0f2f5;
-  }
-  
-  .container {
-    display: grid;
-    grid-template-columns: 280px 1fr 300px;
-    column-gap: 30px;
-  }
-  
   .top-white {
-    height: 20px;
+    height: 30px;
   }
   
   .list-group {

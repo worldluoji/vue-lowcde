@@ -1,16 +1,18 @@
 <template>
-    <el-tabs 
+    <el-affix :offset="120">
+      <el-tabs 
         :tab-position="tabPosition" 
         class="left-tabs"
         type="border-card"
-    >
-      <el-tab-pane label="组件库">
-        <Material />
-      </el-tab-pane>
-      <el-tab-pane label="使用帮助">
-        使用指南
-      </el-tab-pane>
-    </el-tabs>
+      >
+        <el-tab-pane label="组件库">
+          <Material />
+        </el-tab-pane>
+        <el-tab-pane label="使用帮助">
+          使用指南
+        </el-tab-pane>
+      </el-tabs>
+    </el-affix>
   </template>
 
   <script setup>
