@@ -34,9 +34,7 @@
                 </draggable>
                 <div class="top-white"></div>
               </div>
-              <el-aside>
-                <Panel @cancel="cancelPanel"/>
-              </el-aside>
+              <Panel @cancel="cancelPanel"/>
             </el-main>
             <!-- <el-footer>Footer</el-footer> -->
           </el-container>
@@ -104,7 +102,7 @@
 
   .drag-content {
     width: v-bind(canvasWidth);
-    min-height: 500px;
+    min-height: 100vh;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f0f2f5;

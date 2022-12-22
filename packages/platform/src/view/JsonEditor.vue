@@ -3,7 +3,7 @@
 </template>
   
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import * as monaco from 'monaco-editor';
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
@@ -47,6 +47,12 @@ onMounted(() => {
     instance.onDidChangeModelContent(() => {
         emit('update:modelValue',  instance.getValue());
     });
+});
+
+watch(props, (newVal) => {
+    if (newVal && newVal.modelValue) {
+        instance.setValue(newVal.modelValue)
+    }
 });
 </script>
   
