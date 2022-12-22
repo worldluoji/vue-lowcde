@@ -10,8 +10,7 @@
     "build:app": "vite build --mode app"
   },
   "dependencies": {
+    "monaco-editor": "^0.34.1",
     "vuedraggable": "^4.1.0"
-  },
-  "devDependencies": {
   }
 }

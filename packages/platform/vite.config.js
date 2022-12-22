@@ -7,6 +7,8 @@ import AutoImport from 'unplugin-auto-import/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import path from 'path'
 
+const prefix = `monaco-editor/esm/vs`;
+
 // https://vitejs.dev/config/
 export default ({ mode }) => defineConfig({
   plugins: [
@@ -22,6 +24,17 @@ export default ({ mode }) => defineConfig({
     alias: {
       '@store': path.join(__dirname, 'src/store'),
       '@util': path.join(__dirname, 'src/utils')
+    }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          jsonWorker: [`${prefix}/language/json/json.worker`],
+          tsWorker: [`${prefix}/language/typescript/ts.worker`],
+          editorWorker: [`${prefix}/editor/editor.worker`]
+        }
+      }
     }
   }
 })

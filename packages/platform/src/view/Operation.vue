@@ -33,11 +33,10 @@
             </div>
         </div>
 
-         <div class="top-area-right">
-            <el-button @click="preview">预览</el-button>
-            <MetaData :data="JSON.stringify(props.content)"/>
+        <div class="top-area-right">
+          <el-button @click="preview">预览</el-button>
+          <MetaData :data="JSON.stringify(props.content, null, 2)"/>
         </div>
-        
     </div>
 </template>
 
