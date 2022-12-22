@@ -29,10 +29,10 @@ const defaultItem = {id: 1, title: 'MatePad 10 Pro', desc: 'New MatePad Pro 10.8
 const getData = async (condition) => {
     if (condition === 'PadList') {
         // 业务卡片，从后端获取数据
-        let res = await $request.get('http://localhost:8098/v1/products/pad')
+        let res = await $request.get('/v1/products/pad')
         return res
     } else if (condition === 'PhoneList') {
-        return await $request.get('http://localhost:8098/v1/products/phone')
+        return await $request.get('/v1/products/phone')
     } else {
         return [defaultItem]
     }
