@@ -1,9 +1,12 @@
 <template>
-    <div class="editor" ref="dom"></div>
+    <div class="outer">
+        <el-button @click="save">保存</el-button>
+        <div class="editor" ref="dom"></div>
+    </div>
 </template>
   
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, onBeforeUnmount } from 'vue';
 import * as monaco from 'monaco-editor';
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import TsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
@@ -27,16 +30,17 @@ const emit = defineEmits(['update:modelValue']);
 const dom = ref();
 
 let instance;
+let jsModel;
 
 onMounted(() => {
-    const jsonModel = monaco.editor.createModel(
+    jsModel = monaco.editor.createModel(
         props.modelValue,
         'javascript',
         monaco.Uri.parse('ts:filename/facts.d.ts')
     );
 
     instance = monaco.editor.create(dom.value, {
-        model: jsonModel,
+        model: jsModel,
         tabSize: 2,
         automaticLayout: true,
         scrollBeyondLastLine: true,
@@ -44,9 +48,14 @@ onMounted(() => {
         formatOnPaste: true
     });
 
-    instance.onDidChangeModelContent(() => {
-        emit('update:modelValue',  instance.getValue());
-    });
+    // instance.onDidChangeModelContent(() => {
+    //     emit('update:modelValue',  instance.getValue());
+    // });
+});
+
+onBeforeUnmount(() => {
+    instance.dispose();
+    jsModel.dispose();
 });
 
 watch(props, (newVal) => {
@@ -54,10 +63,17 @@ watch(props, (newVal) => {
         instance.setValue(newVal.modelValue)
     }
 });
+
+const save = () => {
+    emit('update:modelValue',  instance.getValue());
+}
 </script>
   
 <style scoped>
 .editor {
+    height: 100%;
+}
+.outer {
     height: 100%;
 }
 </style>

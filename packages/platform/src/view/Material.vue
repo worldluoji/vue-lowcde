@@ -26,6 +26,10 @@
                 <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 14H30C30 14 38 18.1481 38 27.7993C38 37.4504 30 42 30 42H13C13 42 6 35.9785 6 28C6 20.0215 13 14 13 14Z" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 27.9998C25 24.9998 19 33.9998 6 27.9998" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M31 14H40C40 14 44 18 44 30" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 6L32 8.66667L31 14H13L9 6Z" fill="none" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <p>行容器</p>
             </div>
+            <div class="material-icon" data-material="SimpleTable">
+              <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M42 6H6C4.89543 6 4 6.89543 4 8V40C4 41.1046 4.89543 42 6 42H42C43.1046 42 44 41.1046 44 40V8C44 6.89543 43.1046 6 42 6Z" fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round"/><path d="M4 18H44" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.5 18V42" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M30.5 18V42" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 30H44" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M44 8V40C44 41.1046 43.1046 42 42 42H6C4.89543 42 4 41.1046 4 40V8" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p>简单表格</p>
+            </div>
         </div>
     </div>
 </template>

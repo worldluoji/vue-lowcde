@@ -3,7 +3,7 @@
 </template>
   
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, onBeforeUnmount } from 'vue';
 import * as monaco from 'monaco-editor';
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
@@ -27,9 +27,10 @@ const emit = defineEmits(['update:modelValue']);
 const dom = ref();
 
 let instance;
+let jsonModel;
 
 onMounted(() => {
-    const jsonModel = monaco.editor.createModel(
+    jsonModel = monaco.editor.createModel(
         props.modelValue,
         'json',
         monaco.Uri.parse('json://grid/settings.json')
@@ -47,6 +48,11 @@ onMounted(() => {
     instance.onDidChangeModelContent(() => {
         emit('update:modelValue',  instance.getValue());
     });
+});
+
+onBeforeUnmount(() => {
+    instance.dispose();
+    jsonModel.dispose();
 });
 
 watch(props, (newVal) => {

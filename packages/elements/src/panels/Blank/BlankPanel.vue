@@ -17,13 +17,13 @@ const p = defineProps({
     }
 })
 const data = {
-    element: p.props.element ? p.props.element: '',
+    element: p.props.element ? p.props.element: ''
 }
-const options = ['Image', 'NavBar', 'Offer', 'ColumnList']
-const emit = defineEmits(['change'])
+const options = ['Image', 'NavBar', 'Offer', 'ColumnList', 'RowList', 'OfferList', 'SimpleTable'];
+const emit = defineEmits(['change']);
 const change = () => {
-    console.log(data)
-    emit('change', data)
+    // console.log(data)
+    emit('change', data);
 }
 </script>
 

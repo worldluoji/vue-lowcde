@@ -16,7 +16,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import JsonEditor from '../editor/JsonEditor.vue';
+import JsonEditor from './JsonEditor.vue';
 const p = defineProps({
   data: String
 })
