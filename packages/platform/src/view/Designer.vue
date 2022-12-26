@@ -34,7 +34,7 @@
                 </draggable>
                 <div class="top-white"></div>
               </div>
-              <Panel @cancel="cancelPanel"/>
+              <Panel @cancel="cancelPanel" @deleteComponent="deleteComponent"/>
             </el-main>
             <!-- <el-footer>Footer</el-footer> -->
           </el-container>
@@ -49,7 +49,7 @@
   import Panel from './Panel.vue'
   import LeftSide from './LeftSide.vue'
   import { metaStore, canvasStore, currentPanelStore } from '@lowcode/elements'
-
+  
   export default {
     name: 'Designer',
     components: {
@@ -71,19 +71,26 @@
       }
     },
     beforeMount() {
-      this.content = this.meta.get
-      this.depMap = this.meta.getDepMap
-      this.canvasStore.setDesign(true)
+      this.content = this.meta.get;
+      this.depMap = this.meta.getDepMap;
+      this.canvasStore.setDesign(true);
     },
     methods: {
       cancelPanel() {
-        this.currentPanel.set({})
+        this.currentPanel.set({});
       },
       showPanel(element) {
-        this.currentPanel.set(element)
+        this.currentPanel.set(element);
       },
       changeWidth(val) {
-        this.canvasWidth = `${val}px`
+        this.canvasWidth = `${val}px`;
+      },
+      deleteComponent(eid) {
+        // console.log(222, eid);
+        this.meta.delete(eid);
+        this.content = this.meta.get;
+        this.depMap = this.meta.getDepMap;
+        this.cancelPanel();
       }
     }
   }

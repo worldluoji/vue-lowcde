@@ -44,13 +44,13 @@ export default class DragManager {
                 // 没有就加入进去
                 if (Object.keys(this.opData).length > 0) {
                     this.ref.value.push(this.opData)
-                    this.depMap.value.set(this.opData.id, this.opData)
+                    this.depMap.value.set(this.opData.id, { value: this.opData })
                 }
             } else if (index !== value.length - 1) {
                 // 如果不是最后一个，就把前面的那个删了，再加入
                 this.ref.value.splice(index, 1)
                 this.ref.value.push(this.opData)
-                this.depMap.value.set(this.opData.id, this.opData)
+                this.depMap.value.set(this.opData.id, {value: this.opData})
             }
         }
     }

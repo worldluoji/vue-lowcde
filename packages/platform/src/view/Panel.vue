@@ -11,6 +11,7 @@
         <hr>
         <el-button @click="save">保存</el-button>
         <el-button @click="cancel">取消</el-button>
+        <el-button type="danger" @click="deleteComponent">删除</el-button>
     </div>
 </template>
 
@@ -28,8 +29,8 @@ watch(current, (newVal) => {
     // console.log(111, newVal)
     let element = meta.getElementById(newVal.id)
     // console.log('new', p.currentId)
-    if (element) {
-        panelProps.value = element.props
+    if (element && element.value) {
+        panelProps.value = element.value.props
         // console.log(222, panelProps.value)
     }
 })
@@ -37,7 +38,7 @@ watch(current, (newVal) => {
 const change = (p) => {
     // console.log('before change', p)
     if (p.atomicAttrs) {
-        delete panelProps.value.atomicAttrs
+        delete panelProps.value.atomicAttrs;
         panelProps.value.atomicAttrs = p.atomicAttrs;
     } else {
         Object.assign(panelProps.value, p);   
@@ -47,12 +48,40 @@ const change = (p) => {
 
 const save = () => {
     // console.log(111, panelProps.value, current)
-    meta.updateProps(current.value.id, panelProps.value)
+    meta.updateProps(current.value.id, panelProps.value);
 }
 
-const emits = defineEmits(['cancel'])
+const emits = defineEmits(['cancel','deleteComponent']);
 const cancel = () => {
-    emits('cancel')
+    emits('cancel');
+}
+
+const deleteComponent = () => {
+    const eid = current.value.id;
+    if (eid) {
+        ElMessageBox.confirm(
+            '确认删除吗？',
+            '删除组件（不可逆）',
+            {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+            }
+        )
+        .then(() => {
+            emits('deleteComponent', current.value.id);
+            ElMessage({
+                type: 'success',
+                message: '删除成功',
+            })
+        })
+        .catch(() => {
+            ElMessage({
+                type: 'info',
+                message: '删除失败，请稍后再试',
+            })
+        });
+    }
 }
 </script>
 

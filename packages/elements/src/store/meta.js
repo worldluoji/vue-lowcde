@@ -53,14 +53,14 @@ const metaStore = defineStore("meta", {
       this.content = c
     },
     updateProps(currentId, value) {
-      let it = this.depMap.get(currentId)
-      console.log('update', currentId, value)
+      let it = this.depMap.get(currentId).value
+      // console.log('update', currentId, value, this.depMap)
       if (it) {
         Object.assign(it.props, value)
       }
     },
     removeChildren(eid, children) {
-      let e = this.depMap.get(eid)
+      let e = this.depMap.get(eid).value
       if (e) {
         let newChildren = []
         for (let child of e.props.children) {
@@ -75,7 +75,7 @@ const metaStore = defineStore("meta", {
       }
     },
     addChildren(eid, children) {
-      let e = this.depMap.get(eid);
+      let e = this.depMap.get(eid).value;
       if (e) {
         if (!e.props.children) {
           e.props.children = [];
@@ -83,14 +83,48 @@ const metaStore = defineStore("meta", {
         for (let child of children) {
           e.props.children.push(child);
           // 设置依赖关系，方便查找
-          this.depMap.set(child.id, child);
+          this.depMap.set(child.id, {value: child, parent: eid});
           
           // 容器的情况，里面是blank, 要一起加入，否则会出现问题
           if (child.props.id) {
-            this.depMap.set(child.props.id, child.props);
+            this.depMap.set(child.props.id, {value: child.props, parent: child.id});
           }
         }
       }
+    },
+    delete(eid, deps = 0) {
+      let {value, parent} = this.depMap.get(eid);
+      if (!value) {
+        return;
+      }
+
+      // 清空所有儿子的依赖树 TODO
+      // if (value.props) {
+      //   if (value.props.children) {
+      //     for (let child of value.props.children) {
+      //       this.delete(child.id, deps + 1);
+      //     }
+      //   }
+      //   if (value.props.props && value.props.props.children) {
+      //     for (let child of value.props.props.children) {
+      //       this.delete(child.id, deps + 1);
+      //     }
+      //   }
+      // }
+
+      // 清空当前节点
+      if (deps === 0) {
+        if (parent) {
+          this.removeChildren(parent, new Set().add(eid));
+        } else {
+          this.content = this.content.filter(c => c.id !== eid);
+          this.depMap.delete(eid);
+        }
+      }
+
+      // console.log(this.content);
+      // console.log('******************');
+      // console.log(this.depMap);
     }
   }
 });
