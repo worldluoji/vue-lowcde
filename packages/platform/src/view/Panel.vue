@@ -11,7 +11,7 @@
         <hr>
         <el-button @click="save">保存</el-button>
         <el-button @click="cancel">取消</el-button>
-        <el-button type="danger" @click="deleteComponent">删除</el-button>
+        <el-button type="danger" @click="deleteComponent" v-show="current.name !== 'Blank'">删除</el-button>
     </div>
 </template>
 

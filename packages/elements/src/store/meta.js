@@ -29,6 +29,34 @@ import { defineStore } from 'pinia';
 //   }
 //   return null
 // }
+function removeDeps(depMap, eid, removeFirst = true, deps = 0) {
+  let { value } = depMap.get(eid);
+  if (!value) {
+    return;
+  }
+  // 当前节点从依赖树移除
+  if (removeFirst) {
+    depMap.delete(eid);
+  }
+  
+  // 递归将所有儿子从依赖树移除
+  if (value.props) {
+    if (value.props.children) {
+      for (let child of value.props.children) {
+        removeDeps(child.id, deps + 1);
+      }
+    }
+    // 这里可能是Blank包了一层
+    if (value.props.props) {
+      if (value.props.props.id) {
+        depMap.delete(value.props.props.id);
+      }
+      for (let child of value.props.props.children) {
+        removeDeps(child.id, deps + 1);
+      }
+    }
+  }
+}
 
 const metaStore = defineStore("meta", {
   state: () => {
@@ -92,39 +120,39 @@ const metaStore = defineStore("meta", {
         }
       }
     },
-    delete(eid, deps = 0) {
+    delete(eid) {
       let {value, parent} = this.depMap.get(eid);
       if (!value) {
         return;
       }
 
-      // 清空所有儿子的依赖树 TODO
-      // if (value.props) {
-      //   if (value.props.children) {
-      //     for (let child of value.props.children) {
-      //       this.delete(child.id, deps + 1);
-      //     }
-      //   }
-      //   if (value.props.props && value.props.props.children) {
-      //     for (let child of value.props.props.children) {
-      //       this.delete(child.id, deps + 1);
-      //     }
-      //   }
-      // }
+      let removeFirst = true
 
       // 清空当前节点
-      if (deps === 0) {
-        if (parent) {
-          this.removeChildren(parent, new Set().add(eid));
-        } else {
-          this.content = this.content.filter(c => c.id !== eid);
-          this.depMap.delete(eid);
+      if (parent) {
+        let ele = this.depMap.get(parent)?.value;
+        if (!ele || !ele.props) {
+          return;
         }
+        if (ele.props.children) {
+          ele.props.children = ele.props.children.filter(c => c.id !== eid)
+          // this.removeChildren(parent, new Set().add(eid));
+        }
+        // 父节点是Blank容器，置空即可
+        if (ele.props.element) {
+          ele.props.element = '';
+          ele.props.props = {};
+          removeFirst = false;
+        }
+      } else {
+        this.content = this.content.filter(c => c.id !== eid);
+        // this.depMap.delete(eid);
       }
-
-      // console.log(this.content);
-      // console.log('******************');
-      // console.log(this.depMap);
+      
+      // 依赖清除
+      removeDeps(this.depMap, eid, removeFirst);
+      console.log(this.depMap);
+      
     }
   }
 });
