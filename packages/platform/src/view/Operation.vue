@@ -1,12 +1,6 @@
 <template>
     <div class="top-area">
-        <div class="top-area-left">
-            <div class="lowcode-plugin-logo">
-                <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 16H29V4L44 19L29 34V24H18V13L4 28L18 44V32H23" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <p class="font">UI低代码</p>
-            </div>
-        </div>
-
+        <TopAreaLeft />
         <div class="top-area-center">
             <div class="lp-simulator-pane">
                 <span class="lp-simulator-pane-item" @click="setCanvasWidth(pcWidth)">
@@ -41,10 +35,12 @@
 </template>
 
 <script setup>
-import { metaStore, canvasStore } from '@lowcode/elements'
+import { metaStore, canvasStore } from '@lowcode/elements';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import MetaData from './MetaData.vue'
+import MetaData from './MetaData.vue';
+import TopAreaLeft from '../components/TopAreaLeft.vue';
+
 const props = defineProps({
     content: Array,
 })
@@ -90,25 +86,6 @@ const preview = () => {
     width: 100%;
     margin-bottom: 2px;
     padding: 4px 12px 4px 16px;
-  }
-
-  .top-area-left {
-    display: flex;
-    align-items: center;
-  }
-
-  .lowcode-plugin-logo {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    width: 300px;
-    row-gap: 2px;
-  }
-
-  .font {
-    font-size: 1.7rem;
-    font-weight: 800;
   }
 
   .top-area-center {
