@@ -3,25 +3,25 @@
 # pre-end
 ## install
 ```
-npm install
+npm install --legacy-peer-deps
 ```
 
 ## start
 平台启动
 ```
-npm run dev --workspace=platform
+npm run dev
 ```
 
 ## build
 平台打包
 ```
-npm run build --workspace=platform
+npm run build
 ```
 
 ## preview
 平台打包后预览
 ```
-npm run preview --workspace=platform
+npm run preview
 ```
 
 ## TODOS

@@ -4,7 +4,9 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm run dev --workspace=platform",
+    "build": "npm run build --workspace=platform",
+    "preview": "npm run preview --workspace=platform"
   },
   "repository": {
     "type": "git",
