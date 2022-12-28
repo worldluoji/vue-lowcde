@@ -9,6 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/sync/errgroup"
 
+	app "backend/app"
+	page "backend/page"
 	product "backend/product"
 	user "backend/user"
 )
@@ -34,6 +36,9 @@ func router() http.Handler {
 	userHandler := user.NewUserHandler()
 	userHandler.InitUsers()
 
+	appHander := app.NewAppHandler()
+	pageHander := page.NewPageHandler()
+
 	// 路由分组、中间件、认证
 	v1 := router.Group("/v1")
 	{
@@ -45,6 +50,16 @@ func router() http.Handler {
 		userv1 := v1.Group("/users")
 		{
 			userv1.GET("list", userHandler.GetUsers)
+		}
+		appv1 := v1.Group("/app")
+		{
+			appv1.GET("list", appHander.GetAppList)
+			appv1.POST("create", appHander.CreateApp)
+		}
+		pagev1 := v1.Group("/page")
+		{
+			pagev1.GET("list", pageHander.GetPagesByAppId)
+			pagev1.POST("create", pageHander.CreatePage)
 		}
 	}
 
