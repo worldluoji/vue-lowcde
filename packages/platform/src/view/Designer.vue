@@ -2,7 +2,7 @@
     <div>
       <el-container>
         <el-header>
-          <Operation :content="content"  @changeWidth="changeWidth"/>
+          <Operation :content="content"  @changeWidth="changeWidth" @save="save"/>
         </el-header>
         <el-container>
           <el-aside>
@@ -44,11 +44,13 @@
   </template>
   
   <script>
-  import draggable from 'vuedraggable'
-  import Operation from './Operation.vue' 
-  import Panel from './Panel.vue'
-  import LeftSide from './LeftSide.vue'
-  import { metaStore, canvasStore, currentPanelStore } from '@lowcode/elements'
+  import draggable from 'vuedraggable';
+  import Operation from './Operation.vue';
+  import Panel from './Panel.vue';
+  import LeftSide from './LeftSide.vue';
+  import { metaStore, canvasStore, currentPanelStore } from '@lowcode/elements';
+  import { inject } from 'vue';
+  import { jsonToMap, mapToJson } from '../utils/MapUtils';
   
   export default {
     name: 'Designer',
@@ -67,10 +69,25 @@
         meta: metaStore(),
         currentPanel: currentPanelStore(),
         canvasStore: canvasStore(),
-        canvasWidth: '987px'
+        canvasWidth: '987px',
+        pageId: '',
+        metaId: 0,
+        request: inject('$request')
       }
     },
-    beforeMount() {
+    async beforeMount() {
+      this.pageId = this.$route.query.pageId;
+      if (this.pageId) {
+        const res = await this.request.get(`/v1/meta/get?pageId=${this.pageId}`);
+        console.log(res);
+        if (res.id) {
+          this.metaId = res.id
+          if (res.content) {
+            this.meta.set(JSON.parse(res.content));
+            this.meta.setDepMap(jsonToMap(res.deps));
+          }
+        }
+      }
       this.content = this.meta.get;
       this.depMap = this.meta.getDepMap;
       this.canvasStore.setDesign(true);
@@ -91,6 +108,25 @@
         this.content = this.meta.get;
         this.depMap = this.meta.getDepMap;
         this.cancelPanel();
+      },
+      save() {
+        const res = this.request.post('/v1/meta/save', {
+          content: JSON.stringify(this.meta.get),
+          deps: mapToJson(this.meta.getDepMap),
+          pageId: this.pageId,
+          id: this.metaId
+        })
+        if (res.id) {
+          ElMessage({
+            message: '保存成功',
+            type: 'success',
+          });
+        } else {
+          ElMessage({
+            message: '保存失败，请稍后再试',
+            type: 'warning',
+          });
+        }
       }
     }
   }

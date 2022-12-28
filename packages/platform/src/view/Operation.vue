@@ -30,6 +30,7 @@
         <div class="top-area-right">
           <el-button @click="preview">预览</el-button>
           <MetaData :data="JSON.stringify(props.content, null, 2)"/>
+          <el-button @click="save">保存</el-button>
         </div>
     </div>
 </template>
@@ -51,7 +52,7 @@ const padWidth = '768'
 const mobileWidth = '375'
 const canvas = canvasStore()
 const canvasWidth = ref(canvas.getWidth || pcWidth)
-const emits = defineEmits(['changeWidth'])
+const emits = defineEmits(['changeWidth', 'save'])
 emits('changeWidth', canvasWidth.value)
 const setCanvasWidth = (val) => {
     if (val) {
@@ -77,6 +78,9 @@ const preview = () => {
     })        
 }
 
+const save = async () => {
+  emits('save');
+}
 </script>
 
 <style scoped>

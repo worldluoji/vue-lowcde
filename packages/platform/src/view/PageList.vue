@@ -51,11 +51,11 @@ import Header from '../components/Header.vue';
 const $request = inject('$request');
 const pageList = ref([]);
 const route = useRoute();
-const pageId = route.query.pageId;
+const appId = route.query.appId;
 onBeforeMount(async () => {
-    console.log('pageId', pageId);
-    if (pageId) {
-        const res = await $request.get(`/v1/page/list?pageId=${pageId}`);
+    console.log('appId', appId);
+    if (appId) {
+        const res = await $request.get(`/v1/page/list?appId=${appId}`);
         pageList.value = res;
     }
 });
@@ -68,7 +68,7 @@ const form = reactive({
 });
 const formLabelWidth = '140px';
 const addNewPage = async () => {
-    const res = await $request.post('/v1/page/create', {name: form.name, path: form.path, desc: form.desc, pageId: Number(pageId)});
+    const res = await $request.post('/v1/page/create', {name: form.name, path: form.path, desc: form.desc, appId: Number(appId)});
     if (res.id) {
         ElMessage({
             message: '添加成功',
@@ -86,7 +86,7 @@ const addNewPage = async () => {
 
 const router = useRouter()
 const toDesigner = (pageId) => {
-    router.push({path: '/designer', query: {pageId: pageId}});
+    router.push({path: '/designer', query: {appId: appId, pageId: pageId}});
 }
 </script>
 

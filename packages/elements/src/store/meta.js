@@ -80,6 +80,9 @@ const metaStore = defineStore("meta", {
     set(c) {
       this.content = c
     },
+    setDepMap(d) {
+      this.depMap = d
+    },
     updateProps(currentId, value) {
       let it = this.depMap.get(currentId).value
       // console.log('update', currentId, value, this.depMap)

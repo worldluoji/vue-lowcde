@@ -12,19 +12,19 @@ import (
 )
 
 type PageVO struct {
-	ID     uint   `json:"id"`
-	Name   string `json:"name" binding:"required"`
-	Path   string `json:"path" binding:"required"`
-	Desc   string `json:"desc"`
-	PageID uint   `json:"pageId"`
+	ID    uint   `json:"id"`
+	Name  string `json:"name" binding:"required"`
+	Path  string `json:"path" binding:"required"`
+	Desc  string `json:"desc"`
+	AppID uint   `json:"appId"`
 }
 
 type PagePO struct {
 	gorm.Model
-	Name   string `gorm:"column:name"`
-	Path   string `gorm:"column:path"`
-	Desc   string `gorm:"column:desc"`
-	PageID uint   `gorm:"column:pageId"`
+	Name  string `gorm:"column:name"`
+	Path  string `gorm:"column:path"`
+	Desc  string `gorm:"column:desc"`
+	AppID uint   `gorm:"column:appId"`
 }
 
 // TableName maps to mysql table name.
@@ -61,14 +61,14 @@ func (u *PageHandler) GetPagesByAppId(c *gin.Context) {
 	db := GetDB()
 	db.AutoMigrate(&PagePO{})
 
-	pageId, ok := c.GetQuery("pageId")
+	appId, ok := c.GetQuery("appId")
 	if !ok {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "fail to get page id"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "fail to get appId"})
 		return
 	}
 
 	var pages []PagePO
-	if err := db.Where("pageId = ?", pageId).Find(&pages).Error; err != nil {
+	if err := db.Where("appId = ?", appId).Find(&pages).Error; err != nil {
 		log.Fatalf("Get product error: %v", err)
 	}
 	n := len(pages)
@@ -98,7 +98,7 @@ func (u *PageHandler) CreatePage(c *gin.Context) {
 	page.Name = pageVO.Name
 	page.Path = pageVO.Path
 	page.Desc = pageVO.Desc
-	page.PageID = pageVO.PageID
+	page.AppID = pageVO.AppID
 	page.CreatedAt = time.Now()
 	if err := db.Create(page).Error; err != nil {
 		log.Printf("Create error: %v", err)

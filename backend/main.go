@@ -10,6 +10,7 @@ import (
 	"golang.org/x/sync/errgroup"
 
 	app "backend/app"
+	meta "backend/meta"
 	page "backend/page"
 	product "backend/product"
 	user "backend/user"
@@ -38,6 +39,7 @@ func router() http.Handler {
 
 	appHander := app.NewAppHandler()
 	pageHander := page.NewPageHandler()
+	metaHander := meta.NewMetaHandler()
 
 	// 路由分组、中间件、认证
 	v1 := router.Group("/v1")
@@ -60,6 +62,11 @@ func router() http.Handler {
 		{
 			pagev1.GET("list", pageHander.GetPagesByAppId)
 			pagev1.POST("create", pageHander.CreatePage)
+		}
+		metaV1 := v1.Group("/meta")
+		{
+			metaV1.GET("get", metaHander.GetMetaByPageId)
+			metaV1.POST("save", metaHander.CreateOrUpdateMeta)
 		}
 	}
 

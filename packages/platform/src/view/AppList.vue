@@ -75,8 +75,8 @@ const addNewApp = async () => {
 }
 
 const router = useRouter();
-const toPageList = (pageId) => {
-    router.push({ path: '/pagelist', query: { pageId: pageId } });
+const toPageList = (appId) => {
+    router.push({ path: '/pagelist', query: { appId: appId } });
 }
 </script>
 
