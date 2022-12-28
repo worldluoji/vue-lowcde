@@ -17,10 +17,31 @@ async function get(url) {
     return res
 }
 
+async function post(url, params) {   
+    const res = await fetch(BASE_URL + url, {
+        method: 'POST',
+        body: JSON.stringify({
+            ...params
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    }).then(response => response.json())
+    .catch(e => {
+        if (e.errorMessage) {
+            ElMessageBox.alert(e.errorMessage, '提示', {});
+        } else {
+            ElMessageBox.alert('网络忙，请稍后再试', '提示', {});
+        }
+    }) 
+    return res
+}
+
 export default {
     install: (app, options) => {
         app.provide('$request', {
-            get: get
+            get: get,
+            post: post
         })
     }
 }

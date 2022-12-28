@@ -2,12 +2,13 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 
 const routes = [
     { 
-      path: '/', 
+      path: '/designer', 
       name: 'designer',
       component: () => import('../view/Designer.vue'),
     },
     { path: '/preview', name:'preview', component: () => import('../view/Preview.vue') },
-    { path: '/applist', name:'applist', component: () => import('../view/AppList.vue') }
+    { path: '/', name:'applist', component: () => import('../view/AppList.vue') },
+    { path: '/pagelist', name:'pagelist', component: () => import('../view/PageList.vue') }
 ]
   
 // 创建路由实例并传递 `routes` 配置
