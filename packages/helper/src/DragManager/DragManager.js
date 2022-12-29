@@ -85,10 +85,14 @@ export default class DragManager {
             if (i > -1) {
                 this.ref.value[i].state = 1
             } else {
-                this.depMap.value.delete(this.opData.id)
+                if (this.opData && this.opData.id) {
+                    this.depMap.value.delete(this.opData.id)
+                }
             }
         } else {
-            this.depMap.value.delete(this.opData.id)
+            if (this.opData && this.opData.id) {
+                this.depMap.value.delete(this.opData.id)
+            }
         }
 
         // console.log('drop', this.ref.value)
