@@ -109,8 +109,8 @@
         this.depMap = this.meta.getDepMap;
         this.cancelPanel();
       },
-      save() {
-        const res = this.request.post('/v1/meta/save', {
+      async save() {
+        const res = await this.request.post('/v1/meta/save', {
           content: JSON.stringify(this.meta.get),
           pageId: Number(this.pageId),
           id: this.metaId
