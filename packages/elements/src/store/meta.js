@@ -29,6 +29,26 @@ import { defineStore } from 'pinia';
 //   }
 //   return null
 // }
+
+const dfsDepMap = (content, depMap, parent=null) => {
+  for (let e of content) {
+    depMap.set(e.id, {value: e, parent: parent});
+    
+    // 对象容纳了一个组件,比如Blank
+    if (e.props.id) {
+      depMap.set(e.props.id, {value: e.props, parent: e.id});
+      if (e.props.props && e.props.props.children) {
+        dfsDepMap(e.props.props.children, depMap, e.props.id);
+      }
+    }
+
+    // 对象有children, 比如List容器
+    if (e.props.children && e.props.children.length > 0) {
+      dfsDepMap(e.props.children, depMap, e.id);
+    }
+  }
+}
+
 function removeDeps(depMap, eid, removeFirst = true, deps = 0) {
   let { value } = depMap.get(eid);
   if (!value) {
@@ -62,7 +82,8 @@ const metaStore = defineStore("meta", {
   state: () => {
     return {
       content: [],
-      depMap: new Map()
+      depMap: new Map(),
+      id: 0
     }
   },
   getters: {
@@ -73,15 +94,24 @@ const metaStore = defineStore("meta", {
       return (id) => state.depMap.get(id);
     },
     getDepMap(state) {
-      return state.depMap
+      return state.depMap;
+    },
+    getId(state) {
+      return state.id;
     }
   },
   actions: {
     set(c) {
       this.content = c
+      if (c && (this.depMap.size === 0)) {
+        dfsDepMap(this.content, this.depMap);
+      }
     },
     setDepMap(d) {
-      this.depMap = d
+      this.depMap = d;
+    },
+    setId(id) {
+      this.id = id;
     },
     updateProps(currentId, value) {
       let it = this.depMap.get(currentId).value

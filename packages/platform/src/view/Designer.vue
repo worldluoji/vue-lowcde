@@ -50,7 +50,6 @@
   import LeftSide from './LeftSide.vue';
   import { metaStore, canvasStore, currentPanelStore } from '@lowcode/elements';
   import { inject } from 'vue';
-  import { jsonToMap, mapToJson } from '../utils/MapUtils';
   
   export default {
     name: 'Designer',
@@ -77,19 +76,20 @@
     },
     async beforeMount() {
       this.pageId = this.$route.query.pageId;
-      if (this.pageId) {
+      this.content = this.meta.get;
+      if (this.pageId && (!this.content || this.content.length === 0)) {
         const res = await this.request.get(`/v1/meta/get?pageId=${this.pageId}`);
         console.log(res);
         if (res.id) {
-          this.metaId = res.id
+          this.meta.setId(res.id)
           if (res.content) {
             this.meta.set(JSON.parse(res.content));
-            this.meta.setDepMap(jsonToMap(res.deps));
           }
         }
       }
       this.content = this.meta.get;
       this.depMap = this.meta.getDepMap;
+      this.metaId = this.meta.getId;
       this.canvasStore.setDesign(true);
     },
     methods: {
@@ -112,8 +112,7 @@
       save() {
         const res = this.request.post('/v1/meta/save', {
           content: JSON.stringify(this.meta.get),
-          deps: mapToJson(this.meta.getDepMap),
-          pageId: this.pageId,
+          pageId: Number(this.pageId),
           id: this.metaId
         })
         if (res.id) {
