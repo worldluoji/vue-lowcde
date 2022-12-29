@@ -14,14 +14,12 @@ import (
 type MetaVO struct {
 	ID      uint   `json:"id"`
 	Content string `json:"content"`
-	Deps    string `json:"deps"`
 	PageID  uint   `json:"pageId"`
 }
 
 type MetaPO struct {
 	gorm.Model
 	Content string `gorm:"column:content"`
-	Deps    string `gorm:"column:deps"`
 	PageID  uint   `gorm:"column:pageId"`
 }
 
@@ -68,11 +66,10 @@ func (u *MetaHandler) GetMetaByPageId(c *gin.Context) {
 	var meta MetaPO
 	if err := db.Where("pageId = ?", pageId).First(&meta).Error; err != nil {
 		log.Printf("Get meta error: %v", err)
-		c.JSON(http.StatusOK, MetaVO{Content: "", Deps: ""})
+		c.JSON(http.StatusOK, MetaVO{Content: ""})
 		return
 	}
 	u.meta.ID = meta.ID
-	u.meta.Deps = meta.Deps
 	u.meta.Content = meta.Content
 	u.meta.PageID = meta.PageID
 
@@ -90,7 +87,6 @@ func (u *MetaHandler) CreateOrUpdateMeta(c *gin.Context) {
 
 	meta := &MetaPO{}
 	meta.Content = metaVO.Content
-	meta.Deps = metaVO.Deps
 	meta.PageID = metaVO.PageID
 	meta.CreatedAt = time.Now()
 	if metaVO.ID > 0 {
