@@ -51,9 +51,11 @@ const dfsDepMap = (content, depMap, parent=null) => {
 
 function removeDeps(depMap, eid, removeFirst = true, deps = 0) {
   let { value } = depMap.get(eid);
+  // console.log(deps, removeFirst, eid, value);
   if (!value) {
     return;
   }
+
   // 当前节点从依赖树移除
   if (removeFirst) {
     depMap.delete(eid);
@@ -63,16 +65,16 @@ function removeDeps(depMap, eid, removeFirst = true, deps = 0) {
   if (value.props) {
     if (value.props.children) {
       for (let child of value.props.children) {
-        removeDeps(child.id, deps + 1);
+        removeDeps(depMap, child.id, true, deps + 1);
       }
     }
     // 这里可能是Blank包了一层
-    if (value.props.props) {
-      if (value.props.props.id) {
-        depMap.delete(value.props.props.id);
-      }
-      for (let child of value.props.props.children) {
-        removeDeps(child.id, deps + 1);
+    if (value.props.id) {
+      depMap.delete(value.props.id);
+      if (value.props.props && value.props.props.children) {
+        for (let child of value.props.props.children) {
+          removeDeps(depMap, child.id, true, deps + 1);
+        }
       }
     }
   }
