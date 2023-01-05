@@ -14,9 +14,6 @@
         <el-tab-pane label="容器组件">
           <Material :componentsInfo="containerComponentsInfo"/>
         </el-tab-pane>
-        <el-tab-pane label="使用帮助">
-          使用指南
-        </el-tab-pane>
       </el-tabs>
     </el-affix>
   </template>
