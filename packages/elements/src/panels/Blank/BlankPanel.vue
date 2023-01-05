@@ -2,14 +2,15 @@
     <div class="BlankPanel">
         请选择组件: 
         <select v-model="data.element" @change="change">
-            <option v-for="item in options" :key="item" :value="item">
-                {{ item }}
+            <option v-for="item in componentList" :key="item.name" :value="item.name">
+                {{ item.title }}
             </option>
         </select>
     </div>
 </template>
 
 <script setup>
+import componentList from '../../components/components.js';
 const p = defineProps({
     props: {
         type: Object,
@@ -19,7 +20,6 @@ const p = defineProps({
 const data = {
     element: p.props.element ? p.props.element: ''
 }
-const options = ['Image', 'NavBar', 'Offer', 'ColumnList', 'RowList', 'OfferList', 'SimpleTable'];
 const emit = defineEmits(['change']);
 const change = () => {
     // console.log(data)
