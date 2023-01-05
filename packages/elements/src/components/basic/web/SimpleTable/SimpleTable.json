@@ -1,7 +1,7 @@
 {
     "name": "SimpleTable",
-    "title": "简单列表",
-    "description": "简单列表",
+    "title": "表格",
+    "description": "简单表格",
     "type": "business",
     "icon": "",
     "platforms": ["web"]
