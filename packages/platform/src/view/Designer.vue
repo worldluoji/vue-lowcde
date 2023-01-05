@@ -76,17 +76,32 @@
     },
     async beforeMount() {
       this.pageId = this.$route.query.pageId;
-      this.content = this.meta.get;
-      if (this.pageId && (!this.content || this.content.length === 0)) {
+      const appId = this.$route.query.appId;
+      let appPageIdCache = this.meta.getAppPageId;
+      const realAppPageId = `${this.pageId}&${appId}`;
+      // console.log(1, appPageIdCache, realAppPageId);
+      // 没有缓存，或者缓存的页面与当前页面不一致，就重新请求
+      if (!appPageIdCache || (appPageIdCache !== realAppPageId)) {
+        // console.log(222, this.pageId);
         const res = await this.request.get(`/v1/meta/get?pageId=${this.pageId}`);
         console.log(res);
-        if (res.id) {
-          this.meta.setId(res.id)
+        if (res && res.id) {
+          this.meta.setId(res.id);
+          this.meta.setAppPageId(realAppPageId);
           if (res.content) {
             this.meta.set(JSON.parse(res.content));
           }
         }
       }
+      // 这里还是不一致，说明没有请求到东东，应该将缓存清空
+      appPageIdCache = this.meta.getAppPageId;
+      if (appPageIdCache !== realAppPageId) {
+        this.meta.set([]);
+        this.meta.setDepMap(new Map());
+        this.meta.setId(0);
+        this.meta.setAppPageId(realAppPageId);
+      }
+
       this.content = this.meta.get;
       this.depMap = this.meta.getDepMap;
       this.metaId = this.meta.getId;

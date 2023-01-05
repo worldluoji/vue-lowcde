@@ -85,7 +85,8 @@ const metaStore = defineStore("meta", {
     return {
       content: [],
       depMap: new Map(),
-      id: 0
+      id: 0,
+      appPageId: ''
     }
   },
   getters: {
@@ -100,12 +101,15 @@ const metaStore = defineStore("meta", {
     },
     getId(state) {
       return state.id;
+    },
+    getAppPageId(state) {
+      return state.appPageId;
     }
   },
   actions: {
     set(c) {
       this.content = c
-      if (c && (this.depMap.size === 0)) {
+      if (c && (c.length > 0) && (this.depMap.size === 0)) {
         dfsDepMap(this.content, this.depMap);
       }
     },
@@ -114,6 +118,9 @@ const metaStore = defineStore("meta", {
     },
     setId(id) {
       this.id = id;
+    },
+    setAppPageId(id) {
+      this.appPageId = id;
     },
     updateProps(currentId, value) {
       let it = this.depMap.get(currentId).value
