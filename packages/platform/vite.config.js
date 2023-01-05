@@ -36,7 +36,8 @@ export default ({ mode }) => defineConfig({
   resolve: {
     alias: {
       '@store': path.join(__dirname, 'src/store'),
-      '@util': path.join(__dirname, 'src/utils')
+      '@util': path.join(__dirname, 'src/utils'),
+      '@assets': path.join(__dirname, 'src/assets')
     }
   },
   build: {

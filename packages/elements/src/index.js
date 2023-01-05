@@ -1,6 +1,6 @@
-import BasicComponents from './components';
+import BasicComponents,{ BasicComponentsInfo } from './components';
 import Panels from './panels';
-import ContainerComponents from './components/container';
+import ContainerComponents,{ ContainerComponentsInfo } from './components/container';
 import store from './store';
 
 export default {
@@ -12,3 +12,6 @@ export default {
 export const canvasStore = store.Canvas;
 export const currentPanelStore = store.CurrentPanel;
 export const metaStore = store.Meta;
+
+export const basicComponentsInfo = BasicComponentsInfo;
+export const containerComponentsInfo = ContainerComponentsInfo;

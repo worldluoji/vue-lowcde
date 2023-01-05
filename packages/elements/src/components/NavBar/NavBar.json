@@ -1,0 +1,8 @@
+{
+    "name": "NavBar",
+    "title": "导航栏",
+    "description": "导航栏",
+    "type": "basic",
+    "icon": "",
+    "platforms": ["mobile"]
+}

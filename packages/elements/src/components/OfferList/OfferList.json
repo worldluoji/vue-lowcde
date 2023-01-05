@@ -1,0 +1,8 @@
+{
+    "name": "OfferList",
+    "title": "商品列表",
+    "description": "商品列表",
+    "type": "business",
+    "icon": "",
+    "platforms": ["mobile"]
+}

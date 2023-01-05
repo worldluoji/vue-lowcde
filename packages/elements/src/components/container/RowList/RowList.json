@@ -1,0 +1,8 @@
+{
+    "name": "RowList",
+    "title": "行容器",
+    "description": "行容器",
+    "type": "container",
+    "icon": "",
+    "platforms": ["web", "mobile"]
+}

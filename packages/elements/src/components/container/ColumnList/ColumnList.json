@@ -1,0 +1,8 @@
+{
+    "name": "ColumnList",
+    "title": "列容器",
+    "description": "列容器",
+    "type": "container",
+    "icon": "",
+    "platforms": ["web", "mobile"]
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Offer",
+    "title": "商品",
+    "description": "商品",
+    "type": "basic",
+    "icon": "",
+    "platforms": ["mobile"]
+}
