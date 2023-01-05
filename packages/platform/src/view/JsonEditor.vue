@@ -30,12 +30,17 @@ let instance;
 let jsonModel;
 
 onMounted(() => {
-    jsonModel = monaco.editor.createModel(
-        props.modelValue,
-        'json',
-        monaco.Uri.parse('json://grid/settings.json')
-    );
-
+    jsonModel = monaco.editor.getModel(monaco.Uri.parse('json://grid/settings.json'));
+    if (!jsonModel) {
+        jsonModel = monaco.editor.createModel(
+            props.modelValue,
+            'json',
+            monaco.Uri.parse('json://grid/settings.json')
+        );
+    } else {
+        jsonModel.setValue(props.modelValue);
+    }
+  
     instance = monaco.editor.create(dom.value, {
         model: jsonModel,
         tabSize: 2,
@@ -46,7 +51,7 @@ onMounted(() => {
     });
 
     instance.onDidChangeModelContent(() => {
-        emit('update:modelValue',  instance.getValue());
+        emit('update:modelValue', instance.getValue());
     });
 });
 
