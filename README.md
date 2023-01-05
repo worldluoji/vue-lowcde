@@ -36,4 +36,4 @@ npm run preview
 cd backend
 go run main.go
 ```
-这里，后端目前仅用来给前端提供假数据
+这里，后端用来保存元数据，和给前端提供假数据。需要安装go和mariadb,并在3308端口启动mariadb.
