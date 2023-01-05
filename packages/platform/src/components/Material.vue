@@ -1,16 +1,7 @@
 <template>
     <div>
-        <!-- <p class="lc-title">组件库</p> -->
         <div v-draggable class="material-icon-list">
-            <div class="material-icon" v-for="it in basicWebComponentsInfo" :data-material="it.name">
-              <img :src="it.icon || defaultIcon" draggable="false"/>
-              <p>{{ it.title }}</p>
-            </div>
-            <div class="material-icon" v-for="it in basicMobileComponentsInfo" :data-material="it.name">
-              <img :src="it.icon || defaultIcon" draggable="false"/>
-              <p>{{ it.title }}</p>
-            </div>
-            <div class="material-icon" v-for="it in containerComponentsInfo" :data-material="`${it.name}-Container`">
+            <div class="material-icon" v-for="it in p.componentsInfo" :data-material="it.name">
               <img :src="it.icon || defaultIcon" draggable="false"/>
               <p>{{ it.title }}</p>
             </div>
@@ -19,8 +10,11 @@
 </template>
 
 <script setup>
-import { basicWebComponentsInfo, basicMobileComponentsInfo, containerComponentsInfo } from '@lowcode/elements';
 import defaultIcon from '@assets/box.png';
+const p = defineProps({
+  componentsInfo: Object
+});
+
 </script>
 
 <style scoped>

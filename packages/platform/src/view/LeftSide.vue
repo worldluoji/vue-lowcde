@@ -5,8 +5,14 @@
         class="left-tabs"
         type="border-card"
       >
-        <el-tab-pane label="组件库">
-          <Material />
+        <el-tab-pane label="PC基础组件">
+          <Material :componentsInfo="basicWebComponentsInfo"/>
+        </el-tab-pane>
+        <el-tab-pane label="移动基础组件">
+          <Material :componentsInfo="basicMobileComponentsInfo"/>
+        </el-tab-pane>
+        <el-tab-pane label="容器组件">
+          <Material :componentsInfo="containerComponentsInfo"/>
         </el-tab-pane>
         <el-tab-pane label="使用帮助">
           使用指南
@@ -16,8 +22,9 @@
   </template>
 
   <script setup>
-  import { ref } from 'vue'
-  import Material from './Material.vue'
+  import { ref } from 'vue';
+  import Material from '../components/Material.vue';
+  import { basicWebComponentsInfo, basicMobileComponentsInfo, containerComponentsInfo } from '@lowcode/elements';
 
   const tabPosition = ref('left')
   </script>
