@@ -36,7 +36,7 @@ export default class DragManager {
     _calPos(e) {
         const { value } = this.ref
         // console.log('pos', e)
-        if (e.target.isDragContent) {
+        if (e.target.isDragContent && this.opData) {
             // console.log('go here')
             // 拖拽到画布里
             const index = value.indexOf(this.opData)
