@@ -10,6 +10,8 @@ import path from 'path';
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 import legacy from '@vitejs/plugin-legacy';
 
+import autoprefixer from 'autoprefixer';
+
 const prefix = `monaco-editor/esm/vs`;
 
 // https://vitejs.dev/config/
@@ -49,6 +51,16 @@ export default ({ mode }) => defineConfig({
           editorWorker: [`${prefix}/editor/editor.worker`]
         }
       }
+    }
+  },
+  css: {
+    postcss: {
+      plugins: [
+        autoprefixer({
+          // 指定目标浏览器
+          overrideBrowserslist: ['last 2 versions and since 2018 and > 0.5%']
+        })
+      ]
     }
   }
 })
