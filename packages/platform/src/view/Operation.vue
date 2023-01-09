@@ -127,7 +127,9 @@ import TopAreaLeft from '../components/TopAreaLeft.vue';
 const props = defineProps({
   content: {
     type: Array,
-    default: () => []
+    default: () => {
+      return [];
+    }
   }
 });
 

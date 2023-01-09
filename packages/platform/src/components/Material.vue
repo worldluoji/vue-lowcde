@@ -19,7 +19,9 @@ import defaultIcon from '@assets/box.png';
 const p = defineProps({
   componentsInfo: {
     type: Object,
-    default: () => {}
+    default: () => {
+      return {};
+    }
   }
 });
 </script>

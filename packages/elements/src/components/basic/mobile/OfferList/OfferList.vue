@@ -21,7 +21,9 @@ const $request = inject('$request');
 const p = defineProps({
   props: {
     type: Object,
-    default: () => {}
+    default: () => {
+      return {};
+    }
   }
 });
 

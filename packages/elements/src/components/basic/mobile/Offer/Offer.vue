@@ -4,7 +4,9 @@ import { Card } from 'vant';
 const p = defineProps({
   props: {
     type: Object,
-    default: () => {}
+    default: () => {
+      return {};
+    }
   },
   className: {
     type: String,

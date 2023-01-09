@@ -2,7 +2,9 @@
 const props = defineProps({
   props: {
     type: Object,
-    default: () => {}
+    default: () => {
+      return {};
+    }
   },
   className: {
     type: String,

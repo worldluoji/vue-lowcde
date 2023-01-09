@@ -22,7 +22,9 @@
 const p = defineProps({
   props: {
     type: Object,
-    default: () => {}
+    default: () => {
+      return {};
+    }
   }
 });
 const data = {
