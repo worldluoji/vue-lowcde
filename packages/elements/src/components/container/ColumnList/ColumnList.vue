@@ -12,7 +12,7 @@
       <template #item="{ element }">
         <div
           v-if="enabled"
-          :class="[{ 'list-group-item': enabled }]"
+          :class="[{ 'list-group-item': enabled, 'list-group-itemr': true }]"
           @click.stop="showPanel(element)"
         >
           <component
@@ -21,7 +21,7 @@
             :eid="element.id"
           />
         </div>
-        <div v-else :class="[{ 'list-group-item': enabled }]">
+        <div v-else class="list-group-itemr">
           <component
             :is="element.name"
             :props="element.props"
@@ -154,5 +154,9 @@ export default {
 
 .list-group-item:hover {
   border: 1px dashed blue;
+}
+
+.list-group-itemr {
+  min-width: 1px;
 }
 </style>
