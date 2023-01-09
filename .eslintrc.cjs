@@ -8,13 +8,17 @@ module.exports = {
   parser: 'vue-eslint-parser',
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module'
+    sourceType: 'module',
+    node: true
   },
   plugins: ['vue', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
     quotes: ['error', 'single'],
-    semi: ['error', 'always']
+    semi: ['error', 'always'],
+    'vue/multi-word-component-names': 'off',
+    'no-undef': 'off',
+    'vue/v-on-event-hyphenation': 'off'
   },
   settings: {
     vue: {

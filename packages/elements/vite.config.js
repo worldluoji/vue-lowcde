@@ -14,10 +14,10 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver()]
     }),
     Components({
-      resolvers: [VantResolver(), ElementPlusResolver()],
+      resolvers: [VantResolver(), ElementPlusResolver()]
     }),
     chunkSplitPlugin({
       customSplitting: {
@@ -26,7 +26,7 @@ export default defineConfig({
     }),
     legacy({
       // 设置目标浏览器，browserslist 配置语法
-      targets: ['last 2 versions and since 2018 and > 0.5%','ie >= 11'],
+      targets: ['last 2 versions and since 2018 and > 0.5%', 'ie >= 11']
     })
   ]
-})
+});

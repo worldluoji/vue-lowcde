@@ -1,10 +1,10 @@
 <template>
-    <div class="outer">
-        <el-button @click="save">保存</el-button>
-        <div class="editor" ref="dom"></div>
-    </div>
+  <div class="outer">
+    <el-button @click="save">保存</el-button>
+    <div ref="dom" class="editor"></div>
+  </div>
 </template>
-  
+
 <script setup>
 import { onMounted, ref, watch, onBeforeUnmount } from 'vue';
 import * as monaco from 'monaco-editor';
@@ -22,7 +22,10 @@ self.MonacoEnvironment = {
 };
 
 const props = defineProps({
-    modelValue: String,
+  modelValue: {
+    type: String,
+    default: ''
+  }
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -33,47 +36,47 @@ let instance;
 let jsModel;
 
 onMounted(() => {
-    jsModel = monaco.editor.createModel(
-        props.modelValue,
-        'javascript',
-        monaco.Uri.parse('ts:filename/facts.d.ts')
-    );
+  jsModel = monaco.editor.createModel(
+    props.modelValue,
+    'javascript',
+    monaco.Uri.parse('ts:filename/facts.d.ts')
+  );
 
-    instance = monaco.editor.create(dom.value, {
-        model: jsModel,
-        tabSize: 2,
-        automaticLayout: true,
-        scrollBeyondLastLine: true,
-        formatOnType: true,
-        formatOnPaste: true
-    });
+  instance = monaco.editor.create(dom.value, {
+    model: jsModel,
+    tabSize: 2,
+    automaticLayout: true,
+    scrollBeyondLastLine: true,
+    formatOnType: true,
+    formatOnPaste: true
+  });
 
-    // instance.onDidChangeModelContent(() => {
-    //     emit('update:modelValue',  instance.getValue());
-    // });
+  // instance.onDidChangeModelContent(() => {
+  //     emit('update:modelValue',  instance.getValue());
+  // });
 });
 
 onBeforeUnmount(() => {
-    instance.dispose();
-    jsModel.dispose();
+  instance.dispose();
+  jsModel.dispose();
 });
 
 watch(props, (newVal) => {
-    if (newVal && newVal.modelValue) {
-        instance.setValue(newVal.modelValue)
-    }
+  if (newVal && newVal.modelValue) {
+    instance.setValue(newVal.modelValue);
+  }
 });
 
 const save = () => {
-    emit('update:modelValue',  instance.getValue());
-}
+  emit('update:modelValue', instance.getValue());
+};
 </script>
-  
+
 <style scoped>
 .editor {
-    height: 100%;
+  height: 100%;
 }
 .outer {
-    height: 100%;
+  height: 100%;
 }
 </style>

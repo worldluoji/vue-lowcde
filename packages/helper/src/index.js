@@ -1,10 +1,9 @@
-
 import atomicManager from './AtomicManager/AtomicManager';
 import dragManager from './dragmanager/dragmanager';
 import UUID from './UUID/uuid';
 import Request from './plugins/request';
 import render from './Render/Render.vue';
-import JavaScriptEditor from './editor/JavaScriptEditor.vue'
+import JavaScriptEditor from './editor/JavaScriptEditor.vue';
 
 export const AtomicManager = atomicManager;
 export const DragManager = dragManager;

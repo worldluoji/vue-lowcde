@@ -1,5 +1,5 @@
 {
-    "name": "Image",
+    "name": "SimpleImage",
     "title": "图片",
     "description": "简单图片组件",
     "type": "basic",

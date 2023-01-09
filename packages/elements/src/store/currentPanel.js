@@ -1,21 +1,21 @@
 import { defineStore } from 'pinia';
 
-const currentPanelStore = defineStore("currentPanel", {
+const currentPanelStore = defineStore('currentPanel', {
   state: () => {
     return {
-      current: {},
+      current: {}
     };
   },
   getters: {
     get(state) {
-      return state.current
-    },
+      return state.current;
+    }
   },
   actions: {
     set(c) {
-      this.current = c
-    },
-  },
+      this.current = c;
+    }
+  }
 });
 
 export default currentPanelStore;

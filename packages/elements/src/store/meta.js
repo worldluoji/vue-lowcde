@@ -30,13 +30,13 @@ import { defineStore } from 'pinia';
 //   return null
 // }
 
-const dfsDepMap = (content, depMap, parent=null) => {
+const dfsDepMap = (content, depMap, parent = null) => {
   for (let e of content) {
-    depMap.set(e.id, {value: e, parent: parent});
-    
+    depMap.set(e.id, { value: e, parent: parent });
+
     // 对象容纳了一个组件,比如Blank
     if (e.props.id) {
-      depMap.set(e.props.id, {value: e.props, parent: e.id});
+      depMap.set(e.props.id, { value: e.props, parent: e.id });
       if (e.props.props && e.props.props.children) {
         dfsDepMap(e.props.props.children, depMap, e.props.id);
       }
@@ -47,7 +47,7 @@ const dfsDepMap = (content, depMap, parent=null) => {
       dfsDepMap(e.props.children, depMap, e.id);
     }
   }
-}
+};
 
 function removeDeps(depMap, eid, removeFirst = true, deps = 0) {
   let { value } = depMap.get(eid);
@@ -60,7 +60,7 @@ function removeDeps(depMap, eid, removeFirst = true, deps = 0) {
   if (removeFirst) {
     depMap.delete(eid);
   }
-  
+
   // 递归将所有儿子从依赖树移除
   if (value.props) {
     if (value.props.children) {
@@ -80,14 +80,14 @@ function removeDeps(depMap, eid, removeFirst = true, deps = 0) {
   }
 }
 
-const metaStore = defineStore("meta", {
+const metaStore = defineStore('meta', {
   state: () => {
     return {
       content: [],
       depMap: new Map(),
       id: 0,
       appPageId: ''
-    }
+    };
   },
   getters: {
     get(state) {
@@ -108,8 +108,8 @@ const metaStore = defineStore("meta", {
   },
   actions: {
     set(c) {
-      this.content = c
-      if (c && (c.length > 0) && (this.depMap.size === 0)) {
+      this.content = c;
+      if (c && c.length > 0 && this.depMap.size === 0) {
         dfsDepMap(this.content, this.depMap);
       }
     },
@@ -123,25 +123,25 @@ const metaStore = defineStore("meta", {
       this.appPageId = id;
     },
     updateProps(currentId, value) {
-      let it = this.depMap.get(currentId).value
+      let it = this.depMap.get(currentId).value;
       // console.log('update', currentId, value, this.depMap)
       if (it) {
-        Object.assign(it.props, value)
+        Object.assign(it.props, value);
       }
     },
     removeChildren(eid, children) {
-      let e = this.depMap.get(eid).value
+      let e = this.depMap.get(eid).value;
       if (e) {
-        let newChildren = []
+        let newChildren = [];
         for (let child of e.props.children) {
           if (!children.has(child.id)) {
-            newChildren.push(child)
+            newChildren.push(child);
           } else {
             // 如果是要删除的节点，就移除依赖
-            this.depMap.delete(child.id)
+            this.depMap.delete(child.id);
           }
         }
-        e.props.children = newChildren
+        e.props.children = newChildren;
       }
     },
     addChildren(eid, children) {
@@ -153,22 +153,25 @@ const metaStore = defineStore("meta", {
         for (let child of children) {
           e.props.children.push(child);
           // 设置依赖关系，方便查找
-          this.depMap.set(child.id, {value: child, parent: eid});
-          
+          this.depMap.set(child.id, { value: child, parent: eid });
+
           // 容器的情况，里面是blank, 要一起加入，否则会出现问题
           if (child.props.id) {
-            this.depMap.set(child.props.id, {value: child.props, parent: child.id});
+            this.depMap.set(child.props.id, {
+              value: child.props,
+              parent: child.id
+            });
           }
         }
       }
     },
     delete(eid) {
-      let {value, parent} = this.depMap.get(eid);
+      let { value, parent } = this.depMap.get(eid);
       if (!value) {
         return;
       }
 
-      let removeFirst = true
+      let removeFirst = true;
 
       // 清空当前节点
       if (parent) {
@@ -177,7 +180,7 @@ const metaStore = defineStore("meta", {
           return;
         }
         if (ele.props.children) {
-          ele.props.children = ele.props.children.filter(c => c.id !== eid)
+          ele.props.children = ele.props.children.filter((c) => c.id !== eid);
           // this.removeChildren(parent, new Set().add(eid));
         }
         // 父节点是Blank容器，置空即可
@@ -187,14 +190,13 @@ const metaStore = defineStore("meta", {
           removeFirst = false;
         }
       } else {
-        this.content = this.content.filter(c => c.id !== eid);
+        this.content = this.content.filter((c) => c.id !== eid);
         // this.depMap.delete(eid);
       }
-      
+
       // 依赖清除
       removeDeps(this.depMap, eid, removeFirst);
       console.log(this.depMap);
-      
     }
   }
 });

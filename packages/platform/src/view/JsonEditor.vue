@@ -1,7 +1,7 @@
 <template>
-    <div class="editor" ref="dom"></div>
+  <div ref="dom" class="editor"></div>
 </template>
-  
+
 <script setup>
 import { onMounted, ref, watch, onBeforeUnmount } from 'vue';
 import * as monaco from 'monaco-editor';
@@ -19,7 +19,10 @@ self.MonacoEnvironment = {
 };
 
 const props = defineProps({
-    modelValue: String,
+  modelValue: {
+    type: String,
+    default: ''
+  }
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -30,45 +33,47 @@ let instance;
 let jsonModel;
 
 onMounted(() => {
-    jsonModel = monaco.editor.getModel(monaco.Uri.parse('json://grid/settings.json'));
-    if (!jsonModel) {
-        jsonModel = monaco.editor.createModel(
-            props.modelValue,
-            'json',
-            monaco.Uri.parse('json://grid/settings.json')
-        );
-    } else {
-        jsonModel.setValue(props.modelValue);
-    }
-  
-    instance = monaco.editor.create(dom.value, {
-        model: jsonModel,
-        tabSize: 2,
-        automaticLayout: true,
-        scrollBeyondLastLine: true,
-        formatOnType: true,
-        formatOnPaste: true
-    });
+  jsonModel = monaco.editor.getModel(
+    monaco.Uri.parse('json://grid/settings.json')
+  );
+  if (!jsonModel) {
+    jsonModel = monaco.editor.createModel(
+      props.modelValue,
+      'json',
+      monaco.Uri.parse('json://grid/settings.json')
+    );
+  } else {
+    jsonModel.setValue(props.modelValue);
+  }
 
-    instance.onDidChangeModelContent(() => {
-        emit('update:modelValue', instance.getValue());
-    });
+  instance = monaco.editor.create(dom.value, {
+    model: jsonModel,
+    tabSize: 2,
+    automaticLayout: true,
+    scrollBeyondLastLine: true,
+    formatOnType: true,
+    formatOnPaste: true
+  });
+
+  instance.onDidChangeModelContent(() => {
+    emit('update:modelValue', instance.getValue());
+  });
 });
 
 onBeforeUnmount(() => {
-    instance.dispose();
-    jsonModel.dispose();
+  instance.dispose();
+  jsonModel.dispose();
 });
 
 watch(props, (newVal) => {
-    if (newVal && newVal.modelValue) {
-        instance.setValue(newVal.modelValue)
-    }
+  if (newVal && newVal.modelValue) {
+    instance.setValue(newVal.modelValue);
+  }
 });
 </script>
-  
+
 <style scoped>
 .editor {
-    height: 100%;
+  height: 100%;
 }
 </style>

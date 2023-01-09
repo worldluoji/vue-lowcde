@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 
-const canvasStore = defineStore("canvas", {
+const canvasStore = defineStore('canvas', {
   state: () => {
     return {
       canvasWidth: '',
       design: false
-    }
+    };
   },
   getters: {
     getWidth(state) {

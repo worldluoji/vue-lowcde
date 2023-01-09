@@ -7,7 +7,8 @@
     "dev": "npm run dev --workspace=platform",
     "build": "npm run build --workspace=platform",
     "preview": "npm run preview --workspace=platform",
-    "lint": "eslint --ext .js,.jsx,.vue ./"
+    "lint": "eslint --ext .js,.jsx,.vue ./",
+    "fix": "eslint --fix --ext .js,.jsx,.vue ./"
   },
   "repository": {
     "type": "git",
