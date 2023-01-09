@@ -16,7 +16,7 @@
       @change="change"
     />
     <br />
-    行宽：<br />
+    行高：<br />
     <input
       v-for="(it, index) in data.row"
       :key="it"
