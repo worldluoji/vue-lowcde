@@ -21,3 +21,10 @@ export const BasicMobileComponentsInfo = {
   OfferInfo,
   OfferListInfo
 };
+
+export const BasicMobileComponents = {
+  SimpleImage,
+  NavBar,
+  Offer,
+  OfferList
+};

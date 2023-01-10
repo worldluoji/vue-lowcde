@@ -9,3 +9,7 @@ import SimpleTableInfo from './SimpleTable/SimpleTable.json';
 export const BasicWebComponentsInfo = {
   SimpleTableInfo
 };
+
+export const BasicWebComponents = {
+  SimpleTable
+};

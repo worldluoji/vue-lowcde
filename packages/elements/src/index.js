@@ -1,19 +1,19 @@
-import BasicWebComponents, {
+import BasicWebComponentsIn, {
   BasicWebComponentsInfo
 } from './components/basic/web';
-import BasicMobileComponents, {
+import BasicMobileComponentsIn, {
   BasicMobileComponentsInfo
 } from './components/basic/mobile';
 import Panels from './panels';
-import ContainerComponents, {
+import ContainerComponentsIn, {
   ContainerComponentsInfo
 } from './components/container';
 import store from './store';
 
 export default {
-  BasicWebComponents,
-  BasicMobileComponents,
-  ContainerComponents,
+  BasicWebComponentsIn,
+  BasicMobileComponentsIn,
+  ContainerComponentsIn,
   Panels
 };
 

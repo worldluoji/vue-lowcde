@@ -14,3 +14,8 @@ export const ContainerComponentsInfo = {
   ColumnListInfo,
   RowListInfo
 };
+
+export const ContainerComponents = {
+  ColumnList,
+  RowList
+};
