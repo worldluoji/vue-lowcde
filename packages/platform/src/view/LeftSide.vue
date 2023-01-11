@@ -22,7 +22,9 @@ import {
   basicMobileComponentsInfo,
   containerComponentsInfo
 } from '@lowcode/elements';
-
+// 以下两行代码演示了远程加载打包后的库组件
+// import { allComponents } from 'http://localhost/origin-elements.js';
+// console.log(123, allComponents);
 const tabPosition = ref('left');
 </script>
 

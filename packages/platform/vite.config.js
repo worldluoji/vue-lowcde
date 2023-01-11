@@ -63,5 +63,10 @@ export default () =>
           })
         ]
       }
-    }
+    },
+    // optimizeDeps: {
+    //   // 配置为一个字符串数组，将 `vue`强制进行预构建
+    //   include: ['vue']
+    // },
+    define: { 'process.env': {} }
   });
