@@ -29,8 +29,13 @@ import {
 import { CustomerComponentsInfo as CustomerComponentsInfoLocal } from '@lowcode/customer';
 
 // 以下两行代码演示了远程加载打包后的库组件
-// import { allComponents } from 'http://localhost/origin-elements.js';
-// console.log(123, allComponents);
+// import { allComponents } from 'http://localhost/origin-elements.js'; 只能导入静态的，不能是变量
+// import { addr } from './test.js';
+// const addr = 'http://localhost/origin-elements.js';
+// const m = import(addr); // 可以是外部导入的变量，返回promise
+// m.then((d) => {
+//   console.log(222, d.allComponents);
+// });
 const tabPosition = ref('left');
 </script>
 
