@@ -18,7 +18,8 @@
     "packages/platform",
     "packages/packer",
     "packages/elements",
-    "packages/helper"
+    "packages/helper",
+    "packages/customer"
   ],
   "keywords": [],
   "author": "",

@@ -51,6 +51,7 @@ import Panel from './Panel.vue';
 import LeftSide from './LeftSide.vue';
 import { metaStore, canvasStore, currentPanelStore } from '@lowcode/elements';
 import { inject } from 'vue';
+import { CustomerComponents as CustomerComponentsLocal } from '@lowcode/customer';
 
 export default {
   name: 'Designer',
@@ -58,7 +59,8 @@ export default {
     draggable,
     Operation,
     Panel,
-    LeftSide
+    LeftSide,
+    ...CustomerComponentsLocal
   },
   data() {
     return {

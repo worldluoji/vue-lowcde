@@ -20,6 +20,15 @@
   </div>
 </template>
 
+<script>
+import { CustomerComponentPanels as CustomerComponentPanelsLocal } from '@lowcode/customer';
+export default {
+  components: {
+    ...CustomerComponentPanelsLocal
+  }
+};
+</script>
+
 <script setup>
 import { ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';

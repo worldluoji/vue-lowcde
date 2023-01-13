@@ -14,7 +14,11 @@
 </template>
 
 <script>
+import { CustomerComponents as CustomerComponentsLocal } from '@lowcode/customer';
 export default {
+  components: {
+    ...CustomerComponentsLocal
+  },
   props: {
     content: {
       type: Array,
