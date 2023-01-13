@@ -31,11 +31,13 @@ import { CustomerComponentsInfo as CustomerComponentsInfoLocal } from '@lowcode/
 // 以下两行代码演示了远程加载打包后的库组件
 // import { allComponents } from 'http://localhost/origin-elements.js'; 只能导入静态的，不能是变量
 // import { addr } from './test.js';
-// const addr = 'http://localhost/origin-elements.js';
-// const m = import(addr); // 可以是外部导入的变量，返回promise
-// m.then((d) => {
-//   console.log(222, d.allComponents);
+// onBeforeMount(async () => {
+//   // TODO 实际这里应该从后端获取，该页面有哪些外部组件需要动态导入
+//   const addr = 'http://localhost/origin-elements.js';
+//   const m = await import(addr); // 可以是外部导入的变量，返回promise
+//   console.log(222, m.allComponents);
 // });
+
 const tabPosition = ref('left');
 </script>
 
