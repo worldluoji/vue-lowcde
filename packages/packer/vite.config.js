@@ -28,7 +28,13 @@ export default defineConfig({
     }),
     legacy({
       // 设置目标浏览器，browserslist 配置语法
-      targets: ['last 2 versions and since 2018 and > 0.5%', 'ie >= 11']
+      targets: [
+        'iOS >= 9',
+        'Android >= 7',
+        'last 2 versions',
+        '> 0.5%',
+        'not dead'
+      ]
     })
   ],
   css: {
@@ -36,7 +42,13 @@ export default defineConfig({
       plugins: [
         autoprefixer({
           // 指定目标浏览器
-          overrideBrowserslist: ['last 2 versions and since 2018 and > 0.5%']
+          overrideBrowserslist: [
+            'iOS >= 9',
+            'Android >= 7',
+            'last 2 versions',
+            '> 0.5%',
+            'not dead'
+          ]
         })
       ]
     }
