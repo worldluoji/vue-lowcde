@@ -81,7 +81,8 @@ const hideBorder = () => {
   height: v-bind('props.height || "100px"');
   background-color: v-bind('props.backgroundColor');
   .child {
-    position: relative;
+    position: absolute;
+    width: 100%;
   }
 }
 </style>
