@@ -165,6 +165,24 @@ const metaStore = defineStore('meta', {
         }
       }
     },
+    setChildren(eid, children) {
+      let e = this.depMap.get(eid).value;
+      if (e) {
+        e.props.children = children;
+        for (let child of children) {
+          // 设置依赖关系，方便查找
+          this.depMap.set(child.id, { value: child, parent: eid });
+
+          // 容器的情况，里面是blank, 要一起加入，否则会出现问题
+          if (child.props.id) {
+            this.depMap.set(child.props.id, {
+              value: child.props,
+              parent: child.id
+            });
+          }
+        }
+      }
+    },
     delete(eid) {
       let { value, parent } = this.depMap.get(eid);
       if (!value) {

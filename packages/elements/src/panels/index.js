@@ -6,6 +6,7 @@ import ColumnListPanel from './ColumnList/ColumnListPanel.vue';
 import RowListPanel from './RowList/RowListPanel.vue';
 import AtomicAttributeBox from './AtomicAttribute/AtomicAttributeBox.vue';
 import SimpleTablePanel from './SimpleTable/SimpleTablePanel.vue';
+import RelativeContainerPanel from './RelativeContainer/RelativeContainerPanel.vue';
 
 export default (Vue) => {
   Vue.component('SimpleImagePanel', SimpleImagePanel);
@@ -16,4 +17,5 @@ export default (Vue) => {
   Vue.component('RowListPanel', RowListPanel);
   Vue.component('AtomicAttributeBox', AtomicAttributeBox);
   Vue.component('SimpleTablePanel', SimpleTablePanel);
+  Vue.component('RelativeContainerPanel', RelativeContainerPanel);
 };

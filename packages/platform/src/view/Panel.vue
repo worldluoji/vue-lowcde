@@ -1,22 +1,24 @@
 <template>
   <div v-if="current && current.id" class="panel">
-    <component
-      :is="`${current.name}Panel`"
-      :key="current.id"
-      :props="panelProps"
-      @change="change"
-    ></component>
-    <hr />
-    <AtomicAttributeBox :props="panelProps.atomicAttrs" @change="change" />
-    <hr />
-    <el-button @click="save">保存</el-button>
-    <el-button @click="cancel">取消</el-button>
-    <el-button
-      v-show="current.name !== 'Blank'"
-      type="danger"
-      @click="deleteComponent"
-      >删除</el-button
-    >
+    <el-scrollbar height="80vh">
+      <component
+        :is="`${current.name}Panel`"
+        :key="current.id"
+        :props="panelProps"
+        @change="change"
+      ></component>
+      <hr />
+      <AtomicAttributeBox :props="panelProps.atomicAttrs" @change="change" />
+      <hr />
+      <el-button @click="save">保存</el-button>
+      <el-button @click="cancel">取消</el-button>
+      <el-button
+        v-show="current.name !== 'Blank'"
+        type="danger"
+        @click="deleteComponent"
+        >删除</el-button
+      >
+    </el-scrollbar>
   </div>
 </template>
 

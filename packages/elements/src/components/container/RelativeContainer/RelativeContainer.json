@@ -1,0 +1,8 @@
+{
+    "name": "RelativeContainer",
+    "title": "相对容器",
+    "description": "相对布局容器",
+    "type": "container",
+    "icon": "",
+    "platforms": ["web", "mobile"]
+}
