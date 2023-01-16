@@ -74,15 +74,14 @@ const hideBorder = () => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .container-parent {
   position: relative;
   width: 100%;
   height: v-bind('props.height || "100px"');
   background-color: v-bind('props.backgroundColor');
-}
-
-.child {
-  position: relative;
+  .child {
+    position: relative;
+  }
 }
 </style>
