@@ -44,7 +44,10 @@ const p = defineProps({
   clear: both;
 }
 .material-icon {
-  float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .material-icon p {
   font-size: 16px;
