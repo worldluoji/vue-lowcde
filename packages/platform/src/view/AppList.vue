@@ -60,7 +60,6 @@ const addNewApp = async () => {
     name: form.name,
     desc: form.desc
   });
-  console.log(res);
   if (res.id) {
     ElMessage({
       message: '添加成功',

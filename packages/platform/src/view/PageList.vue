@@ -52,7 +52,6 @@ const pageList = ref([]);
 const route = useRoute();
 const appId = route.query.appId;
 onBeforeMount(async () => {
-  console.log('appId', appId);
   if (appId) {
     const res = await $request.get(`/v1/page/list?appId=${appId}`);
     pageList.value = res;
