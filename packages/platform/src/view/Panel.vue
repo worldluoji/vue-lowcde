@@ -1,24 +1,44 @@
 <template>
   <div v-if="current && current.id" class="panel">
-    <el-scrollbar height="80vh">
-      <component
-        :is="`${current.name}Panel`"
-        :key="current.id"
-        :props="panelProps"
-        @change="change"
-      ></component>
-      <hr />
-      <AtomicAttributeBox :props="panelProps.atomicAttrs" @change="change" />
-      <hr />
-      <el-button @click="save">保存</el-button>
-      <el-button @click="cancel">取消</el-button>
-      <el-button
-        v-show="current.name !== 'Blank'"
-        type="danger"
-        @click="deleteComponent"
-        >删除</el-button
-      >
-    </el-scrollbar>
+    <el-tabs v-model="activeName" type="card" class="panel-tabs">
+      <el-tab-pane label="属性" name="first">
+        <el-scrollbar height="70vh">
+          <component
+            :is="`${current.name}Panel`"
+            :key="current.id"
+            :props="panelProps"
+            @change="change"
+          ></component>
+          <div class="btn-group">
+            <el-button @click="save">保存</el-button>
+            <el-button @click="cancel">取消</el-button>
+            <el-button
+              v-show="current.name !== 'Blank'"
+              type="danger"
+              @click="deleteComponent"
+              >删除</el-button
+            >
+          </div>
+        </el-scrollbar>
+      </el-tab-pane>
+      <el-tab-pane label="样式" name="second">
+        <el-scrollbar height="70vh">
+          <AtomicAttributeBox
+            :props="panelProps.atomicAttrs"
+            @change="change"
+          />
+          <div class="btn-group">
+            <el-button @click="cancel">取消</el-button>
+            <el-button
+              v-show="current.name !== 'Blank'"
+              type="danger"
+              @click="deleteComponent"
+              >删除</el-button
+            >
+          </div>
+        </el-scrollbar>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
@@ -89,6 +109,8 @@ const deleteComponent = () => {
       });
   }
 };
+
+const activeName = ref('first');
 </script>
 
 <style scoped>
@@ -105,5 +127,16 @@ const deleteComponent = () => {
   border-bottom: 0;
   padding: 12px;
   z-index: 10;
+}
+
+.panel-tabs > .el-tabs__content {
+  padding: 32px;
+  color: #6b778c;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.btn-group {
+  margin-top: 20px;
 }
 </style>
