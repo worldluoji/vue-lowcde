@@ -107,9 +107,10 @@ const metaStore = defineStore('meta', {
     }
   },
   actions: {
-    set(c) {
+    set(c, force = false) {
       this.content = c;
-      if (c && c.length > 0 && this.depMap.size === 0) {
+      if (force || (c && c.length > 0 && this.depMap.size === 0)) {
+        this.depMap = new Map();
         dfsDepMap(this.content, this.depMap);
       }
     },
@@ -214,7 +215,6 @@ const metaStore = defineStore('meta', {
 
       // 依赖清除
       removeDeps(this.depMap, eid, removeFirst);
-      console.log(this.depMap);
     }
   }
 });

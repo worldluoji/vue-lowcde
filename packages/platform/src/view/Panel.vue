@@ -43,6 +43,7 @@ const panelProps = ref({});
 
 watch(current, (newVal) => {
   let element = meta.getElementById(newVal.id);
+  console.log(111, element);
   if (element && element.value) {
     panelProps.value = element.value.props;
   }

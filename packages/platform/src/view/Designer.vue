@@ -92,7 +92,7 @@ export default {
         this.meta.setId(res.id);
         this.meta.setAppPageId(realAppPageId);
         if (res.content) {
-          this.meta.set(JSON.parse(res.content));
+          this.meta.set(JSON.parse(res.content), true);
         }
       }
     }
