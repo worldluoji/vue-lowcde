@@ -28,7 +28,9 @@ export default () =>
       chunkSplitPlugin({
         customSplitting: {
           'vue-vendor': ['vue', 'vue-router', 'pinia'],
-          'utils-vendor': ['throttle-debounce', 'vuedraggable']
+          'utils-vendor': ['throttle-debounce', 'vuedraggable'],
+          'elementplus-vendor': ['element-plus'],
+          'vant-vendor': ['vant']
         }
       }),
       legacy({
