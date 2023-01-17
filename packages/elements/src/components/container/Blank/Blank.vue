@@ -13,8 +13,9 @@
 
 <script>
 import { canvasStore, currentPanelStore } from '@lowcode/elements';
+import { CustomerComponents as CustomerComponentsLocal } from '@lowcode/customer';
 export default {
-  components: {},
+  components: { ...CustomerComponentsLocal },
   props: {
     props: {
       type: Object,

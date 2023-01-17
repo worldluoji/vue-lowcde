@@ -2,7 +2,7 @@
   <div class="BlankPanel">
     请选择组件:
     <select v-model="data.element" @change="change">
-      <option v-for="item in componentList" :key="item.name" :value="item.name">
+      <option v-for="item in allComponents" :key="item.name" :value="item.name">
         {{ item.title }}
       </option>
     </select>
@@ -11,6 +11,8 @@
 
 <script setup>
 import componentList from '../../components/components.js';
+import { CustomerComponentsInfo } from '@lowcode/customer';
+const allComponents = { ...componentList, ...CustomerComponentsInfo };
 const p = defineProps({
   props: {
     type: Object,
