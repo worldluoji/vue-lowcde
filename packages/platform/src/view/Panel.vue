@@ -42,28 +42,22 @@ const current = currentPanel.get;
 const panelProps = ref({});
 
 watch(current, (newVal) => {
-  // console.log(111, newVal)
   let element = meta.getElementById(newVal.id);
-  // console.log('new', p.currentId)
   if (element && element.value) {
     panelProps.value = element.value.props;
-    // console.log(222, panelProps.value)
   }
 });
 
 const change = (p) => {
-  // console.log('before change', p)
   if (p.atomicAttrs) {
     delete panelProps.value.atomicAttrs;
     panelProps.value.atomicAttrs = p.atomicAttrs;
   } else {
     Object.assign(panelProps.value, p);
   }
-  // console.log('after change', panelProps.value)
 };
 
 const save = () => {
-  // console.log(111, panelProps.value, current)
   meta.updateProps(current.value.id, panelProps.value);
 };
 
