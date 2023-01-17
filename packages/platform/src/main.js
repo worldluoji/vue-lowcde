@@ -18,6 +18,7 @@ createApp(App)
       el.draggable = true;
     });
     el.addEventListener('dragstart', (e) => dragManager.dragstart(e));
+    el.addEventListener('click', (e) => dragManager.click(e));
   })
   .directive('dragcontent', (el, binding) => {
     // 监听了dragover 和 drop

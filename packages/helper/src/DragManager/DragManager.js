@@ -99,4 +99,34 @@ export default class DragManager {
     // 拖拽结束后清空opData
     this.opData = {};
   }
+
+  click(e) {
+    let current = e.target.dataset.material;
+    if (!current) {
+      current = e.target.parentNode.dataset.material;
+      if (!current) {
+        return;
+      }
+    }
+    this.current = current;
+    this.opData = {
+      id: uuid(),
+      name: this.current,
+      type: 'Basic',
+      props: {},
+      state: 2
+    };
+
+    // 容器，设置默认值，后续可通过配置面板修改
+    if (this.current.endsWith('-Container')) {
+      this.opData.name = this.current.split('-')[0];
+      this.opData.type = 'Container';
+      this.opData.props = {
+        children: []
+      };
+    }
+    this.ref.value.push(this.opData);
+    this.depMap.value.set(this.opData.id, { value: this.opData });
+    this.opData = {};
+  }
 }
