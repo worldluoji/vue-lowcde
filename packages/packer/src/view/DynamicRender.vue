@@ -17,7 +17,12 @@ import { onBeforeMount, inject, ref, watch } from 'vue';
 import { Render } from '@lowcode/helper';
 import { useRouter } from 'vue-router';
 const $request = inject('$request');
-const p = defineProps(['pageId']);
+const p = defineProps({
+  pageId: {
+    type: String,
+    default: ''
+  }
+});
 
 const content = ref([]);
 const updateData = async (pageId) => {
