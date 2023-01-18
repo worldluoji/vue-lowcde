@@ -7,13 +7,15 @@ async function get(url) {
   const res = await fetch(BASE_URL + url, {
     method: 'GET'
   })
-    .then((response) => response.json())
-    .catch((e) => {
-      if (e.errorMessage) {
-        ElMessageBox.alert(e.errorMessage, '提示', {});
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
       } else {
-        ElMessageBox.alert('网络忙，请稍后再试', '提示', {});
+        throw new Error(response.statusText);
       }
+    })
+    .catch(() => {
+      ElMessageBox.alert('网络忙，请稍后再试', '提示', {});
     });
   return res;
 }
@@ -28,13 +30,15 @@ async function post(url, params) {
       'Content-type': 'application/json; charset=UTF-8'
     }
   })
-    .then((response) => response.json())
-    .catch((e) => {
-      if (e.errorMessage) {
-        ElMessageBox.alert(e.errorMessage, '提示', {});
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
       } else {
-        ElMessageBox.alert('网络忙，请稍后再试', '提示', {});
+        throw new Error(response.statusText);
       }
+    })
+    .catch(() => {
+      ElMessageBox.alert('网络忙，请稍后再试', '提示', {});
     });
   return res;
 }
