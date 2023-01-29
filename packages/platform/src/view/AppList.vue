@@ -7,7 +7,7 @@
       <el-main>
         <div class="app-list">
           <div v-for="app in appList" :key="app.id">
-            <el-card shadow="hover" @click="toPageList(app.id)">
+            <el-card shadow="hover" @click="toPageList(app.id, app.name)">
               <div class="app-info">
                 <svg
                   t="1674961107803"
@@ -105,8 +105,8 @@ const addNewApp = async () => {
 };
 
 const router = useRouter();
-const toPageList = (appId) => {
-  router.push({ path: '/pagelist', query: { appId: appId } });
+const toPageList = (appId, appName) => {
+  router.push({ path: '/pagelist', query: { appId: appId, appName: appName } });
 };
 </script>
 

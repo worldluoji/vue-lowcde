@@ -2,7 +2,10 @@
   <div>
     <el-container>
       <el-header>
-        <Header />
+        <div class="top">
+          <TopAreaLeft />
+          <h1>应用-{{ appName }}</h1>
+        </div>
       </el-header>
       <el-main>
         <div class="page-list">
@@ -69,11 +72,12 @@
 <script setup>
 import { onBeforeMount, ref, inject, reactive } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import Header from '../components/Header.vue';
+import TopAreaLeft from '../components/TopAreaLeft.vue';
 const $request = inject('$request');
 const pageList = ref([]);
 const route = useRoute();
 const appId = route.query.appId;
+const appName = route.query.appName;
 onBeforeMount(async () => {
   if (appId) {
     const res = await $request.get(`/v1/page/list?appId=${appId}`);
@@ -120,7 +124,13 @@ const handleDelete = (pageId) => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.top {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
 .page-list {
   display: flex;
   justify-content: center;
