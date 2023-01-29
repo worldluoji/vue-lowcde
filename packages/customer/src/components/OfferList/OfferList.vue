@@ -14,8 +14,6 @@
 
 <script setup>
 import { inject, watchEffect, ref } from 'vue';
-// eslint-disable-next-line no-unused-vars
-import { Card } from 'vant';
 const $request = inject('$request');
 
 const p = defineProps({

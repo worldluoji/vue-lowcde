@@ -1,6 +1,4 @@
 <script setup>
-// eslint-disable-next-line no-unused-vars
-import { Card } from 'vant';
 const p = defineProps({
   props: {
     type: Object,

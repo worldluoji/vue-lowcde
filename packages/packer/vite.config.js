@@ -16,7 +16,7 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
-      resolvers: [ElementPlusResolver()]
+      resolvers: [VantResolver(), ElementPlusResolver()]
     }),
     Components({
       resolvers: [VantResolver(), ElementPlusResolver()]

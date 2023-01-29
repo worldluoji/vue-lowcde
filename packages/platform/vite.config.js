@@ -20,7 +20,7 @@ export default () =>
     plugins: [
       vue(),
       AutoImport({
-        resolvers: [ElementPlusResolver()]
+        resolvers: [VantResolver(), ElementPlusResolver()]
       }),
       Components({
         resolvers: [VantResolver(), ElementPlusResolver()]
