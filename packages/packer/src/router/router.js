@@ -7,23 +7,61 @@ const router = createRouter({
   routes
 });
 
-// 模拟从后端加载首页数据, 实际应该通过appId从后端获取。这里实际可以把所有路由都加载了，后续就不用再动态加，只用处理跳转登陆逻辑（权限控制）
-const getHost = async () => {
-  return new Promise((reslove) => {
-    reslove({ path: '/', name: 'home', pageId: 3 });
-  });
-};
+async function get(url) {
+  const res = await fetch(url, {
+    method: 'GET'
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(response.statusText);
+      }
+    })
+    .catch(() => {
+      ElMessageBox.alert('网络忙，请稍后再试', '提示', {});
+    });
+  return res;
+}
 
-const host = await getHost();
-// console.log(111, host);
-if (host) {
+const siteMeta = await get('./config.json');
+// console.log('siteMeta', siteMeta);
+if (!siteMeta) {
+  throw new Error('config不能为空');
+}
+
+// 获取appId
+let appId = siteMeta.appId;
+// console.log('appid', appId);
+if (!appId) {
+  throw new Error('appId为空');
+}
+
+const BASE_URL = `${import.meta.env.VITE_BASE_API_URL}`;
+const routeRes = await get(`${BASE_URL}/v1/page/list?appId=${appId}`);
+console.log('routeRes', routeRes);
+
+// 通过appId从后端获取路由。这里实际可以把所有路由都加载了，后续就不用再动态加，只用处理跳转登陆逻辑（权限控制）
+if (routeRes && routeRes.length > 0) {
+  for (let r of routeRes) {
+    router.addRoute({
+      path: r.path,
+      name: r.name,
+      component: () => import('../view/DynamicRender.vue'),
+      props: { pageId: r.id + '' }
+    });
+  }
+
+  // 默认第一个为根路由
+  let r = routeRes[0];
   router.addRoute({
-    path: host.path,
-    name: host.name,
+    path: '/',
     component: () => import('../view/DynamicRender.vue'),
-    props: { pageId: host.pageId }
+    props: { pageId: r.id + '' }
   });
 }
+
+// console.log('router', router.getRoutes());
 
 const generateRoute = (to, name) => {
   return {
@@ -36,7 +74,7 @@ const generateRoute = (to, name) => {
 
 router.beforeEach((to) => {
   // console.log(111, to.name, to.fullPath, to.path);
-  console.log(router.getRoutes());
+  // console.log(router.getRoutes());
   let name = to.name;
   if (!name) {
     // 如果已经是'/'直接返回了

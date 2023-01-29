@@ -43,11 +43,11 @@ watch(p, (newVal) => {
 
 const router = useRouter();
 const test = () => {
-  console.log(p.pageId);
+  // console.log(p.pageId);
   if (p.pageId == 2) {
-    router.push({ path: '/first', query: { pageId: 3 } });
+    router.push({ name: 'test1', query: { pageId: 3 } });
   } else {
-    router.push({ path: '/second', query: { pageId: 2 } });
+    router.push({ path: 'home', query: { pageId: 2 } });
   }
 };
 </script>
