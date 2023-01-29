@@ -7,18 +7,21 @@
     @select="handleSelect"
   >
     <TopAreaLeft />
-    <el-menu-item index="0" disabled>首页</el-menu-item>
-    <el-menu-item index="1">应用列表</el-menu-item>
-    <el-menu-item index="2" disabled>帮助</el-menu-item>
+    <el-menu-item index="/">应用列表</el-menu-item>
+    <el-menu-item index="/help" disabled>帮助</el-menu-item>
   </el-menu>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import TopAreaLeft from './TopAreaLeft.vue';
-const activeIndex = ref('1');
-const handleSelect = (key, keyPath) => {
-  console.log(key, keyPath);
+const activeIndex = ref('/');
+const router = useRouter();
+const handleSelect = (key) => {
+  // console.log(key, keyPath);
+  activeIndex.value = key;
+  router.push({ path: key });
 };
 </script>
 

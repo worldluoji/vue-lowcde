@@ -1,5 +1,5 @@
 <template>
-  <div class="top-area-left">
+  <div class="top-area-left" @click="toAppList">
     <div class="lowcode-plugin-logo">
       <svg
         width="36"
@@ -21,10 +21,21 @@
   </div>
 </template>
 
-<style scoped>
+<script setup>
+import { useRouter } from 'vue-router';
+const router = useRouter();
+const toAppList = () => {
+  router.push({ path: '/' });
+};
+</script>
+
+<style lang="scss" scoped>
 .top-area-left {
   display: flex;
   align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .lowcode-plugin-logo {
@@ -32,12 +43,12 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  width: 300px;
   row-gap: 2px;
 }
 
 .font {
   font-size: 1.7rem;
   font-weight: 800;
+  margin-right: 100px;
 }
 </style>

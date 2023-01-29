@@ -74,7 +74,7 @@ const $request = inject('$request');
 const appList = ref([]);
 onBeforeMount(async () => {
   const res = await $request.get('/v1/app/list');
-  console.log(res);
+  // console.log(res);
   appList.value = res;
 });
 const dialogNewAppVisible = ref(false);
