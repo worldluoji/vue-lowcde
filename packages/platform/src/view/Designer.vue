@@ -149,7 +149,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
 .el-main {
   display: flex;
   align-items: center;
