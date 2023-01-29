@@ -6,12 +6,35 @@
       </el-header>
       <el-main>
         <div class="page-list">
-          <div v-for="page in pageList" :key="page.id">
-            <el-card shadow="hover" @click="toDesigner(page.id)">
-              <p>{{ page.name }}</p>
-              <p>{{ page.path }}</p>
-            </el-card>
-          </div>
+          <el-table :data="pageList" stripe style="width: 100%">
+            <el-table-column type="index" width="100" />
+            <el-table-column prop="name" label="页面名称" width="180" />
+            <el-table-column prop="path" label="页面路由" width="180" />
+            <el-table-column prop="desc" label="页面描述" width="180" />
+            <el-table-column label="操作">
+              <template #default="scope">
+                <el-button size="small" @click="toDesigner(scope.row.id)"
+                  >编辑</el-button
+                >
+                <el-popconfirm
+                  :title="`确认删除页面${scope.row.name}吗？`"
+                  confirm-button-text="确认"
+                  cancel-button-text="取消"
+                  width="220"
+                  confirm-button-type="danger"
+                >
+                  <template #reference>
+                    <el-button
+                      size="small"
+                      type="danger"
+                      @click="handleDelete(scope.row.id)"
+                      >删除</el-button
+                    >
+                  </template>
+                </el-popconfirm>
+              </template>
+            </el-table-column>
+          </el-table>
         </div>
         <div class="newPage">
           <el-button @click="dialogNewPageVisible = true">+</el-button>
@@ -91,6 +114,10 @@ const router = useRouter();
 const toDesigner = (pageId) => {
   router.push({ path: '/designer', query: { appId: appId, pageId: pageId } });
 };
+const handleDelete = (pageId) => {
+  // TODO
+  console.log(pageId);
+};
 </script>
 
 <style scoped>
@@ -101,15 +128,6 @@ const toDesigner = (pageId) => {
   flex-wrap: wrap;
   gap: 20px;
   margin-top: 30px;
-}
-
-.el-card {
-  text-align: center;
-  height: 130px;
-  width: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .newPage {
