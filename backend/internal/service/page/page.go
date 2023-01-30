@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 
 	"backend/internal/model/page"
 	"backend/internal/utils"
@@ -31,10 +32,14 @@ func NewPageHandler() *PageHandler {
 	}
 }
 
-func (u *PageHandler) GetPagesByAppId(c *gin.Context) {
-	db := utils.GetDB()
-	db.AutoMigrate(&PagePO{})
+var db *gorm.DB
 
+func init() {
+	db = utils.GetDB()
+	db.AutoMigrate(&PagePO{})
+}
+
+func (u *PageHandler) GetPagesByAppId(c *gin.Context) {
 	appId, ok := c.GetQuery("appId")
 	if !ok {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "fail to get appId"})
@@ -66,8 +71,6 @@ func (u *PageHandler) CreatePage(c *gin.Context) {
 		return
 	}
 
-	db := utils.GetDB()
-
 	page := &PagePO{}
 	page.Name = pageVO.Name
 	page.Path = pageVO.Path
@@ -92,7 +95,6 @@ func (u *PageHandler) DeletePage(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": fmt.Errorf("failed to get param")})
 		return
 	}
-	db := utils.GetDB()
 	if err := db.Where("id = ?", id).Delete(&PagePO{}).Error; err != nil {
 		log.Printf("Delete page error: %v", err)
 		c.JSON(http.StatusOK, "failed")

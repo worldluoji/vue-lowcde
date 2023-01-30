@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 
 	"backend/internal/model/app"
 	"backend/internal/utils"
@@ -31,9 +32,14 @@ func NewAppHandler() *AppHandler {
 	}
 }
 
-func (u *AppHandler) GetAppList(c *gin.Context) {
-	db := utils.GetDB()
+var db *gorm.DB
+
+func init() {
+	db = utils.GetDB()
 	db.AutoMigrate(&AppPO{})
+}
+
+func (u *AppHandler) GetAppList(c *gin.Context) {
 	var apps []AppPO
 	if err := db.Find(&apps).Error; err != nil {
 		log.Fatalf("Get product error: %v", err)
@@ -59,8 +65,6 @@ func (u *AppHandler) CreateApp(c *gin.Context) {
 		return
 	}
 
-	db := utils.GetDB()
-
 	app := &AppPO{}
 	app.Name = appVO.Name
 	app.Desc = appVO.Desc
@@ -83,7 +87,6 @@ func (u *AppHandler) DeleteApp(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": fmt.Errorf("failed to get param")})
 		return
 	}
-	db := utils.GetDB()
 	if err := db.Where("id = ?", id).Delete(&AppPO{}).Error; err != nil {
 		log.Printf("Delete app error: %v", err)
 		c.JSON(http.StatusOK, "failed")

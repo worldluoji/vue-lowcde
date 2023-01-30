@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 
 	"backend/internal/model/meta"
 	"backend/internal/utils"
@@ -30,10 +31,14 @@ func NewMetaHandler() *MetaHandler {
 	}
 }
 
-func (u *MetaHandler) GetMetaByPageId(c *gin.Context) {
-	db := utils.GetDB()
-	db.AutoMigrate(&MetaPO{})
+var db *gorm.DB
 
+func init() {
+	db = utils.GetDB()
+	db.AutoMigrate(&MetaPO{})
+}
+
+func (u *MetaHandler) GetMetaByPageId(c *gin.Context) {
 	pageId, ok := c.GetQuery("pageId")
 	if !ok {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "fail to get pageId"})
@@ -59,8 +64,6 @@ func (u *MetaHandler) CreateOrUpdateMeta(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	db := utils.GetDB()
 
 	meta := &MetaPO{}
 	meta.Content = metaVO.Content
