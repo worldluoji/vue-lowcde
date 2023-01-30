@@ -16,7 +16,7 @@
   },
   "workspaces": [
     "packages/platform",
-    "packages/packer",
+    "packages/runtime",
     "packages/elements",
     "packages/helper",
     "packages/customer"
