@@ -9,23 +9,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+
+	"backend/internal/model/page"
 )
 
-type PageVO struct {
-	ID    uint   `json:"id"`
-	Name  string `json:"name" binding:"required"`
-	Path  string `json:"path" binding:"required"`
-	Desc  string `json:"desc"`
-	AppID uint   `json:"appId"`
-}
+type PageVO page.PageVO
 
-type PagePO struct {
-	gorm.Model
-	Name  string `gorm:"column:name"`
-	Path  string `gorm:"column:path"`
-	Desc  string `gorm:"column:desc"`
-	AppID uint   `gorm:"column:appId"`
-}
+type PagePO page.PagePO
 
 // TableName maps to mysql table name.
 func (p *PagePO) TableName() string {

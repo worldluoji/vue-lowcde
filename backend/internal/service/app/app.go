@@ -9,19 +9,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+
+	"backend/internal/model/app"
 )
 
-type AppVO struct {
-	ID   uint   `json:"id"`
-	Name string `json:"name" binding:"required"`
-	Desc string `json:"desc"`
-}
+type AppVO app.AppVO
 
-type AppPO struct {
-	gorm.Model
-	Name string `gorm:"column:name"`
-	Desc string `gorm:"column:desc"`
-}
+type AppPO app.AppPO
 
 // TableName maps to mysql table name.
 func (p *AppPO) TableName() string {

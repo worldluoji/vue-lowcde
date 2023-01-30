@@ -9,19 +9,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+
+	"backend/internal/model/meta"
 )
 
-type MetaVO struct {
-	ID      uint   `json:"id"`
-	Content string `json:"content"`
-	PageID  uint   `json:"pageId"`
-}
+type MetaVO meta.MetaVO
 
-type MetaPO struct {
-	gorm.Model
-	Content string `gorm:"column:content"`
-	PageID  uint   `gorm:"column:pageId"`
-}
+type MetaPO meta.MetaPO
 
 // TableName maps to mysql table name.
 func (p *MetaPO) TableName() string {
