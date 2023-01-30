@@ -1,16 +1,14 @@
 package meta
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 
 	"backend/internal/model/meta"
+	"backend/internal/utils"
 )
 
 type MetaVO meta.MetaVO
@@ -32,23 +30,8 @@ func NewMetaHandler() *MetaHandler {
 	}
 }
 
-func GetDB() *gorm.DB {
-	dns := fmt.Sprintf(`%s:%s@tcp(%s)/%s?charset=utf8&parseTime=%t&loc=%s`,
-		"root",
-		"199114",
-		"localhost:3308",
-		"lowcode",
-		true,
-		"Local")
-	db, err := gorm.Open(mysql.Open(dns), &gorm.Config{})
-	if err != nil {
-		log.Fatalf("failed to connect database: %v", err)
-	}
-	return db
-}
-
 func (u *MetaHandler) GetMetaByPageId(c *gin.Context) {
-	db := GetDB()
+	db := utils.GetDB()
 	db.AutoMigrate(&MetaPO{})
 
 	pageId, ok := c.GetQuery("pageId")
@@ -77,7 +60,7 @@ func (u *MetaHandler) CreateOrUpdateMeta(c *gin.Context) {
 		return
 	}
 
-	db := GetDB()
+	db := utils.GetDB()
 
 	meta := &MetaPO{}
 	meta.Content = metaVO.Content

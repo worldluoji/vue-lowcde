@@ -7,10 +7,9 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 
 	"backend/internal/model/app"
+	"backend/internal/utils"
 )
 
 type AppVO app.AppVO
@@ -32,23 +31,8 @@ func NewAppHandler() *AppHandler {
 	}
 }
 
-func GetDB() *gorm.DB {
-	dns := fmt.Sprintf(`%s:%s@tcp(%s)/%s?charset=utf8&parseTime=%t&loc=%s`,
-		"root",
-		"199114",
-		"localhost:3308",
-		"lowcode",
-		true,
-		"Local")
-	db, err := gorm.Open(mysql.Open(dns), &gorm.Config{})
-	if err != nil {
-		log.Fatalf("failed to connect database: %v", err)
-	}
-	return db
-}
-
 func (u *AppHandler) GetAppList(c *gin.Context) {
-	db := GetDB()
+	db := utils.GetDB()
 	db.AutoMigrate(&AppPO{})
 	var apps []AppPO
 	if err := db.Find(&apps).Error; err != nil {
@@ -75,7 +59,7 @@ func (u *AppHandler) CreateApp(c *gin.Context) {
 		return
 	}
 
-	db := GetDB()
+	db := utils.GetDB()
 
 	app := &AppPO{}
 	app.Name = appVO.Name
@@ -99,7 +83,7 @@ func (u *AppHandler) DeleteApp(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": fmt.Errorf("failed to get param")})
 		return
 	}
-	db := GetDB()
+	db := utils.GetDB()
 	if err := db.Where("id = ?", id).Delete(&AppPO{}).Error; err != nil {
 		log.Printf("Delete app error: %v", err)
 		c.JSON(http.StatusOK, "failed")
