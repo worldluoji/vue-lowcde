@@ -8,6 +8,8 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 
 import { resolve } from 'path';
 
+import autoprefixer from 'autoprefixer';
+
 // https://vitejs.dev/config/
 export default ({ mode }) =>
   defineConfig({
@@ -43,5 +45,21 @@ export default ({ mode }) =>
       Components({
         resolvers: [VantResolver(), ElementPlusResolver()]
       })
-    ]
+    ],
+    css: {
+      postcss: {
+        plugins: [
+          autoprefixer({
+            // 指定目标浏览器
+            overrideBrowserslist: [
+              'iOS >= 9',
+              'Android >= 7',
+              'last 2 versions',
+              '> 0.5%',
+              'not dead'
+            ]
+          })
+        ]
+      }
+    }
   });
