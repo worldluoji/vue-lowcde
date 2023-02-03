@@ -17,8 +17,12 @@ export default ({ mode }) =>
         entry: resolve(__dirname, 'src/index.js'),
         name: loadEnv(mode, process.cwd()).VITE_PACKAGE_NAME,
         // the proper extensions will be added
-        fileName: loadEnv(mode, process.cwd()).VITE_PACKAGE_NAME
-      }
+        fileName: loadEnv(mode, process.cwd()).VITE_PACKAGE_NAME,
+        formats: ['es']
+      },
+      outDir: `dist/${loadEnv(mode, process.cwd()).VITE_PACKAGE_NAME}/${
+        loadEnv(mode, process.cwd()).VITE_PACKAGE_VERSION
+      }`
       // rollupOptions: {
       //   // 确保外部化处理那些你不想打包进库的依赖
       //   external: ['vue'],
