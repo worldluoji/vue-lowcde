@@ -9,7 +9,8 @@
     "preview": "npm run preview --workspace=platform",
     "lint": "eslint --ext .js,.jsx,.vue ./",
     "fix": "eslint --fix --ext .js,.jsx,.vue ./",
-    "build:comp": "npm run build --workspace=@lowcode/customer"
+    "build:comp": "npm run build --workspace=@lowcode/customer",
+    "build:engine": "npm run build --workspace=runtime"
   },
   "repository": {
     "type": "git",

@@ -30,6 +30,11 @@ npm run build:comp
 ```
 打包后的组件在packages/customer/dist目录下
 
+## 打包引擎包
+```
+npm run build:engine
+```
+
 ## TODOs
 1. 完善远程引入组件
 2. 优化容器选择组件的方式（现在是下拉列表，需优化）
