@@ -84,7 +84,7 @@ export default {
     const realAppPageId = `${this.pageId}&${appId}`;
     // console.log(1, appPageIdCache, realAppPageId);
     // 没有缓存，或者缓存的页面与当前页面不一致，就重新请求
-    if (!appPageIdCache || appPageIdCache !== realAppPageId) {
+    if (this.pageId && (!appPageIdCache || appPageIdCache !== realAppPageId)) {
       // console.log(222, this.pageId);
       const res = await this.request.get(`/v1/meta/get?pageId=${this.pageId}`);
       console.log(res);
