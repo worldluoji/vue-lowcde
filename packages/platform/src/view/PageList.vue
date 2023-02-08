@@ -11,9 +11,9 @@
         <div class="page-list">
           <el-table :data="pageList" stripe style="width: 100%">
             <el-table-column type="index" width="100" />
-            <el-table-column prop="name" label="页面名称" width="180" />
-            <el-table-column prop="path" label="页面路由" width="180" />
-            <el-table-column prop="desc" label="页面描述" width="180" />
+            <el-table-column prop="name" label="页面名称" />
+            <el-table-column prop="path" label="页面路由" />
+            <el-table-column prop="desc" label="页面描述" />
             <el-table-column label="操作">
               <template #default="scope">
                 <el-button size="small" @click="toDesigner(scope.row.id)"
@@ -25,14 +25,10 @@
                   cancel-button-text="取消"
                   width="220"
                   confirm-button-type="danger"
+                  @confirm="handleDelete(scope.row.id)"
                 >
                   <template #reference>
-                    <el-button
-                      size="small"
-                      type="danger"
-                      @click="handleDelete(scope.row.id)"
-                      >删除</el-button
-                    >
+                    <el-button size="small" type="danger">删除</el-button>
                   </template>
                 </el-popconfirm>
               </template>
@@ -65,6 +61,7 @@
         </div>
       </el-main>
       <!-- <el-footer>Footer</el-footer> -->
+      <Registy :app-id="appId" />
     </el-container>
   </div>
 </template>
@@ -73,6 +70,7 @@
 import { onBeforeMount, ref, inject, reactive } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import TopAreaLeft from '../components/TopAreaLeft.vue';
+import Registy from '../components/Registry.vue';
 const $request = inject('$request');
 const pageList = ref([]);
 const route = useRoute();

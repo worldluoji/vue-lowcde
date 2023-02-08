@@ -5,6 +5,7 @@ import (
 	"backend/internal/service/meta"
 	"backend/internal/service/page"
 	"backend/internal/service/product"
+	"backend/internal/service/registry"
 	"backend/internal/service/user"
 	"time"
 
@@ -36,6 +37,7 @@ func GetApiRouter() *gin.Engine {
 	appHander := app.NewAppHandler()
 	pageHander := page.NewPageHandler()
 	metaHander := meta.NewMetaHandler()
+	registryHandler := registry.NewRegistryHandler()
 
 	// 路由分组、中间件、认证
 	v1 := router.Group("/v1")
@@ -63,6 +65,12 @@ func GetApiRouter() *gin.Engine {
 		{
 			metaV1.GET("get", metaHander.GetMetaByPageId)
 			metaV1.POST("save", metaHander.CreateOrUpdateMeta)
+		}
+		registryV1 := v1.Group("/registry")
+		{
+			registryV1.GET("list", registryHandler.GetRegistriesByAppId)
+			registryV1.POST("create", registryHandler.CreateRegistry)
+			registryV1.POST("delete", registryHandler.DeleteRegistry)
 		}
 	}
 
