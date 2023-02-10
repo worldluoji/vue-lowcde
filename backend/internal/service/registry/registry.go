@@ -46,10 +46,10 @@ func (u *RegistryHandler) GetRegistriesByAppId(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "fail to get appId"})
 		return
 	}
-
+	log.Println(appId)
 	var registries []RegistryPO
 	if err := db.Where("appId = ?", appId).Find(&registries).Error; err != nil {
-		log.Fatalf("Get product error: %v", err)
+		log.Fatalf("Get registry error: %v", err)
 	}
 	n := len(registries)
 	if n > 0 {
@@ -63,6 +63,8 @@ func (u *RegistryHandler) GetRegistriesByAppId(c *gin.Context) {
 				AppID:        registries[i].AppID,
 			}
 		}
+	} else {
+		u.registries = nil
 	}
 
 	c.JSON(http.StatusOK, u.registries)

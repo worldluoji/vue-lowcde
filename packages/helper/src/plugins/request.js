@@ -3,8 +3,8 @@ import 'element-plus/es/components/message-box/style/css';
 
 const BASE_URL = `${import.meta.env.VITE_BASE_API_URL}`;
 
-async function get(url) {
-  const res = await fetch(BASE_URL + url, {
+async function get(url, baseUrl = BASE_URL) {
+  const res = await fetch(baseUrl + url, {
     method: 'GET'
   })
     .then((response) => {
@@ -20,8 +20,8 @@ async function get(url) {
   return res;
 }
 
-async function post(url, params) {
-  const res = await fetch(BASE_URL + url, {
+async function post(url, params, baseUrl = BASE_URL) {
+  const res = await fetch(baseUrl + url, {
     method: 'POST',
     body: JSON.stringify({
       ...params
@@ -50,5 +50,9 @@ export default {
       get: get,
       post: post
     });
+  },
+  $request: {
+    get: get,
+    post: post
   }
 };

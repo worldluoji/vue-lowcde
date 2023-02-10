@@ -25,17 +25,17 @@ export default ({ mode }) =>
       outDir: `dist/${loadEnv(mode, process.cwd()).VITE_PACKAGE_NAME}/${
         loadEnv(mode, process.cwd()).VITE_PACKAGE_VERSION
       }`,
-      cssCodeSplit: false
-      // rollupOptions: {
-      //   // 确保外部化处理那些你不想打包进库的依赖
-      //   external: ['vue'],
-      //   output: {
-      //     // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
-      //     globals: {
-      //       vue: 'Vue'
-      //     }
-      //   }
-      // }
+      cssCodeSplit: false,
+      rollupOptions: {
+        // 确保外部化处理那些你不想打包进库的依赖
+        external: ['vue'],
+        output: {
+          // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+          globals: {
+            vue: 'Vue'
+          }
+        }
+      }
     },
     plugins: [
       vue(),

@@ -51,7 +51,9 @@ import Panel from './Panel.vue';
 import LeftSide from './LeftSide.vue';
 import { metaStore, canvasStore, currentPanelStore } from '@lowcode/elements';
 import { inject } from 'vue';
-import { CustomerComponents as CustomerComponentsLocal } from '@lowcode/customer';
+// import { CustomerComponents as CustomerComponentsLocal } from '@lowcode/customer'; // 本地脚手架定制时，设计器直接本地加载自定义组件
+import { getCustomerComponents } from '../utils/CustomerComponentsUtils';
+// import { CustomerComponents } from 'http://localhost:8099/cutomerElements/1.0.0/cutomerElements.js'; // Relative references must start with either "/", "./", or "../".
 
 export default {
   name: 'Designer',
@@ -59,8 +61,7 @@ export default {
     draggable,
     Operation,
     Panel,
-    LeftSide,
-    ...CustomerComponentsLocal
+    LeftSide
   },
   data() {
     return {
@@ -73,15 +74,16 @@ export default {
       canvasStore: canvasStore(),
       canvasWidth: '987px',
       pageId: '',
+      appId: '',
       metaId: 0,
       request: inject('$request')
     };
   },
   async beforeMount() {
     this.pageId = this.$route.query.pageId;
-    const appId = this.$route.query.appId;
+    this.appId = this.$route.query.appId;
     let appPageIdCache = this.meta.getAppPageId;
-    const realAppPageId = `${this.pageId}&${appId}`;
+    const realAppPageId = `${this.pageId}&${this.appId}`;
     // console.log(1, appPageIdCache, realAppPageId);
     // 没有缓存，或者缓存的页面与当前页面不一致，就重新请求
     if (this.pageId && (!appPageIdCache || appPageIdCache !== realAppPageId)) {
@@ -109,6 +111,22 @@ export default {
     this.depMap = this.meta.getDepMap;
     this.metaId = this.meta.getId;
     this.canvasStore.setDesign(true);
+  },
+  async mounted() {
+    let custormerComps = await getCustomerComponents(this.appId);
+    // 动态挂载到components中
+    if (
+      custormerComps &&
+      Object.keys(custormerComps.customerComponents).length > 0
+    ) {
+      Object.assign(this.$.components, custormerComps.customerComponents);
+    }
+    // console.log(1, this.$.components);
+    // const url =
+    //   '/Users/honorluo/vue-lowcode/packages/customer/dist/cutomerElements/1.0.0/cutomerElements.js';
+    // let c = await import(url);
+    // console.log(1, c.CustomerComponents);
+    // Object.assign(this.$.components, c.CustomerComponents);
   },
   methods: {
     cancelPanel() {
