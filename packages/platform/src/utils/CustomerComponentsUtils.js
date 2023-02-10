@@ -1,7 +1,7 @@
 import { request } from '@lowcode/helper';
 const $request = request.$request;
 
-// const STATIC_RES_URL = `${import.meta.env.VITE_STATIC_RES_URL}`;
+const STATIC_RES_URL = `${import.meta.env.VITE_STATIC_RES_URL}`;
 export async function getCustomerComponents(appId) {
   let registries = await $request.get(`/v1/registry/list?appId=${appId}`);
   //   console.log('1', registries);
@@ -15,7 +15,7 @@ export async function getCustomerComponents(appId) {
       }
       console.log(it.registerName, it.packageName, it.version);
       // TODO 这里直接写本地的地址，实际应该根据url下载到本地，再import读取, 还要处理已经存在的情况
-      const url = `/Users/honorluo/vue-lowcode/packages/customer/dist/${it.packageName}/${it.version}/${it.packageName}.js`;
+      const url = `${STATIC_RES_URL}/${it.packageName}/${it.version}/${it.packageName}.js`;
       const m = await import(url);
       console.log('re', m);
       Object.assign(customerComponents, m.CustomerComponents);
