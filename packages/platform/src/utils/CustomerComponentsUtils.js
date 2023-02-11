@@ -15,7 +15,8 @@ export async function getCustomerComponents(appId) {
       }
       console.log(it.registerName, it.packageName, it.version);
       // TODO 这里直接写本地的地址，实际应该根据url下载到本地，再import读取, 还要处理已经存在的情况
-      const url = `${STATIC_RES_URL}/${it.packageName}/${it.version}/${it.packageName}.js`;
+      const url = `${STATIC_RES_URL}${it.packageName}/${it.version}/${it.packageName}.js`;
+      console.log(222, url);
       const m = await import(url);
       console.log('re', m);
       Object.assign(customerComponents, m.CustomerComponents);

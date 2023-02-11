@@ -61,5 +61,6 @@ export default ({ mode }) =>
           })
         ]
       }
-    }
+    },
+    define: { 'process.env': {} }
   });

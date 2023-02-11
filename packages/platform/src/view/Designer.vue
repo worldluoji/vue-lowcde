@@ -121,7 +121,7 @@ export default {
     ) {
       Object.assign(this.$.components, custormerComps.customerComponents);
     }
-    // console.log(1, this.$.components);
+    console.log(1, this.$.components);
     // const url =
     //   '/Users/honorluo/vue-lowcode/packages/customer/dist/cutomerElements/1.0.0/cutomerElements.js';
     // let c = await import(url);

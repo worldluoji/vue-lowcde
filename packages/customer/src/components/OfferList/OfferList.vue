@@ -1,5 +1,5 @@
 <template>
-  <div v-atomicattr="p.props.atomicAttrs" class="offerList">
+  <div class="offerList">
     <div v-for="card in dataList" :key="card.id">
       <van-card
         :num="card.num"
@@ -13,8 +13,9 @@
 </template>
 
 <script setup>
-import { inject, watchEffect, ref } from 'vue';
-const $request = inject('$request');
+import { watchEffect, ref } from 'vue';
+import request from '../../utils/request.js';
+const $request = request.$request;
 
 const p = defineProps({
   props: {
