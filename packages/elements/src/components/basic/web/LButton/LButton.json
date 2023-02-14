@@ -1,0 +1,8 @@
+{
+    "name": "LButton",
+    "title": "普通按钮",
+    "description": "普通按钮",
+    "type": "basic",
+    "icon": "",
+    "platforms": ["web"]
+}
