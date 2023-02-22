@@ -52,7 +52,6 @@ import LeftSide from './LeftSide.vue';
 import { metaStore, canvasStore, currentPanelStore } from '@lowcode/elements';
 import { inject } from 'vue';
 // import { CustomerComponents as CustomerComponentsLocal } from '@lowcode/customer'; // 本地脚手架定制时，设计器直接本地加载自定义组件
-import { getCustomerComponents } from '../utils/CustomerComponentsUtils';
 // import { CustomerComponents } from 'http://localhost:8099/cutomerElements/1.0.0/cutomerElements.js'; // Relative references must start with either "/", "./", or "../".
 
 export default {
@@ -111,22 +110,6 @@ export default {
     this.depMap = this.meta.getDepMap;
     this.metaId = this.meta.getId;
     this.canvasStore.setDesign(true);
-  },
-  async mounted() {
-    let custormerComps = await getCustomerComponents(this.appId);
-    // 动态挂载到components中
-    if (
-      custormerComps &&
-      Object.keys(custormerComps.customerComponents).length > 0
-    ) {
-      Object.assign(this.$.components, custormerComps.customerComponents);
-    }
-    console.log(1, this.$.components);
-    // const url =
-    //   '/Users/honorluo/vue-lowcode/packages/customer/dist/cutomerElements/1.0.0/cutomerElements.js';
-    // let c = await import(url);
-    // console.log(1, c.CustomerComponents);
-    // Object.assign(this.$.components, c.CustomerComponents);
   },
   methods: {
     cancelPanel() {
