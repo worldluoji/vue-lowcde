@@ -4,7 +4,9 @@ import App from './PlantForm.vue';
 import router from './router/router';
 import { createPinia } from 'pinia';
 import elements from '@lowcode/elements';
-import { DragManager, AtomicManager, request } from '@lowcode/helper';
+import { request } from '@lowcode/helper';
+import DragManager from './manager/drag/DragManager.js';
+import AtomicManager from './manager/atomic/AtomicManager.js';
 
 const pinia = createPinia();
 
