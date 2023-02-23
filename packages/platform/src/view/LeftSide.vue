@@ -10,9 +10,9 @@
       <el-tab-pane label="容器组件">
         <Material :components-info="containerComponentsInfo" />
       </el-tab-pane>
-      <el-tab-pane label="自定义组件">
+      <!-- <el-tab-pane label="自定义组件">
         <Material :components-info="CustomerComponentsInfoLocal" />
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
   </el-affix>
 </template>
@@ -26,7 +26,7 @@ import {
   containerComponentsInfo
 } from '@lowcode/elements';
 
-import { CustomerComponentsInfo as CustomerComponentsInfoLocal } from '@lowcode/customer';
+// import { CustomerComponentsInfo as CustomerComponentsInfoLocal } from '@lowcode/customer';
 
 // 以下两行代码演示了远程加载打包后的库组件
 // import { allComponents } from 'http://localhost/origin-elements.js'; 只能导入静态的，不能是变量

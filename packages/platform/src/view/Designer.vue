@@ -52,7 +52,6 @@ import LeftSide from './LeftSide.vue';
 import { metaStore, canvasStore, currentPanelStore } from '@lowcode/elements';
 import { inject } from 'vue';
 // import { CustomerComponents as CustomerComponentsLocal } from '@lowcode/customer'; // 本地脚手架定制时，设计器直接本地加载自定义组件
-// import { CustomerComponents } from 'http://localhost:8099/cutomerElements/1.0.0/cutomerElements.js'; // Relative references must start with either "/", "./", or "../".
 
 export default {
   name: 'Designer',
@@ -61,6 +60,7 @@ export default {
     Operation,
     Panel,
     LeftSide
+    // ...CustomerComponentsLocal
   },
   data() {
     return {
@@ -111,6 +111,23 @@ export default {
     this.metaId = this.meta.getId;
     this.canvasStore.setDesign(true);
   },
+  // mounted() {
+  //   const s = document.createElement('script');
+  //   const url =
+  //     'http://localhost:8099/cutomerElements/1.0.0/cutomerElements.umd.cjs';
+  //   s.type = 'text/javascript';
+  //   s.src = url;
+  //   s.onload = () => {
+  //     console.log(window, window.location, window.cutomerElements);
+  //     Object.assign(
+  //       this.$.components,
+  //       window.cutomerElements.CustomerComponents
+  //     );
+  //     console.log(this.$.components);
+  //     this.$forceUpdate();
+  //   };
+  //   document.body.appendChild(s);
+  // },
   methods: {
     cancelPanel() {
       this.currentPanel.set({});
@@ -135,12 +152,12 @@ export default {
         id: this.metaId
       });
       if (res.id) {
-        ElMessage({
+        ElementPlus.ElMessage({
           message: '保存成功',
           type: 'success'
         });
       } else {
-        ElMessage({
+        ElementPlus.ElMessage({
           message: '保存失败，请稍后再试',
           type: 'warning'
         });
