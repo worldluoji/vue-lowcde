@@ -1,18 +1,16 @@
-import { createApp } from 'vue';
 import './style.css';
 import App from './PlantForm.vue';
 import router from './router/router';
-import { createPinia } from 'pinia';
 import elements from '@lowcode/elements';
 import { request, AtomicManager } from '@lowcode/helper';
 import DragManager from './manager/drag/DragManager.js';
 
-const pinia = createPinia();
+const pinia = Pinia.createPinia();
 
 const dragManager = new DragManager();
 const atomicManager = new AtomicManager();
 
-createApp(App)
+Vue.createApp(App)
   .directive('draggable', (el) => {
     // v-draggable用在选择物料上，将内部组件加上draggable属性，并监听dragstart；
     el.querySelectorAll('[data-material]').forEach((el) => {
@@ -38,4 +36,6 @@ createApp(App)
   .use(elements.ContainerComponentsIn)
   .use(elements.Panels)
   .use(request)
+  .use(ElementPlus)
+  .use(vant)
   .mount('#app');

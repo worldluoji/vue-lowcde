@@ -1,10 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import Components from 'unplugin-vue-components/vite';
-import { VantResolver } from 'unplugin-vue-components/resolvers';
 
-import AutoImport from 'unplugin-auto-import/vite';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import path from 'path';
 
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
@@ -12,31 +8,42 @@ import legacy from '@vitejs/plugin-legacy';
 
 import autoprefixer from 'autoprefixer';
 
+import commonjs from 'rollup-plugin-commonjs';
+import externalGlobals from 'rollup-plugin-external-globals';
+
 const prefix = 'monaco-editor/esm/vs';
+
+// 全局对象
+let globals = externalGlobals(
+  {
+    vue: 'Vue',
+    pinia: 'Pinia',
+    'vue-router': 'VueRouter',
+    'element-plus': 'ElementPlus'
+  },
+  {
+    exclude: ['**/codicon.css']
+  }
+);
+
+const plugins =
+  process.env.NODE_ENV === 'production' ? [] : [commonjs(), globals];
 
 // https://vitejs.dev/config/
 export default () =>
   defineConfig({
     plugins: [
       vue(),
-      AutoImport({
-        resolvers: [VantResolver(), ElementPlusResolver()]
-      }),
-      Components({
-        resolvers: [VantResolver(), ElementPlusResolver()]
-      }),
       chunkSplitPlugin({
         customSplitting: {
-          'vue-vendor': ['vue', 'vue-router', 'pinia'],
-          'utils-vendor': ['throttle-debounce', 'vuedraggable'],
-          'elementplus-vendor': ['element-plus'],
-          'vant-vendor': ['vant']
+          'utils-vendor': ['throttle-debounce', 'vuedraggable']
         }
       }),
       legacy({
         // 设置目标浏览器，browserslist 配置语法
         targets: ['last 2 versions and since 2018 and > 0.5%']
-      })
+      }),
+      ...plugins
     ],
     resolve: {
       alias: {
@@ -46,7 +53,10 @@ export default () =>
       }
     },
     build: {
+      assetsDir: './static',
       rollupOptions: {
+        external: ['vue', 'pinia', 'vueRouter'],
+        plugins: [commonjs(), globals],
         output: {
           manualChunks: {
             jsonWorker: [`${prefix}/language/json/json.worker`],

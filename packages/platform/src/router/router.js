@@ -1,5 +1,3 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
-
 const routes = [
   {
     path: '/designer',
@@ -25,9 +23,9 @@ const routes = [
 
 // 创建路由实例并传递 `routes` 配置
 // 你可以在这里输入更多的配置，但我们在这里暂时保持简单
-const router = createRouter({
+const router = VueRouter.createRouter({
   // 内部提供了 history 模式的实现。
-  history: createWebHashHistory(),
+  history: VueRouter.createWebHashHistory(),
   routes // `routes: routes` 的缩写
 });
 
