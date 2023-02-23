@@ -21,6 +21,10 @@ const p = defineProps({
   pageId: {
     type: String,
     default: ''
+  },
+  appId: {
+    type: String,
+    default: ''
   }
 });
 
@@ -45,9 +49,9 @@ const router = useRouter();
 const test = () => {
   // console.log(p.pageId);
   if (p.pageId == 2) {
-    router.push({ name: 'test1', query: { pageId: 3 } });
+    router.push({ name: 'test1', query: { pageId: 3, appId: p.appId } });
   } else {
-    router.push({ path: 'home', query: { pageId: 2 } });
+    router.push({ path: 'home', query: { pageId: 2, appId: p.appId } });
   }
 };
 </script>

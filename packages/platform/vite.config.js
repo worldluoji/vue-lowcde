@@ -55,7 +55,7 @@ export default () =>
     build: {
       assetsDir: './static',
       rollupOptions: {
-        external: ['vue', 'pinia', 'vueRouter'],
+        external: ['vue', 'pinia', 'vue-router'],
         plugins: [commonjs(), globals],
         output: {
           manualChunks: {

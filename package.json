@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/worldluoji/vue-lowcde#readme",
   "dependencies": {
+    "install": "^0.13.0",
     "throttle-debounce": "^5.0.0",
     "uuid": "^9.0.0",
     "vue": "^3.2.45"
@@ -46,6 +47,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.8.0",
     "prettier": "^2.8.2",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-external-globals": "^0.7.1",
     "sass": "^1.57.1",
     "terser": "^5.16.1",
     "unplugin-auto-import": "^0.12.0",

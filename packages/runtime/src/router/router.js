@@ -1,9 +1,8 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
-
+import { getQueryString } from '../utils/urlUtil';
 const routes = [];
 
-const router = createRouter({
-  history: createWebHashHistory(),
+const router = VueRouter.createRouter({
+  history: VueRouter.createWebHashHistory(),
   routes
 });
 
@@ -19,20 +18,20 @@ async function get(url) {
       }
     })
     .catch(() => {
-      ElMessageBox.alert('网络忙，请稍后再试', '提示', {});
+      ElementPlus.ElMessageBox.alert('网络忙，请稍后再试', '提示', {});
     });
   return res;
 }
-
-const siteMeta = await get('./config.json');
-// console.log('siteMeta', siteMeta);
-if (!siteMeta) {
-  throw new Error('config不能为空');
-}
+// const siteMeta = await get('./config.json');
+// // console.log('siteMeta', siteMeta);
+// if (!siteMeta) {
+//   throw new Error('config不能为空');
+// }
 
 // 获取appId
-let appId = siteMeta.appId;
-// console.log('appid', appId);
+// let appId = siteMeta.appId;
+const appId = getQueryString('appId');
+// console.log('appId', appId);
 if (!appId) {
   throw new Error('appId为空');
 }
@@ -48,7 +47,7 @@ if (routeRes && routeRes.length > 0) {
       path: r.path,
       name: r.name,
       component: () => import('../view/DynamicRender.vue'),
-      props: { pageId: r.id + '' }
+      props: { pageId: r.id + '', appId }
     });
   }
 
@@ -57,43 +56,43 @@ if (routeRes && routeRes.length > 0) {
   router.addRoute({
     path: '/',
     component: () => import('../view/DynamicRender.vue'),
-    props: { pageId: r.id + '' }
+    props: { pageId: r.id + '', appId }
   });
 }
 
 // console.log('router', router.getRoutes());
 
-const generateRoute = (to, name) => {
-  return {
-    name: name,
-    path: to.path,
-    component: () => import('../view/DynamicRender.vue'),
-    props: { pageId: to.query.pageId }
-  };
-};
+// const generateRoute = (to, name) => {
+//   return {
+//     name: name,
+//     path: to.path,
+//     component: () => import('../view/DynamicRender.vue'),
+//     props: { pageId: to.query.pageId }
+//   };
+// };
 
-router.beforeEach((to) => {
-  // console.log(111, to.name, to.fullPath, to.path);
-  // console.log(router.getRoutes());
-  let name = to.name;
-  if (!name) {
-    // 如果已经是'/'直接返回了
-    if (to.path === '/') {
-      return;
-    }
-    name = to.path.slice(1);
-  }
+// router.beforeEach((to) => {
+//   // console.log(111, to.name, to.fullPath, to.path);
+//   // console.log(router.getRoutes());
+//   let name = to.name;
+//   if (!name) {
+//     // 如果已经是'/'直接返回了
+//     if (to.path === '/') {
+//       return;
+//     }
+//     name = to.path.slice(1);
+//   }
 
-  // 路由已经存在，直接走路由即可
-  if (router.hasRoute(name)) {
-    return;
-  }
+//   // 路由已经存在，直接走路由即可
+//   if (router.hasRoute(name)) {
+//     return;
+//   }
 
-  // console.log(222, to.name, to.fullPath, to.path);
-  // 路由不存在，就根据跳转的path动态添加路由
-  router.addRoute(generateRoute(to, name));
-  // 触发重定向
-  return to.fullPath;
-});
+//   // console.log(222, to.name, to.fullPath, to.path);
+//   // 路由不存在，就根据跳转的path动态添加路由
+//   router.addRoute(generateRoute(to, name));
+//   // 触发重定向
+//   return to.fullPath;
+// });
 
 export default router;
