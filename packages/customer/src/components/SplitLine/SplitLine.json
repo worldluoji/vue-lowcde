@@ -1,0 +1,8 @@
+{
+    "name": "SplitLine",
+    "title": "分割线",
+    "description": "分割线",
+    "type": "basic",
+    "icon": "",
+    "platforms": ["web"]
+}

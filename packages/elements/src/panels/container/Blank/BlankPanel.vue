@@ -10,9 +10,9 @@
 </template>
 
 <script setup>
-import componentList from '../../components/components.js';
-import { CustomerComponentsInfo } from '@lowcode/customer';
-const allComponents = { ...componentList, ...CustomerComponentsInfo };
+import componentList from '../../../components/components.js';
+// import { CustomerComponentsInfo } from '@lowcode/customer';
+const allComponents = { ...componentList };
 const p = defineProps({
   props: {
     type: Object,

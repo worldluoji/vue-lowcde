@@ -8,9 +8,7 @@
     "build": "vite build"
   },
   "dependencies": {
-
-  },
-  "devDependencies": {
-
+    "element-plus": "^2.2.30",
+    "vant": "^4.0.11"
   }
 }

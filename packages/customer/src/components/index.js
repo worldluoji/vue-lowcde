@@ -1,14 +1,14 @@
-import OfferList from './OfferList/OfferList.vue';
-import OfferListInfo from './OfferList/OfferList.json';
+import SplitLine from './SplitLine/SplitLine.vue';
+import SplitLineInfo from './SplitLine/SplitLine.json';
 
 export const install = (Vue) => {
-  Vue.component('OfferList', OfferList);
+  Vue.component('SplitLine', SplitLine);
 };
 
 export const CustomerComponents = {
-  OfferList
+  SplitLine
 };
 
 export const CustomerComponentsInfo = {
-  OfferListInfo
+  SplitLineInfo
 };

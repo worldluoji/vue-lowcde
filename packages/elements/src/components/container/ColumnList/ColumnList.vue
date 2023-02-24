@@ -36,7 +36,7 @@
 <script>
 import draggable from 'vuedraggable';
 import { metaStore, canvasStore, currentPanelStore } from '@lowcode/elements';
-import { uuid } from '@lowcode/helper';
+import { v4 as uuid } from 'uuid';
 import { ref } from 'vue';
 
 export default {

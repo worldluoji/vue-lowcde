@@ -1,9 +1,7 @@
-import BasicWebComponentsIn, {
-  BasicWebComponentsInfo
-} from './components/basic/web';
+import BasicWebComponentsIn, { BasicWebComponentsInfo } from './components/web';
 import BasicMobileComponentsIn, {
   BasicMobileComponentsInfo
-} from './components/basic/mobile';
+} from './components/mobile';
 import Panels from './panels';
 import ContainerComponentsIn, {
   ContainerComponentsInfo

@@ -59,3 +59,25 @@ export NODE_OPTIONS="--max-old-space-size=4096"
 linux可写入到.bashrc, Mac在~目录下有.bash_profile和.zprofile可配置。一般在这个文件中添加用户级环境变量，在登陆时执行一次。
 ～/.bash_profile生效的前提是我们需要使用bash作为终端，随着系统的升级MAC会将默认终端切换为zsh，
 如果我们稍不注意按照提示进行了修改，那么就会导致～/.bash_profile无效
+
+
+# 其它说明
+全局引入的包如下，也就是public/static目录下的文件是从这里下载的，内网没有cdn，就先下载下来了。
+```
+<script src="https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.prod.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-router@4.1.6/dist/vue-router.global.prod.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue-demi/0.13.11/index.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pinia@2.0.27/dist/pinia.iife.min.js"></script>
+<script src="
+    https://cdn.jsdelivr.net/npm/element-plus@2.2.30/dist/index.full.min.js
+"></script>
+<link href="
+    https://cdn.jsdelivr.net/npm/element-plus@2.2.30/dist/index.min.css
+" rel="stylesheet">
+<script src="
+    https://cdn.jsdelivr.net/npm/vant@4.0.11/lib/vant.min.js
+"></script>
+<link href="
+    https://cdn.jsdelivr.net/npm/vant@4.0.11/lib/index.min.css
+" rel="stylesheet">
+```

@@ -42,14 +42,14 @@
   </div>
 </template>
 
-<script>
+<!-- <script>
 import { CustomerComponentPanels as CustomerComponentPanelsLocal } from '@lowcode/customer';
 export default {
   components: {
     ...CustomerComponentPanelsLocal
   }
 };
-</script>
+</script> -->
 
 <script setup>
 import { ref, watch } from 'vue';
@@ -89,20 +89,20 @@ const cancel = () => {
 const deleteComponent = () => {
   const eid = current.value.id;
   if (eid) {
-    ElMessageBox.confirm('确认删除吗？', '删除组件（不可逆）', {
+    ElementPlus.ElMessageBox.confirm('确认删除吗？', '删除组件（不可逆）', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning'
     })
       .then(() => {
         emits('deleteComponent', current.value.id);
-        ElMessage({
+        ElementPlus.ElMessage({
           type: 'success',
           message: '删除成功'
         });
       })
       .catch(() => {
-        ElMessage({
+        ElementPlus.ElMessage({
           type: 'info',
           message: '删除失败，请稍后再试'
         });

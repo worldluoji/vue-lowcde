@@ -1,6 +1,4 @@
-import { defineStore } from 'pinia';
-
-const currentPanelStore = defineStore('currentPanel', {
+const currentPanelStore = Pinia.defineStore('currentPanel', {
   state: () => {
     return {
       current: {}

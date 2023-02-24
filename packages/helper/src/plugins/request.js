@@ -1,6 +1,3 @@
-import { ElMessageBox } from 'element-plus';
-import 'element-plus/es/components/message-box/style/css';
-
 const BASE_URL = `${import.meta.env.VITE_BASE_API_URL}`;
 
 async function get(url, baseUrl = BASE_URL) {
@@ -15,7 +12,7 @@ async function get(url, baseUrl = BASE_URL) {
       }
     })
     .catch(() => {
-      ElMessageBox.alert('网络忙，请稍后再试', '提示', {});
+      ElementPlus.ElMessageBox.alert('网络忙，请稍后再试', '提示', {});
     });
   return res;
 }
@@ -38,7 +35,7 @@ async function post(url, params, baseUrl = BASE_URL) {
       }
     })
     .catch(() => {
-      ElMessageBox.alert('网络忙，请稍后再试', '提示', {});
+      ElementPlus.ElMessageBox.alert('网络忙，请稍后再试', '提示', {});
     });
   return res;
 }

@@ -1,5 +1,5 @@
-import { BasicWebComponentsInfo } from './basic/web';
-import { BasicMobileComponentsInfo } from './basic/mobile';
+import { BasicWebComponentsInfo } from './web';
+import { BasicMobileComponentsInfo } from './mobile';
 import { ContainerComponentsInfo } from './container';
 
 export default {

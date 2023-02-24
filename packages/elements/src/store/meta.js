@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia';
-
 // // 递归逐层查找，后续优化
 // const findById = (content, id) => {
 //   for (let e of content) {
@@ -80,7 +78,7 @@ function removeDeps(depMap, eid, removeFirst = true, deps = 0) {
   }
 }
 
-const metaStore = defineStore('meta', {
+const metaStore = Pinia.defineStore('meta', {
   state: () => {
     return {
       content: [],

@@ -23,10 +23,10 @@ const p = defineProps({
 const onClick = () => {
   if (p.props.eventType) {
     if (p.props.eventType === 'message') {
-      ElMessage({
+      ElementPlus.ElMessage({
         showClose: true,
         message: p.props.mg.value || '',
-        type: p.props.mg.type || 'message'
+        type: p.props.mg.type || 'info'
       });
     }
   }

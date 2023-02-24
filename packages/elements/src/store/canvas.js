@@ -1,6 +1,4 @@
-import { defineStore } from 'pinia';
-
-const canvasStore = defineStore('canvas', {
+const canvasStore = Pinia.defineStore('canvas', {
   state: () => {
     return {
       canvasWidth: '',

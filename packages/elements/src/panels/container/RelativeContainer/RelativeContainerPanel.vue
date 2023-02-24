@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import uuid from '@lowcode/helper/src/UUID/uuid';
+import { v4 as uuid } from 'uuid';
 import { ref, reactive } from 'vue';
 const p = defineProps({
   props: {
