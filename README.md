@@ -3,36 +3,36 @@
 # pre-end
 ## install
 ```
-npm install --legacy-peer-deps
+pnpm install
 ```
 
 ## start
 平台启动
 ```
-npm run dev
+pnpm dev
 ```
 
 ## build
 平台打包
 ```
-npm run build
+pnpm build
 ```
 
 ## preview
 平台打包后预览
 ```
-npm run preview
+pnpm preview
 ```
 
 ## 打包自定义组件
 ```
-npm run build:comp
+pnpm build:comp
 ```
 打包后的组件在packages/customer/dist目录下
 
 ## 打包引擎包
 ```
-npm run build:engine
+pnpm build:engine
 ```
 
 ## TODOs

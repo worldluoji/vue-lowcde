@@ -4,13 +4,14 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "dev": "npm run dev --workspace=platform",
-    "build": "npm run build --workspace=platform",
-    "preview": "npm run preview --workspace=platform",
+    "dev": "pnpm -r --filter=./packages/platform dev",
+    "build": "pnpm -r --filter=./packages/platform build",
+    "preview": "pnpm -r --filter=./packages/platform preview",
     "lint": "eslint --ext .js,.jsx,.vue ./",
     "fix": "eslint --fix --ext .js,.jsx,.vue ./",
-    "build:comp": "npm run build --workspace=@lowcode/customer",
-    "build:engine": "npm run build --workspace=runtime"
+    "build:comp": "pnpm -r --filter=./packages/customer build",
+    "build:engine": "pnpm -r --filter=./packages/runtime build",
+    "preview:engine": "pnpm -r --filter=./packages/runtime preview"
   },
   "repository": {
     "type": "git",
