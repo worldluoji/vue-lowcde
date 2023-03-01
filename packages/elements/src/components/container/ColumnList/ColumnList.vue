@@ -119,11 +119,12 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .ghost {
   opacity: 0.5;
   background: #c8ebfb;
 }
+
 .not-draggable {
   cursor: no-drop;
 }
@@ -135,10 +136,9 @@ export default {
   grid-template-columns: v-bind(templateColumns);
   padding: 10px 0px;
   column-gap: v-bind('gap');
-}
-
-.list-group:hover {
-  border: 1px dashed blue;
+  &:hover {
+    border: 1px dashed blue;
+  }
 }
 
 .list-groupr {
@@ -150,10 +150,9 @@ export default {
 
 .list-group-item {
   text-align: center;
-}
-
-.list-group-item:hover {
-  border: 1px dashed blue;
+  &:hover {
+    border: 1px dashed blue;
+  }
 }
 
 .list-group-itemr {

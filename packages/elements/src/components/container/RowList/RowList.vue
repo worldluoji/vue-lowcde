@@ -119,7 +119,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .ghost {
   opacity: 0.5;
   background: #c8ebfb;
@@ -135,10 +135,9 @@ export default {
   grid-template-rows: v-bind(templateRows);
   padding: 10px 0px;
   row-gap: v-bind('gap');
-}
-
-.list-group:hover {
-  border: 1px dashed blue;
+  &:hover {
+    border: 1px dashed blue;
+  }
 }
 
 .list-groupr {
@@ -150,9 +149,8 @@ export default {
 
 .list-group-item {
   text-align: center;
-}
-
-.list-group-item:hover {
-  border: 1px dashed blue;
+  &:hover {
+    border: 1px dashed blue;
+  }
 }
 </style>
