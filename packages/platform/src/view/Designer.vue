@@ -23,9 +23,13 @@
                 @end="dragging = false"
               >
                 <template #item="{ element, index }">
-                  <div :class="[{ 'list-item': element.type !== 'Container' }]">
+                  <div :class="[{ 'list-item': element.type !== 'container' }]">
                     <component
-                      :is="element.name"
+                      :is="
+                        element.type === 'container'
+                          ? `${element.name}_Design`
+                          : element.name
+                      "
                       :key="index"
                       :props="element.props"
                       :eid="element.id"

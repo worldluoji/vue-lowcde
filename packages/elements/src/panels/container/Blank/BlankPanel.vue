@@ -1,15 +1,24 @@
 <template>
   <div class="BlankPanel">
-    请选择组件:
-    <select v-model="data.element" @change="change">
-      <option v-for="item in allComponents" :key="item.name" :value="item.name">
-        {{ item.title }}
-      </option>
-    </select>
+    <el-select
+      v-model="value"
+      class="m-2"
+      placeholder="请选择组件"
+      size="large"
+      @change="change"
+    >
+      <el-option
+        v-for="item in allComponents"
+        :key="item.name"
+        :label="item.title"
+        :value="item"
+      />
+    </el-select>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import componentList from '../../../components/components.js';
 // import { CustomerComponentsInfo } from '@lowcode/customer';
 const allComponents = { ...componentList };
@@ -19,13 +28,14 @@ const p = defineProps({
     required: true
   }
 });
-const data = {
-  element: p.props.element ? p.props.element : ''
-};
+const value = ref(p.props.element || '');
 const emit = defineEmits(['change']);
 const change = () => {
-  // console.log(data)
-  emit('change', data);
+  console.log(value.value);
+  emit('change', {
+    element: value.value.name,
+    type: value.value.type
+  });
 };
 </script>
 

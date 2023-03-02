@@ -1,26 +1,27 @@
-import Blank from './Blank/Blank.vue';
-import ColumnList from './ColumnList/ColumnList.vue';
-import RowList from './RowList/RowList.vue';
-import RelativeContainer from './RelativeContainer/RelativeContainer.vue';
-
+const modules = import.meta.glob('./**/*.vue', { eager: true });
+let components = {};
+Object.values(modules).forEach((m) => {
+  components[m.default.__name] = m.default;
+});
+// console.log(123, components);
 export default (Vue) => {
-  Vue.component('Blank', Blank);
-  Vue.component('ColumnList', ColumnList);
-  Vue.component('RowList', RowList);
-  Vue.component('RelativeContainer', RelativeContainer);
-};
-
-import ColumnListInfo from './ColumnList/ColumnList.json';
-import RowListInfo from './RowList/RowList.json';
-import RelativeContainerInfo from './RelativeContainer/RelativeContainer.json';
-export const ContainerComponentsInfo = {
-  ColumnListInfo,
-  RowListInfo,
-  RelativeContainerInfo
+  for (let k in components) {
+    Vue.component(k, components[k]);
+  }
 };
 
 export const ContainerComponents = {
-  ColumnList,
-  RowList,
-  RelativeContainer
+  ...components
+};
+
+// 容器组件信息
+const modulesInfo = import.meta.glob('./**/*.json', { eager: true });
+let infos = {};
+Object.values(modulesInfo).forEach((m) => {
+  infos[m.name] = m.default;
+});
+// console.log(infos);
+
+export const ContainerComponentsInfo = {
+  ...infos
 };

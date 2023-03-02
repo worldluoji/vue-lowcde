@@ -18,7 +18,7 @@ export default class DragManager {
     this.opData = {
       id: uuid(),
       name: this.current,
-      type: 'Basic',
+      type: 'basic',
       props: {},
       state: 2
     };
@@ -26,7 +26,7 @@ export default class DragManager {
     // 容器，设置默认值，后续可通过配置面板修改
     if (this.current.endsWith('-Container')) {
       this.opData.name = this.current.split('-')[0];
-      this.opData.type = 'Container';
+      this.opData.type = 'container';
       this.opData.props = {
         children: []
       };
@@ -120,7 +120,7 @@ export default class DragManager {
     // 容器，设置默认值，后续可通过配置面板修改
     if (this.current.endsWith('-Container')) {
       this.opData.name = this.current.split('-')[0];
-      this.opData.type = 'Container';
+      this.opData.type = 'container';
       this.opData.props = {
         children: []
       };
