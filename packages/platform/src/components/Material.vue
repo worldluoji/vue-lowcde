@@ -5,7 +5,9 @@
         v-for="it in p.componentsInfo"
         :key="it.name"
         class="material-icon"
-        :data-material="it.name"
+        :data-material="
+          it.type !== 'container' ? it.name : `${it.name}-Container`
+        "
       >
         <img :src="it.icon || defaultIcon" draggable="false" />
         <p>{{ it.title }}</p>

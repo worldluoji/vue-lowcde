@@ -23,14 +23,20 @@
                 @end="dragging = false"
               >
                 <template #item="{ element, index }">
-                  <component
-                    :is="element.name"
-                    :key="index"
-                    :props="element.props"
-                    :eid="element.id"
-                    :data-index="index"
-                    @click="showPanel(element)"
-                  ></component>
+                  <div :class="[{ 'list-item': element.type !== 'container' }]">
+                    <component
+                      :is="
+                        element.type === 'container'
+                          ? `${element.name}_Design`
+                          : element.name
+                      "
+                      :key="index"
+                      :props="element.props"
+                      :eid="element.id"
+                      :data-index="index"
+                      @click="showPanel(element)"
+                    ></component>
+                  </div>
                 </template>
               </draggable>
               <div class="top-white"></div>
@@ -204,5 +210,12 @@ export default {
 }
 .not-draggable {
   cursor: no-drop;
+}
+
+.list-item {
+  padding: 5px 0px;
+  &:hover {
+    border: 1px dashed blue;
+  }
 }
 </style>
