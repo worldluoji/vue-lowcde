@@ -49,7 +49,7 @@ export default {
     }
   },
   setup() {
-    const templateRows = ref('repeat(auto-fit, minmax(100px, 1fr))');
+    const templateRows = ref('repeat(auto-fit, minmax(10px, 1fr))');
     return {
       templateRows
     };
@@ -123,6 +123,7 @@ export default {
   width: 100%;
   display: grid;
   grid-template-rows: v-bind(templateRows);
+  grid-template-columns: minmax(10px, 1fr);
   padding: 10px 0px;
   row-gap: v-bind('gap');
   &:hover {

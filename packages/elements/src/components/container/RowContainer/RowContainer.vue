@@ -26,7 +26,7 @@ export default {
   },
   setup(props) {
     const templateRows = ref(
-      props.props.templateRows || 'repeat(auto-fit, minmax(100px, 1fr))'
+      props.props.templateRows || 'repeat(auto-fit, minmax(10px, 1fr))'
     );
     const gap = ref(`${props.props.gap || '0'}px`);
     return {
@@ -41,6 +41,7 @@ export default {
   width: 100%;
   display: grid;
   grid-template-rows: v-bind(templateRows);
+  grid-template-columns: minmax(10px, 1fr);
   row-gap: v-bind(gap);
 }
 </style>

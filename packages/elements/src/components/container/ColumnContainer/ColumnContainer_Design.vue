@@ -49,7 +49,7 @@ export default {
     }
   },
   setup() {
-    const templateColumns = ref('repeat(auto-fit, minmax(100px, 1fr))');
+    const templateColumns = ref('repeat(auto-fit, minmax(10px, 1fr))');
     return {
       templateColumns
     };
