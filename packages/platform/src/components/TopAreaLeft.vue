@@ -47,8 +47,7 @@ const toAppList = () => {
 }
 
 .font {
-  font-size: 1.7rem;
+  font-size: 1.6rem;
   font-weight: 800;
-  margin-right: 100px;
 }
 </style>

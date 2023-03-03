@@ -1,120 +1,128 @@
 <template>
-  <div class="top-area">
-    <TopAreaLeft />
-    <div class="top-area-center">
-      <div class="lp-simulator-pane">
-        <span class="lp-simulator-pane-item" @click="setCanvasWidth(pcWidth)">
-          <i class="next-icon next-large">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M8 11C8 9.34315 9.34315 8 11 8H37C38.6569 8 40 9.34315 40 11V32H8V11Z"
-                stroke="#333"
-                stroke-width="4"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M4 32H44V34C44 37.3137 41.3137 40 38 40H10C6.68629 40 4 37.3137 4 34V32Z"
+  <el-page-header :icon="null">
+    <template #title>
+      <TopAreaLeft />
+    </template>
+    <template #content>
+      <div class="top-area-center">
+        <div class="lp-simulator-pane">
+          <span class="lp-simulator-pane-item" @click="setCanvasWidth(pcWidth)">
+            <i class="next-icon next-large">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 48 48"
                 fill="none"
-                stroke="#333"
-                stroke-width="4"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </i>
-        </span>
-        <span class="lp-simulator-pane-item" @click="setCanvasWidth(padWidth)">
-          <i class="next-icon next-large">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                x="5"
-                y="10"
-                width="38"
-                height="30"
-                rx="2"
-                fill="none"
-                stroke="#333"
-                stroke-width="4"
-              />
-              <path
-                d="M11 27V23"
-                stroke="#333"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </i>
-        </span>
-        <span
-          class="lp-simulator-pane-item"
-          @click="setCanvasWidth(mobileWidth)"
-        >
-          <i class="next-icon next-large">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M8 30H40V42C40 43.1046 39.1046 44 38 44H10C8.89543 44 8 43.1046 8 42V30Z"
-                fill="none"
-                stroke="#333"
-                stroke-width="4"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M40 30V6C40 4.89543 39.1046 4 38 4H10C8.89543 4 8 4.89543 8 6V30"
-                stroke="#333"
-                stroke-width="4"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M22 37H26"
-                stroke="#333"
-                stroke-width="4"
-                stroke-linecap="round"
-              />
-            </svg>
-          </i>
-        </span>
-        <div class="lp-simulator-width-setter">
-          <span class="lp-simulator-width-setter-wrapper">
-            <input
-              v-model="canvasWidth"
-              type="text"
-              autocomplete="off"
-              height="28"
-              @change="setCanvasWidth($event.target.value)"
-            />
-            <span
-              class="next-input-group-addon next-input-group-text next-medium"
-              >px</span
-            >
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11C8 9.34315 9.34315 8 11 8H37C38.6569 8 40 9.34315 40 11V32H8V11Z"
+                  stroke="#333"
+                  stroke-width="4"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M4 32H44V34C44 37.3137 41.3137 40 38 40H10C6.68629 40 4 37.3137 4 34V32Z"
+                  fill="none"
+                  stroke="#333"
+                  stroke-width="4"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </i>
           </span>
+          <span
+            class="lp-simulator-pane-item"
+            @click="setCanvasWidth(padWidth)"
+          >
+            <i class="next-icon next-large">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="5"
+                  y="10"
+                  width="38"
+                  height="30"
+                  rx="2"
+                  fill="none"
+                  stroke="#333"
+                  stroke-width="4"
+                />
+                <path
+                  d="M11 27V23"
+                  stroke="#333"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </i>
+          </span>
+          <span
+            class="lp-simulator-pane-item"
+            @click="setCanvasWidth(mobileWidth)"
+          >
+            <i class="next-icon next-large">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 30H40V42C40 43.1046 39.1046 44 38 44H10C8.89543 44 8 43.1046 8 42V30Z"
+                  fill="none"
+                  stroke="#333"
+                  stroke-width="4"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M40 30V6C40 4.89543 39.1046 4 38 4H10C8.89543 4 8 4.89543 8 6V30"
+                  stroke="#333"
+                  stroke-width="4"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M22 37H26"
+                  stroke="#333"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </i>
+          </span>
+          <div class="lp-simulator-width-setter">
+            <span class="lp-simulator-width-setter-wrapper">
+              <input
+                v-model="canvasWidth"
+                type="text"
+                autocomplete="off"
+                height="28"
+                @change="setCanvasWidth($event.target.value)"
+              />
+              <span
+                class="next-input-group-addon next-input-group-text next-medium"
+                >px</span
+              >
+            </span>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="top-area-right">
-      <el-button @click="preview">预览</el-button>
-      <MetaData :data="JSON.stringify(props.content, null, 2)" />
-      <el-button @click="save">保存</el-button>
-    </div>
-  </div>
+    </template>
+    <template #extra>
+      <div class="top-area-right">
+        <el-button @click="preview">预览</el-button>
+        <MetaData :data="JSON.stringify(props.content, null, 2)" />
+        <el-button @click="save">保存</el-button>
+      </div>
+    </template>
+  </el-page-header>
 </template>
 
 <script setup>
@@ -173,6 +181,7 @@ const save = async () => {
 <style scoped>
 .top-area {
   display: flex;
+  flex-wrap: wrap-reverse;
   background-color: #fff;
   width: 100%;
   margin-bottom: 2px;
@@ -181,7 +190,6 @@ const save = async () => {
 
 .top-area-center {
   flex: 1;
-  flex-direction: row;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -260,11 +268,10 @@ input {
 
 .top-area-right {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   gap: 3px;
-  width: 300px;
+  padding: 0px 10px;
 }
 
 button {
