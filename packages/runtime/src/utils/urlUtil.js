@@ -1,8 +1,11 @@
-export function getQueryString(name) {
-  let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-  let r = window.location.hash.slice(1).match(reg);
-  if (r != null) {
-    return decodeURIComponent(r[2]);
+export function getAppIdFromQueryParam() {
+  const hash = window.location.hash;
+  if (!hash) {
+    return null;
   }
-  return null;
+  const res = hash.match(/appId=(\d+)/);
+  if (!res) {
+    return null;
+  }
+  return res[1];
 }
