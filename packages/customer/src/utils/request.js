@@ -1,8 +1,19 @@
 const BASE_URL = `${import.meta.env.VITE_BASE_API_URL}`;
 
-async function get(url, baseUrl = BASE_URL) {
-  const res = await fetch(baseUrl + url, {
-    method: 'GET'
+async function get(
+  path,
+  baseUrl = BASE_URL,
+  headers = {},
+  cors = 'cors',
+  credentials = 'same-origin'
+) {
+  const res = await fetch(baseUrl + path, {
+    method: 'GET',
+    headers: {
+      ...headers
+    },
+    mode: cors,
+    credentials: credentials
   })
     .then((response) => {
       if (response.ok) {
@@ -17,15 +28,24 @@ async function get(url, baseUrl = BASE_URL) {
   return res;
 }
 
-async function post(url, params, baseUrl = BASE_URL) {
-  const res = await fetch(baseUrl + url, {
+async function post(
+  path,
+  params,
+  baseUrl = BASE_URL,
+  headers = { 'Content-type': 'application/json; charset=UTF-8' },
+  cors = 'cors',
+  credentials = 'same-origin'
+) {
+  const res = await fetch(baseUrl + path, {
     method: 'POST',
     body: JSON.stringify({
       ...params
     }),
     headers: {
-      'Content-type': 'application/json; charset=UTF-8'
-    }
+      ...headers
+    },
+    mode: cors,
+    credentials: credentials
   })
     .then((response) => {
       if (response.ok) {
@@ -48,8 +68,6 @@ export default {
       post: post
     });
   },
-  $request: {
-    get: get,
-    post: post
-  }
+  get: get,
+  post: post
 };
