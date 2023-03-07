@@ -1,27 +1,11 @@
 import { getAppIdFromQueryParam } from '../utils/urlUtil';
+import { request } from '@lowcode/helper';
 const routes = [];
 
 const router = VueRouter.createRouter({
   history: VueRouter.createWebHashHistory(),
   routes
 });
-
-async function get(url) {
-  const res = await fetch(url, {
-    method: 'GET'
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error(response.statusText);
-      }
-    })
-    .catch(() => {
-      ElementPlus.ElMessageBox.alert('网络忙，请稍后再试', '提示', {});
-    });
-  return res;
-}
 
 const appId = getAppIdFromQueryParam('appId');
 // console.log('appId', appId);
@@ -30,7 +14,7 @@ if (!appId) {
 }
 
 const BASE_URL = `${import.meta.env.VITE_BASE_API_URL}`;
-const routeRes = await get(`${BASE_URL}/v1/page/list?appId=${appId}`);
+const routeRes = await request.get(`/v1/page/list?appId=${appId}`, BASE_URL);
 // console.log('routeRes', routeRes);
 
 // 通过appId从后端获取路由。这里实际可以把所有路由都加载了，后续就不用再动态加，只用处理跳转登陆逻辑（权限控制）
