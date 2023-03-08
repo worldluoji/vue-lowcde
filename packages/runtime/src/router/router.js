@@ -1,4 +1,4 @@
-import { getAppIdFromQueryParam } from '../utils/urlUtil';
+import { getAppId, getAppName } from '../utils/urlUtil';
 import { request } from '@lowcode/helper';
 const routes = [];
 
@@ -7,7 +7,7 @@ const router = VueRouter.createRouter({
   routes
 });
 
-const appId = getAppIdFromQueryParam('appId');
+const appId = getAppId();
 // console.log('appId', appId);
 if (!appId) {
   throw new Error('appId为空');
@@ -35,6 +35,12 @@ if (routeRes && routeRes.length > 0) {
     component: () => import('../view/DynamicRender.vue'),
     props: { pageId: r.id + '', appId }
   });
+}
+
+const title = getAppName();
+// console.log(222, title);
+if (title) {
+  document.title = title;
 }
 
 // console.log('router', router.getRoutes());
