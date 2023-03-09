@@ -6,12 +6,6 @@
   </div>
 </template>
 
-<!-- <script>
-export default {
-  props: ['pageId']
-};
-</script> -->
-
 <script setup>
 import { onBeforeMount, inject, ref, watch } from 'vue';
 import { Render } from '@lowcode/helper';
@@ -51,7 +45,7 @@ const test = () => {
   if (p.pageId == 2) {
     router.push({ name: 'test1', query: { pageId: 3, appId: p.appId } });
   } else {
-    router.push({ path: 'home', query: { pageId: 2, appId: p.appId } });
+    router.push({ name: 'home', query: { pageId: 2, appId: p.appId } });
   }
 };
 </script>

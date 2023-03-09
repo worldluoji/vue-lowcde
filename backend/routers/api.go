@@ -4,7 +4,6 @@ import (
 	"backend/internal/service/app"
 	"backend/internal/service/meta"
 	"backend/internal/service/page"
-	"backend/internal/service/product"
 	"backend/internal/service/registry"
 	"backend/internal/service/user"
 	"time"
@@ -29,8 +28,6 @@ func GetApiRouter() *gin.Engine {
 		MaxAge: 12 * time.Hour,
 	}))
 
-	productHandler := product.NewProductHandler()
-	productHandler.InitProducts()
 	userHandler := user.NewUserHandler()
 	userHandler.InitUsers()
 
@@ -42,11 +39,6 @@ func GetApiRouter() *gin.Engine {
 	// 路由分组、中间件、认证
 	v1 := router.Group("/v1")
 	{
-		productv1 := v1.Group("/products")
-		{
-			// 路由匹配
-			productv1.GET(":category", productHandler.GetByCateGory)
-		}
 		userv1 := v1.Group("/users")
 		{
 			userv1.GET("list", userHandler.GetUsers)

@@ -4,7 +4,7 @@
       <el-header>
         <div class="top">
           <TopAreaLeft />
-          <h1>应用-{{ appName }}</h1>
+          <h1 class="title">应用-{{ appName }}</h1>
         </div>
       </el-header>
       <el-main>
@@ -148,5 +148,9 @@ const handleDelete = (pageId) => {
 img {
   width: 100%;
   height: 300px;
+}
+
+.title {
+  margin-left: 20vw;
 }
 </style>

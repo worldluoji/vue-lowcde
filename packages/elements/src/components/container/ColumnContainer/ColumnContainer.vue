@@ -30,7 +30,7 @@ export default {
   },
   setup(props) {
     const templateColumns = ref(
-      props.props.templateColumns || 'repeat(auto-fit, minmax(100px, 1fr))'
+      props.props.templateColumns || 'repeat(auto-fit, minmax(10px, 1fr))'
     );
     const gap = ref(`${props.props.gap || '0'}px`);
     return {

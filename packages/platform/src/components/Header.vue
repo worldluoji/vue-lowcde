@@ -7,6 +7,7 @@
     @select="handleSelect"
   >
     <TopAreaLeft />
+    <span class="nav"></span>
     <el-menu-item index="/">应用列表</el-menu-item>
     <el-menu-item index="/help" disabled>帮助</el-menu-item>
   </el-menu>
@@ -29,5 +30,9 @@ const handleSelect = (key) => {
 .el-menu-item {
   margin: 20px;
   font-size: 1.2rem;
+}
+
+.nav {
+  margin-left: 5vw;
 }
 </style>
