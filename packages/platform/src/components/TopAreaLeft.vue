@@ -1,6 +1,6 @@
 <template>
-  <div class="top-area-left" @click="toAppList">
-    <div class="lowcode-plugin-logo">
+  <div class="top-area-left">
+    <div class="lowcode-plugin-logo" @click="toAppList">
       <svg
         width="36"
         height="36"
@@ -18,11 +18,13 @@
       </svg>
       <p class="font">低代码引擎</p>
     </div>
+    <LangSelector />
   </div>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router';
+import LangSelector from './LangSelector.vue';
 const router = useRouter();
 const toAppList = () => {
   router.push({ path: '/' });

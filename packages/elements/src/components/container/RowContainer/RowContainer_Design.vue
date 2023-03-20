@@ -10,7 +10,13 @@
       @end="dragging = false"
     >
       <template #item="{ element }">
-        <div :class="'list-group-item'" @click.stop="showPanel(element)">
+        <div
+          :class="[
+            { 'list-group-item': true },
+            { 'text-center': !element.props.element }
+          ]"
+          @click.stop="showPanel(element)"
+        >
           <component
             :is="
               element.type === 'container'
@@ -132,9 +138,12 @@ export default {
 }
 
 .list-group-item {
-  text-align: center;
   &:hover {
     border: 1px dashed blue;
   }
+}
+
+.text-center {
+  text-align: center;
 }
 </style>

@@ -4,6 +4,7 @@ import router from './router/router';
 import elements from '@lowcode/elements';
 import { request, AtomicManager } from '@lowcode/helper';
 import DragManager from './manager/drag/DragManager.js';
+import i18n from './i18n';
 
 const pinia = Pinia.createPinia();
 
@@ -38,4 +39,5 @@ Vue.createApp(App)
   .use(request)
   .use(ElementPlus)
   .use(vant)
+  .use(i18n)
   .mount('#app');

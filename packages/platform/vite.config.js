@@ -19,7 +19,8 @@ let globals = externalGlobals(
     vue: 'Vue',
     pinia: 'Pinia',
     'vue-router': 'VueRouter',
-    'element-plus': 'ElementPlus'
+    'element-plus': 'ElementPlus',
+    'vue-i18n': 'VueI18n'
   },
   {
     exclude: ['**/codicon.css']
@@ -55,7 +56,7 @@ export default () =>
     build: {
       assetsDir: './static',
       rollupOptions: {
-        external: ['vue', 'pinia', 'vue-router'],
+        external: ['vue', 'pinia', 'vue-router', 'vue-i18n', 'element-plus'],
         plugins: [commonjs(), globals],
         output: {
           manualChunks: {
