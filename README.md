@@ -62,7 +62,7 @@ linux可写入到.bashrc, Mac在~目录下有.bash_profile和.zprofile可配置�
 
 
 # 其它说明
-全局引入的包如下，也就是public/static目录下的文件是从这里下载的，内网没有cdn，就先下载下来了。
+1. 全局引入的包如下，也就是public/static目录下的文件是从这里下载的，内网没有cdn，就先下载下来了。
 ```
 <script src="https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.prod.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue-router@4.1.6/dist/vue-router.global.prod.js"></script>
@@ -81,3 +81,10 @@ linux可写入到.bashrc, Mac在~目录下有.bash_profile和.zprofile可配置�
     https://cdn.jsdelivr.net/npm/vant@4.0.11/lib/index.min.css
 " rel="stylesheet">
 ```
+
+2. 如何使用运行时预览的功能
+对于本地，先 pnpm build:engine 打包引擎包, 进入dist目录，然后
+```
+http-server -p 8988
+```
+对于生产环境，修改 .env.production 中的 VITE_RUNTIME_URL 指向引擎实际的URL地址。
