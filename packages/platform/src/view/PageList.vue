@@ -5,6 +5,7 @@
         <div class="top">
           <TopAreaLeft />
           <h1 class="title">{{ $t('msg.app') }}-{{ appName }}</h1>
+          <el-button text @click="toRutime">运行时预览</el-button>
         </div>
       </el-header>
       <el-main>
@@ -71,6 +72,7 @@ import { onBeforeMount, ref, inject, reactive } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import TopAreaLeft from '../components/TopAreaLeft.vue';
 import Registy from '../components/Registry.vue';
+const RUNTIME_URL = `${import.meta.env.VITE_RUNTIME_URL}`;
 const $request = inject('$request');
 const pageList = ref([]);
 const route = useRoute();
@@ -119,6 +121,10 @@ const toDesigner = (pageId) => {
 const handleDelete = (pageId) => {
   // TODO
   console.log(pageId);
+};
+
+const toRutime = () => {
+  window.location.href = `${RUNTIME_URL}/#/?appName=${appName}&appId=${appId}`;
 };
 </script>
 

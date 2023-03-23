@@ -12,6 +12,7 @@
     "build:comp": "pnpm -r --filter=./packages/customer build",
     "build:engine": "pnpm -r --filter=./packages/runtime build",
     "preview:engine": "pnpm -r --filter=./packages/runtime preview",
+    "dev:engine": "pnpm -r --filter=./packages/runtime dev",
     "prepare": "husky install"
   },
   "repository": {
