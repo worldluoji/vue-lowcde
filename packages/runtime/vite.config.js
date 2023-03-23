@@ -56,7 +56,7 @@ export default defineConfig({
   build: {
     assetsDir: './static',
     rollupOptions: {
-      external: ['vue', 'pinia', 'vue-router'],
+      external: ['vue', 'pinia', 'vue-router', 'element-plus'],
       plugins: [commonjs(), globals]
     }
   },
