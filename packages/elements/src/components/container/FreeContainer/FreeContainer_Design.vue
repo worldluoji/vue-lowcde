@@ -13,7 +13,7 @@
         top: it.props.top,
         left: it.props.left
       }"
-      class="child"
+      :class="['child', { inRow: it.props.inRow === '1' }]"
       :data-child="it.id"
     >
       <component
@@ -89,5 +89,9 @@ const hideBorder = () => {
   .child {
     position: absolute;
   }
+}
+
+.inRow {
+  width: 100%;
 }
 </style>

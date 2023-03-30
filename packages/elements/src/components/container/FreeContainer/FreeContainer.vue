@@ -7,7 +7,7 @@
         top: it.props.top,
         left: it.props.left
       }"
-      class="child"
+      :class="['child', { inRow: it.props.inRow === '1' }]"
     >
       <component :is="it.name" :props="it.props" :eid="it.id" />
     </div>
@@ -41,5 +41,9 @@ const props = reactive(p.props);
     position: absolute;
     width: 100%;
   }
+}
+
+.inRow {
+  width: 100%;
 }
 </style>

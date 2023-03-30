@@ -31,6 +31,13 @@
         <el-form-item label="left">
           <el-input v-model="newItem.left" />
         </el-form-item>
+        <div class="mb-2 flex items-center text-sm">
+          <span class="info">是否占据一行:</span>
+          <el-radio-group v-model="newItem.inRow" class="ml-4">
+            <el-radio label="1" size="large">是</el-radio>
+            <el-radio label="0" size="large">否</el-radio>
+          </el-radio-group>
+        </div>
         <el-form-item>
           <el-button type="primary" @click="addItem(newItem)"> 新增 </el-button>
           <el-button @click="reset"> 重置 </el-button>
@@ -50,6 +57,13 @@
           <el-form-item label="left">
             <el-input v-model="it.props.left" />
           </el-form-item>
+          <div class="mb-2 flex items-center text-sm">
+            <span class="info">是否占据一行:</span>
+            <el-radio-group v-model="it.props.inRow" class="ml-4">
+              <el-radio label="1" size="large">是</el-radio>
+              <el-radio label="0" size="large">否</el-radio>
+            </el-radio-group>
+          </div>
           <el-form-item>
             <el-button type="danger" @click="deleteItem(it.id)">
               删除
@@ -83,8 +97,7 @@ let newItem = reactive({
   name: '',
   top: '',
   left: '',
-  right: '',
-  bottom: ''
+  inRow: '0'
 });
 
 const itemList = ref(p.props.children || []);
@@ -92,6 +105,7 @@ const reset = () => {
   newItem.name = '';
   newItem.top = '';
   newItem.left = '';
+  newItem.inRow = '0';
 };
 const change = () => {
   const finalData = {
@@ -106,7 +120,8 @@ const addItem = (item) => {
     id: uuid(),
     props: {
       top: item.top,
-      left: item.left
+      left: item.left,
+      inRow: item.inRow
     }
   };
   itemList.value.push(newItem);
@@ -126,5 +141,9 @@ const deleteItem = (id) => {
 <style scoped>
 .relativePanel {
   width: 100%;
+}
+
+.info {
+  margin-right: 10px;
 }
 </style>
