@@ -80,6 +80,7 @@ linux可写入到.bashrc, Mac在~目录下有.bash_profile和.zprofile可配置�
 <link href="
     https://cdn.jsdelivr.net/npm/vant@4.0.11/lib/index.min.css
 " rel="stylesheet">
+https://unpkg.com/rxjs@7.8.0/dist/bundles/rxjs.umd.min.js
 ```
 
 2. 如何使用运行时预览的功能
