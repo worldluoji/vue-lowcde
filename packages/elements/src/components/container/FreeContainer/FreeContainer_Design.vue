@@ -46,17 +46,6 @@ const p = defineProps({
 const props = reactive(p.props);
 const meta = metaStore();
 
-const callBack = (top, left, id) => {
-  meta.updateProps(id, { top, left });
-};
-
-const vFree = {
-  mounted: (el) => {
-    // console.log(321, el.dataset.child);
-    addDragCapability(el, callBack);
-  }
-};
-
 watch(props, (newVal) => {
   // console.log(123, newVal, p.eid);
   if (newVal.children && p.eid) {
@@ -78,6 +67,23 @@ const hideBorder = () => {
   parentDom.value.style.border = '';
   // parentDom.value.classList.remove('ignore-elements');
 };
+
+const callBack = (top, left, id) => {
+  const width = Number(parentDom.value.clientWidth);
+  const height = Number(parentDom.value.clientHeight);
+  console.log(123, width, height);
+  meta.updateProps(id, {
+    top: `${(top / height) * 100}%`,
+    left: `${(left / width) * 100}%`
+  });
+};
+
+const vFree = {
+  mounted: (el) => {
+    // console.log(321, el.dataset.child);
+    addDragCapability(el, callBack);
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -89,6 +95,7 @@ const hideBorder = () => {
   .child {
     position: absolute;
   }
+  box-sizing: border-box;
 }
 
 .inRow {

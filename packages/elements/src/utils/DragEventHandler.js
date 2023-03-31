@@ -94,7 +94,7 @@ export function addDragCapability(element, handleMouseUp) {
     if (handleMouseUp) {
       const elementId = element.dataset.child;
       if (elementId) {
-        handleMouseUp(`${top}px`, `${left}px`, elementId);
+        handleMouseUp(top, left, elementId);
       }
     }
   });
