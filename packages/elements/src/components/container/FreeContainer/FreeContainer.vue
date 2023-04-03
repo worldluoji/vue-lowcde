@@ -1,5 +1,5 @@
 <template>
-  <div class="container-parent">
+  <div v-atomicattr="props.atomicAttrs" class="container-parent">
     <div
       v-for="it in props.children"
       :key="it.id"
@@ -39,7 +39,6 @@ const props = reactive(p.props);
   background-color: v-bind('props.backgroundColor');
   .child {
     position: absolute;
-    width: 100%;
   }
 }
 

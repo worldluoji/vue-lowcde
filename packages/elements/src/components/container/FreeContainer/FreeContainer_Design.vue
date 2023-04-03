@@ -1,6 +1,7 @@
 <template>
   <div
     ref="parentDom"
+    v-atomicattr="props.atomicAttrs"
     class="container-parent"
     @mouseover.stop="showBorder"
     @mouseout.stop="hideBorder"
