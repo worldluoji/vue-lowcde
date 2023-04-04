@@ -1,0 +1,8 @@
+{
+    "name": "FreeContainer",
+    "title": "自由容器",
+    "description": "自由拖拽容器",
+    "type": "container",
+    "icon": "",
+    "platforms": ["web", "mobile"]
+}

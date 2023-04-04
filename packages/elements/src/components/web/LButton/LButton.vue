@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <span>
     <el-button
       :type="p.props.buttonType"
       :circle="p.props.circle"
@@ -7,7 +7,7 @@
     >
       {{ p.props.buttonName || '按钮名称' }}
     </el-button>
-  </div>
+  </span>
 </template>
 
 <script setup>

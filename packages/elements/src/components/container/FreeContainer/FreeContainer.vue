@@ -1,15 +1,13 @@
 <template>
-  <div class="container-parent">
+  <div v-atomicattr="props.atomicAttrs" class="container-parent">
     <div
       v-for="it in props.children"
       :key="it.id"
       :style="{
-        top: it.top,
-        left: it.left,
-        right: it.right,
-        bottom: it.bottom
+        top: it.props.top,
+        left: it.props.left
       }"
-      class="child"
+      :class="['child', { inRow: it.props.inRow === '1' }]"
     >
       <component :is="it.name" :props="it.props" :eid="it.id" />
     </div>
@@ -41,7 +39,10 @@ const props = reactive(p.props);
   background-color: v-bind('props.backgroundColor');
   .child {
     position: absolute;
-    width: 100%;
   }
+}
+
+.inRow {
+  width: 100%;
 }
 </style>

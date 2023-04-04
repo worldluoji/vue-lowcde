@@ -1,6 +1,7 @@
 <template>
   <div
     ref="parentDom"
+    v-atomicattr="props.atomicAttrs"
     class="container-parent"
     @mouseover.stop="showBorder"
     @mouseout.stop="hideBorder"
@@ -8,13 +9,13 @@
     <div
       v-for="it in props.children"
       :key="it.id"
+      v-free
       :style="{
-        top: it.top,
-        left: it.left,
-        right: it.right,
-        bottom: it.bottom
+        top: it.props.top,
+        left: it.props.left
       }"
-      class="child"
+      :class="['child', { inRow: it.props.inRow === '1' }]"
+      :data-child="it.id"
     >
       <component
         :is="it.type === 'container' ? `${it.name}_Design` : it.name"
@@ -29,6 +30,8 @@
 <script setup>
 import { reactive, watch, ref } from 'vue';
 import { metaStore, currentPanelStore } from '@lowcode/elements';
+import { addDragCapability } from '../../../utils/DragEventHandler';
+
 const p = defineProps({
   props: {
     type: Object,
@@ -52,17 +55,35 @@ watch(props, (newVal) => {
 });
 
 const showPanel = (element) => {
-  console.log(11, element);
   currentPanelStore().set(element);
 };
 
 const parentDom = ref('');
 const showBorder = () => {
   parentDom.value.style.border = '1px dashed blue';
+  // parentDom.value.classList.add('ignore-elements');
 };
 
 const hideBorder = () => {
   parentDom.value.style.border = '';
+  // parentDom.value.classList.remove('ignore-elements');
+};
+
+const callBack = (top, left, id) => {
+  const width = Number(parentDom.value.clientWidth);
+  const height = Number(parentDom.value.clientHeight);
+  console.log(123, width, height);
+  meta.updateProps(id, {
+    top: `${(top / height) * 100}%`,
+    left: `${(left / width) * 100}%`
+  });
+};
+
+const vFree = {
+  mounted: (el) => {
+    // console.log(321, el.dataset.child);
+    addDragCapability(el, callBack);
+  }
 };
 </script>
 
@@ -74,7 +95,11 @@ const hideBorder = () => {
   background-color: v-bind('props.backgroundColor');
   .child {
     position: absolute;
-    width: 100%;
   }
+  box-sizing: border-box;
+}
+
+.inRow {
+  width: 100%;
 }
 </style>
