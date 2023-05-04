@@ -98,13 +98,13 @@ const addNewItem = async () => {
     appId: Number(p.appId)
   });
   if (res.id) {
-    ElMessage({
+    ElementPlus.ElMessage({
       message: '添加成功',
       type: 'success'
     });
     registTableData.value.push(res);
   } else {
-    ElMessage({
+    ElementPlus.ElMessage({
       message: '网络忙，请稍后再试',
       type: 'warning'
     });
@@ -117,13 +117,13 @@ const handleDelete = async (id) => {
     id
   });
   if (res === 'success') {
-    ElMessage({
+    ElementPlus.ElMessage({
       message: '删除成功',
       type: 'success'
     });
     registTableData.value = registTableData.value.filter((v) => v.id !== id);
   } else {
-    ElMessage({
+    ElementPlus.ElMessage({
       message: '网络忙,请稍后再试',
       type: 'warning'
     });

@@ -90,13 +90,13 @@ const addNewApp = async () => {
     desc: form.desc
   });
   if (res.id) {
-    ElMessage({
+    ElementPlus.ElMessage({
       message: '添加成功',
       type: 'success'
     });
     appList.value.push(res);
   } else {
-    ElMessage({
+    ElementPlus.ElMessage({
       message: '添加失败，请稍后再试',
       type: 'warning'
     });
