@@ -230,6 +230,7 @@ const save = async () => {
   width: 105px;
   height: 32px;
   margin-left: 12px;
+  padding: 6px;
 }
 
 .next-input-group-addon {
@@ -237,7 +238,7 @@ const save = async () => {
   display: table-cell;
   vertical-align: middle;
   white-space: nowrap;
-  height: 22px;
+  line-height: 19px;
 }
 
 .next-input-group-text {
@@ -259,7 +260,7 @@ const save = async () => {
 }
 
 input {
-  width: 28px;
+  width: 38px;
   padding: 0 5px;
   font-size: 12px;
   height: 22px;

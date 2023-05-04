@@ -1,20 +1,18 @@
 <template>
-  <el-affix :offset="120">
-    <el-tabs :tab-position="tabPosition" class="left-tabs" type="border-card">
-      <el-tab-pane label="PC基础组件">
-        <Material :components-info="basicWebComponentsInfo" />
-      </el-tab-pane>
-      <el-tab-pane label="移动基础组件">
-        <Material :components-info="basicMobileComponentsInfo" />
-      </el-tab-pane>
-      <el-tab-pane label="容器组件">
-        <Material :components-info="containerComponentsInfo" />
-      </el-tab-pane>
-      <!-- <el-tab-pane label="自定义组件">
-        <Material :components-info="CustomerComponentsInfoLocal" />
-      </el-tab-pane> -->
-    </el-tabs>
-  </el-affix>
+  <el-tabs :tab-position="tabPosition" class="left-tabs" type="border-card">
+    <el-tab-pane label="PC组件">
+      <Material :components-info="basicWebComponentsInfo" />
+    </el-tab-pane>
+    <el-tab-pane label="移动组件">
+      <Material :components-info="basicMobileComponentsInfo" />
+    </el-tab-pane>
+    <el-tab-pane label="容器组件">
+      <Material :components-info="containerComponentsInfo" />
+    </el-tab-pane>
+    <!-- <el-tab-pane label="自定义组件">
+      <Material :components-info="CustomerComponentsInfoLocal" />
+    </el-tab-pane> -->
+  </el-tabs>
 </template>
 
 <script setup>
@@ -38,7 +36,7 @@ import {
 //   console.log(222, m.allComponents);
 // });
 
-const tabPosition = ref('left');
+const tabPosition = ref('top');
 </script>
 
 <style>
