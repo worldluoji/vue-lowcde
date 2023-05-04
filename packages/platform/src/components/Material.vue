@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="list-contaienr">
     <div v-draggable class="material-icon-list">
       <div
         v-for="it in p.componentsInfo"
@@ -30,14 +30,14 @@ const p = defineProps({
 
 <style scoped>
 .material-icon-list {
-  /* margin-right: 10vw; */
   display: grid;
-  grid-template-columns: 70px 70px;
-  grid-template-rows: 60px 60px;
+  grid-template-columns: 70px 70px 70px;
+  grid-template-rows: repeat(auto-fit, minmax(60px, 70px));
   gap: 18px;
   place-items: center;
   background-color: #fff;
   margin-top: 10px;
+  min-height: 100vh;
 }
 
 .material-icon-list:after {
@@ -66,5 +66,10 @@ const p = defineProps({
 img {
   width: 36px;
   height: 36px;
+}
+
+.list-contaienr {
+  display: grid;
+  place-items: center;
 }
 </style>

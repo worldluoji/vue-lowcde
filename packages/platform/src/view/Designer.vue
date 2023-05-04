@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="designer">
     <el-container>
       <el-header>
         <Operation :content="content" @changeWidth="changeWidth" @save="save" />
@@ -11,7 +11,6 @@
         <el-container>
           <el-main>
             <div v-dragcontent="content" v-deps="depMap" class="drag-content">
-              <div class="top-white"></div>
               <draggable
                 v-dragcontent="content"
                 class="list-group"
@@ -39,7 +38,6 @@
                   </div>
                 </template>
               </draggable>
-              <div class="top-white"></div>
             </div>
             <Panel @cancel="cancelPanel" @deleteComponent="deleteComponent" />
           </el-main>
@@ -174,14 +172,22 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.designer {
+  --top-white-length: 30px;
+}
+
 .el-main {
   display: flex;
-  align-items: center;
+  // align-items: center;
   justify-content: center;
+  overflow: visible;
+  margin-top: var(--top-white-length, 30px);
+  padding: 0 var(--el-main-padding);
 }
 
 .el-aside {
   width: 300px;
+  margin-top: var(--top-white-length, 30px);
 }
 
 .drag-content {
@@ -190,11 +196,6 @@ export default {
   border: 1px solid #ddd;
   border-radius: 5px;
   background-color: #f0f2f5;
-  margin-top: 10px;
-}
-
-.top-white {
-  height: 30px;
 }
 
 .list-group {

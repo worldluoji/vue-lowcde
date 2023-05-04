@@ -100,13 +100,13 @@ const addNewPage = async () => {
     appId: Number(appId)
   });
   if (res.id) {
-    ElMessage({
+    ElementPlus.ElMessage({
       message: '添加成功',
       type: 'success'
     });
     pageList.value.push(res);
   } else {
-    ElMessage({
+    ElementPlus.ElMessage({
       message: '添加失败，请稍后再试',
       type: 'warning'
     });
