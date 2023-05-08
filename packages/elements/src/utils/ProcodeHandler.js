@@ -14,8 +14,12 @@ export async function implementCodeAsync(code) {
     throw new Error('代码不能为空');
   }
 
-  return await (async function () {
-    // console.log('code', p.props.code)
-    return new AsyncFunction('$request', code)($request);
-  })();
+  return await new AsyncFunction('$request', code)($request);
+}
+
+export function implementCodeSync(code) {
+  if (!code) {
+    throw new Error('代码不能为空');
+  }
+  return new Function(code)();
 }
