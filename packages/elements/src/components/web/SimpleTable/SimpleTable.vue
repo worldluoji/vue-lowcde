@@ -15,6 +15,7 @@
 
 <script setup>
 import { ref, watchEffect, inject } from 'vue';
+import { implementCodeAsync } from '../../../utils/ProcodeHandler.js';
 
 const $request = inject('$request');
 const p = defineProps({
@@ -28,17 +29,13 @@ const p = defineProps({
 
 const tableData = ref(null);
 
-const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 const getData = async () => {
   // 业务卡片，从后端获取数据
   if (!p.props) {
     return [];
   }
   if (p.props.interfaceType === 'ProCode') {
-    return await (async function () {
-      // console.log('code', p.props.code)
-      return await new AsyncFunction('$request', p.props.code)($request);
-    })();
+    return await implementCodeAsync(p.props.code);
   } else {
     return await $request.get(p.props.url);
   }
