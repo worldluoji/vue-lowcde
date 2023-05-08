@@ -77,9 +77,8 @@ const registTableData = ref([]);
 onBeforeMount(async () => {
   if (p.appId !== '') {
     let res = await $request.get(`/v1/registry/list?appId=${p.appId}`);
-    if (res) {
-      registTableData.value = res;
-      // console.log('1res', registTableData.value, res);
+    if (res && res.code == 0) {
+      registTableData.value = res.data;
     }
   }
 });
@@ -97,26 +96,26 @@ const addNewItem = async () => {
     ...form,
     appId: Number(p.appId)
   });
-  if (res.id) {
+  if (res.code == 0) {
     ElementPlus.ElMessage({
       message: '添加成功',
       type: 'success'
     });
-    registTableData.value.push(res);
+    registTableData.value.push(res.data);
   } else {
     ElementPlus.ElMessage({
-      message: '网络忙，请稍后再试',
+      message: res.message || '网络忙，请稍后再试',
       type: 'warning'
     });
   }
+  dialogNewVisible.value = false;
 };
 
 const handleDelete = async (id) => {
-  // console.log('handleDelete', id);
-  let res = await $request.post('/v1/registry/delete', {
+  let res = await $request.delete('/v1/registry/delete', {
     id
   });
-  if (res === 'success') {
+  if (res.code === 0) {
     ElementPlus.ElMessage({
       message: '删除成功',
       type: 'success'
@@ -124,7 +123,7 @@ const handleDelete = async (id) => {
     registTableData.value = registTableData.value.filter((v) => v.id !== id);
   } else {
     ElementPlus.ElMessage({
-      message: '网络忙,请稍后再试',
+      message: res.message || '网络忙,请稍后再试',
       type: 'warning'
     });
   }

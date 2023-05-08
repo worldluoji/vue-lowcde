@@ -9,6 +9,7 @@ import (
 	"gorm.io/gorm"
 
 	"backend/internal/model/registry"
+	"backend/internal/model/response"
 	"backend/internal/utils"
 )
 
@@ -40,16 +41,24 @@ func init() {
 	db.AutoMigrate(&RegistryPO{})
 }
 
+type Response response.Response
+
 func (u *RegistryHandler) GetRegistriesByAppId(c *gin.Context) {
+	var res Response
 	appId, ok := c.GetQuery("appId")
 	if !ok {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "fail to get appId"})
+		res.Code = http.StatusBadRequest
+		res.Message = "fail to get appId"
+		c.JSON(http.StatusBadRequest, res)
 		return
 	}
 	log.Println(appId)
 	var registries []RegistryPO
 	if err := db.Where("appId = ?", appId).Find(&registries).Error; err != nil {
-		log.Fatalf("Get registry error: %v", err)
+		res.Code = http.StatusInternalServerError
+		res.Message = "fail to get registry"
+		c.JSON(http.StatusBadRequest, res)
+		return
 	}
 	n := len(registries)
 	if n > 0 {
@@ -67,13 +76,18 @@ func (u *RegistryHandler) GetRegistriesByAppId(c *gin.Context) {
 		u.registries = nil
 	}
 
-	c.JSON(http.StatusOK, u.registries)
+	res.Code = 0
+	res.Data = u.registries
+	c.JSON(http.StatusOK, res)
 }
 
 func (u *RegistryHandler) CreateRegistry(c *gin.Context) {
+	var res Response
 	var registryVO RegistryVO
 	if err := c.ShouldBindJSON(&registryVO); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		res.Code = http.StatusBadRequest
+		res.Message = "fail to get params"
+		c.JSON(http.StatusBadRequest, res)
 		return
 	}
 
@@ -85,28 +99,38 @@ func (u *RegistryHandler) CreateRegistry(c *gin.Context) {
 	registry.CreatedAt = time.Now()
 	if err := db.Create(registry).Error; err != nil {
 		log.Printf("Create error: %v", err)
-		c.JSON(http.StatusInternalServerError, registryVO)
+		res.Code = http.StatusInternalServerError
+		res.Message = "create resigtry error"
+		c.JSON(http.StatusInternalServerError, res)
 		return
 	}
 
 	log.Printf("Create registry %s success", registry.RegisterName)
 
 	registryVO.ID = registry.ID
-	c.JSON(http.StatusOK, registryVO)
+	res.Code = 0
+	res.Data = registryVO
+	c.JSON(http.StatusOK, res)
 }
 
 func (u *RegistryHandler) DeleteRegistry(c *gin.Context) {
+	var res Response
 	var deleteVO DeleteVO
 	if err := c.ShouldBindJSON(&deleteVO); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		res.Code = http.StatusBadRequest
+		res.Message = "fail to get params"
+		c.JSON(http.StatusBadRequest, res)
 		return
 	}
 
 	id := deleteVO.ID
 	if err := db.Where("ID = ?", id).Delete(&RegistryPO{}).Error; err != nil {
 		log.Printf("Delete registry error: %v", err)
-		c.JSON(http.StatusOK, "failed")
+		res.Code = http.StatusBadRequest
+		res.Message = "fail to delete registry"
+		c.JSON(http.StatusInternalServerError, res)
 		return
 	}
-	c.JSON(http.StatusOK, "success")
+	res.Code = 0
+	c.JSON(http.StatusOK, res)
 }
