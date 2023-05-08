@@ -92,12 +92,11 @@ export default {
     if (this.pageId && (!appPageIdCache || appPageIdCache !== realAppPageId)) {
       // console.log(222, this.pageId);
       const res = await this.request.get(`/v1/meta/get?pageId=${this.pageId}`);
-      console.log(res);
-      if (res && res.id) {
-        this.meta.setId(res.id);
+      if (res && res.code == 0 && res.data && res.data.id) {
+        this.meta.setId(res.data.id);
         this.meta.setAppPageId(realAppPageId);
-        if (res.content) {
-          this.meta.set(JSON.parse(res.content), true);
+        if (res.data.content) {
+          this.meta.set(JSON.parse(res.data.content), true);
         }
       }
     }
@@ -155,7 +154,7 @@ export default {
         pageId: Number(this.pageId),
         id: this.metaId
       });
-      if (res.id) {
+      if (res.code == 0) {
         ElementPlus.ElMessage({
           message: '保存成功',
           type: 'success'

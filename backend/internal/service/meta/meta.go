@@ -9,6 +9,7 @@ import (
 	"gorm.io/gorm"
 
 	"backend/internal/model/meta"
+	"backend/internal/model/response"
 	"backend/internal/utils"
 )
 
@@ -38,30 +39,43 @@ func init() {
 	db.AutoMigrate(&MetaPO{})
 }
 
+type Response response.Response
+
 func (u *MetaHandler) GetMetaByPageId(c *gin.Context) {
+	var res Response
 	pageId, ok := c.GetQuery("pageId")
 	if !ok {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "fail to get pageId"})
+		res.Code = http.StatusBadRequest
+		res.Message = "fail to get pageId"
+		c.JSON(http.StatusBadRequest, res)
 		return
 	}
 
 	var meta MetaPO
 	if err := db.Where("pageId = ?", pageId).First(&meta).Error; err != nil {
 		log.Printf("Get meta error: %v", err)
-		c.JSON(http.StatusOK, MetaVO{Content: ""})
+		res.Code = http.StatusInternalServerError
+		res.Message = "fail to get meta data"
+		c.JSON(http.StatusInternalServerError, res)
 		return
 	}
 	u.meta.ID = meta.ID
 	u.meta.Content = meta.Content
 	u.meta.PageID = meta.PageID
 
-	c.JSON(http.StatusOK, u.meta)
+	res.Code = 0
+	res.Data = u.meta
+	c.JSON(http.StatusOK, res)
 }
 
 func (u *MetaHandler) CreateOrUpdateMeta(c *gin.Context) {
+	var res Response
 	var metaVO MetaVO
 	if err := c.ShouldBindJSON(&metaVO); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		log.Printf("get params error: %v", err)
+		res.Code = http.StatusBadRequest
+		res.Message = "fail to get params"
+		c.JSON(http.StatusBadRequest, res)
 		return
 	}
 
@@ -73,19 +87,24 @@ func (u *MetaHandler) CreateOrUpdateMeta(c *gin.Context) {
 		meta.ID = metaVO.ID
 		if err := db.Save(meta).Error; err != nil {
 			log.Printf("Update metadata error: %v", err)
-			c.JSON(http.StatusInternalServerError, &MetaVO{})
+			res.Code = http.StatusInternalServerError
+			res.Message = "Update metadata error"
+			c.JSON(http.StatusInternalServerError, res)
 			return
 		}
 	} else {
 		if err := db.Create(meta).Error; err != nil {
 			log.Printf("Create error: %v", err)
-			c.JSON(http.StatusInternalServerError, &MetaVO{})
+			res.Code = http.StatusInternalServerError
+			res.Message = "Create meata data error"
+			c.JSON(http.StatusInternalServerError, res)
 			return
 		}
 		metaVO.ID = meta.ID
 	}
 
 	log.Printf("Update page %d success", meta.PageID)
-
-	c.JSON(http.StatusOK, metaVO)
+	res.Code = 0
+	res.Data = metaVO
+	c.JSON(http.StatusOK, res)
 }

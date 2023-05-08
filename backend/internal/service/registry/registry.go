@@ -47,6 +47,7 @@ func (u *RegistryHandler) GetRegistriesByAppId(c *gin.Context) {
 	var res Response
 	appId, ok := c.GetQuery("appId")
 	if !ok {
+		log.Println("fail to get appId")
 		res.Code = http.StatusBadRequest
 		res.Message = "fail to get appId"
 		c.JSON(http.StatusBadRequest, res)
@@ -55,6 +56,7 @@ func (u *RegistryHandler) GetRegistriesByAppId(c *gin.Context) {
 	log.Println(appId)
 	var registries []RegistryPO
 	if err := db.Where("appId = ?", appId).Find(&registries).Error; err != nil {
+		log.Printf("get params error: %v", err)
 		res.Code = http.StatusInternalServerError
 		res.Message = "fail to get registry"
 		c.JSON(http.StatusBadRequest, res)
