@@ -81,7 +81,9 @@ const appName = route.query.appName;
 onBeforeMount(async () => {
   if (appId) {
     const res = await $request.get(`/v1/page/list?appId=${appId}`);
-    pageList.value = res;
+    if (res && res.code == 0) {
+      pageList.value = res.data;
+    }
   }
 });
 const dialogNewPageVisible = ref(false);
@@ -99,15 +101,15 @@ const addNewPage = async () => {
     desc: form.desc,
     appId: Number(appId)
   });
-  if (res.id) {
+  if (res.code == 0) {
     ElementPlus.ElMessage({
       message: '添加成功',
       type: 'success'
     });
-    pageList.value.push(res);
+    pageList.value.push(res.data);
   } else {
     ElementPlus.ElMessage({
-      message: '添加失败，请稍后再试',
+      message: res.message || '添加失败，请稍后再试',
       type: 'warning'
     });
   }
@@ -118,9 +120,28 @@ const router = useRouter();
 const toDesigner = (pageId) => {
   router.push({ path: '/designer', query: { appId: appId, pageId: pageId } });
 };
-const handleDelete = (pageId) => {
-  // TODO
-  console.log(pageId);
+const handleDelete = async (pageId) => {
+  // console.log(pageId);
+  const res = await $request.delete(`/v1/page/delete?id=${pageId}`);
+  if (res) {
+    if (res.code == 0) {
+      ElementPlus.ElMessage({
+        message: '删除成功',
+        type: 'success'
+      });
+      pageList.value = pageList.value.filter((p) => p.id !== pageId);
+    } else {
+      ElementPlus.ElMessage({
+        message: res.message ? res.message : '删除失败',
+        type: 'warning'
+      });
+    }
+  } else {
+    ElementPlus.ElMessage({
+      message: '删除失败',
+      type: 'warning'
+    });
+  }
 };
 
 const toRutime = () => {
