@@ -27,6 +27,8 @@ const p = defineProps({
   }
 });
 
+/*__onMounted__*/
+
 const tableData = ref(null);
 
 const getData = async () => {

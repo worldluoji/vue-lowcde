@@ -38,6 +38,24 @@
           </div>
         </el-scrollbar>
       </el-tab-pane>
+      <el-tab-pane label="高级" name="高级">
+        <el-scrollbar height="70vh">
+          <div>
+            <el-button text @click="drawVisible = true"> onMounted </el-button>
+            <el-drawer
+              v-model="drawVisible"
+              title="onMounted声明周期高代码编辑"
+              direction="ttb"
+              :append-to-body="true"
+            >
+              <JSEditor
+                :model-value="modelValue"
+                @update:modelValue="changeEditorContent"
+              />
+            </el-drawer>
+          </div>
+        </el-scrollbar>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -55,17 +73,21 @@ export default {
 import { ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { metaStore, currentPanelStore } from '@lowcode/elements';
+import { JSEditor } from '@lowcode/helper';
 
 const meta = metaStore();
 const currentPanel = storeToRefs(currentPanelStore());
 const current = currentPanel.get;
 const panelProps = ref({});
+const drawVisible = ref(false);
+const modelValue = ref('');
 
 watch(current, (newVal) => {
   let element = meta.getElementById(newVal.id);
   if (element && element.value) {
     panelProps.value = element.value.props;
   }
+  modelValue.value = panelProps.value.onMountedCode || '';
 });
 
 const change = (p) => {
@@ -79,6 +101,12 @@ const change = (p) => {
 
 const save = () => {
   meta.updateProps(current.value.id, panelProps.value);
+};
+
+const changeEditorContent = (content) => {
+  // console.log(content);
+  panelProps.value.onMountedCode = content;
+  save();
 };
 
 const emits = defineEmits(['cancel', 'deleteComponent']);
