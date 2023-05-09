@@ -4,8 +4,8 @@ const keywords = ['/*__onMounted__*/'];
 
 const newCode = `
 Vue.onMounted(() => {
-    if (p.props.onMountedCode && p.props.onMountedCode.length) {
-      implementCodeAsync(p.props.onMountedCode);
+    if (p.props.__lifecycle__ && p.props.__lifecycle__.length) {
+      implementCodeAsync(p.props.__lifecycle__[0]);
     }
 });`;
 

@@ -40,20 +40,10 @@
       </el-tab-pane>
       <el-tab-pane label="高级" name="高级">
         <el-scrollbar height="70vh">
-          <div>
-            <el-button text @click="drawVisible = true"> onMounted </el-button>
-            <el-drawer
-              v-model="drawVisible"
-              title="onMounted声明周期高代码编辑"
-              direction="ttb"
-              :append-to-body="true"
-            >
-              <JSEditor
-                :model-value="modelValue"
-                @update:modelValue="changeEditorContent"
-              />
-            </el-drawer>
-          </div>
+          <LifeCyclePro
+            :value="lifeCycleValue"
+            @change="changeLifecycleContent"
+          />
         </el-scrollbar>
       </el-tab-pane>
     </el-tabs>
@@ -73,21 +63,20 @@ export default {
 import { ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { metaStore, currentPanelStore } from '@lowcode/elements';
-import { JSEditor } from '@lowcode/helper';
+import LifeCyclePro from '../components/LifeCyclePro.vue';
 
 const meta = metaStore();
 const currentPanel = storeToRefs(currentPanelStore());
 const current = currentPanel.get;
 const panelProps = ref({});
-const drawVisible = ref(false);
-const modelValue = ref('');
+const lifeCycleValue = ref(['', '', '', '']);
 
 watch(current, (newVal) => {
   let element = meta.getElementById(newVal.id);
   if (element && element.value) {
     panelProps.value = element.value.props;
   }
-  modelValue.value = panelProps.value.onMountedCode || '';
+  lifeCycleValue.value = panelProps.value.__lifecycle__ || ['', '', '', ''];
 });
 
 const change = (p) => {
@@ -103,9 +92,11 @@ const save = () => {
   meta.updateProps(current.value.id, panelProps.value);
 };
 
-const changeEditorContent = (content) => {
-  // console.log(content);
-  panelProps.value.onMountedCode = content;
+const changeLifecycleContent = (value, index) => {
+  if (!panelProps.value.__lifecycle__) {
+    panelProps.value.__lifecycle__ = ['', '', '', ''];
+  }
+  panelProps.value.__lifecycle__[index] = value;
   save();
 };
 
