@@ -10,7 +10,7 @@ import autoprefixer from 'autoprefixer';
 
 import commonjs from 'rollup-plugin-commonjs';
 import externalGlobals from 'rollup-plugin-external-globals';
-import insertCodePlugin from './plugins/vite-plugin-insertcode';
+import insertLifecyclePlugin from './plugins/vite-plugin-insertlifecycle';
 
 const prefix = 'monaco-editor/esm/vs';
 
@@ -46,7 +46,7 @@ export default () =>
         // 设置目标浏览器，browserslist 配置语法
         targets: ['last 2 versions and since 2018 and > 0.5%']
       }),
-      insertCodePlugin(),
+      insertLifecyclePlugin(),
       ...plugins
     ],
     resolve: {

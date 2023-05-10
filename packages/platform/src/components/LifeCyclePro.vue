@@ -29,10 +29,16 @@ const p = defineProps({
 });
 const lifecycles = reactive([
   {
+    name: 'onBeforeMount',
+    title: 'onBeforeMount生命周期高代码编辑',
+    visiable: false,
+    modelValue: p.value[0]
+  },
+  {
     name: 'onMounted',
     title: 'onMounted生命周期高代码编辑',
     visiable: false,
-    modelValue: p.value[0]
+    modelValue: p.value[1]
   }
 ]);
 

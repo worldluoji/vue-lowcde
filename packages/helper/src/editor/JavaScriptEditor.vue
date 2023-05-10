@@ -40,11 +40,16 @@ let instance;
 let jsModel;
 
 onMounted(() => {
-  jsModel = monaco.editor.createModel(
-    props.modelValue,
-    'javascript',
-    monaco.Uri.parse('ts:filename/facts.d.ts')
-  );
+  jsModel = monaco.editor.getModel(monaco.Uri.parse('ts:filename/facts.d.ts'));
+  if (!jsModel) {
+    jsModel = monaco.editor.createModel(
+      props.modelValue,
+      'javascript',
+      monaco.Uri.parse('ts:filename/facts.d.ts')
+    );
+  } else {
+    jsModel.setValue(props.modelValue);
+  }
 
   instance = monaco.editor.create(dom.value, {
     model: jsModel,
