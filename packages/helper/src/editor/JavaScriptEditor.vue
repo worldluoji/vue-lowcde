@@ -26,9 +26,9 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  index: {
-    type: Number,
-    default: 0
+  attrName: {
+    type: String,
+    default: ''
   }
 });
 
@@ -77,7 +77,7 @@ watch(props, (newVal) => {
 });
 
 const save = () => {
-  emit('update:modelValue', instance.getValue(), props.index);
+  emit('update:modelValue', instance.getValue(), props.attrName);
 };
 </script>
 

@@ -69,14 +69,14 @@ const meta = metaStore();
 const currentPanel = storeToRefs(currentPanelStore());
 const current = currentPanel.get;
 const panelProps = ref({});
-const lifeCycleValue = ref(['', '', '', '']);
+const lifeCycleValue = ref({});
 
 watch(current, (newVal) => {
   let element = meta.getElementById(newVal.id);
   if (element && element.value) {
     panelProps.value = element.value.props;
   }
-  lifeCycleValue.value = panelProps.value.__lifecycle__ || ['', '', '', ''];
+  lifeCycleValue.value = panelProps.value.__lifecycle__ || {};
 });
 
 const change = (p) => {
@@ -92,11 +92,11 @@ const save = () => {
   meta.updateProps(current.value.id, panelProps.value);
 };
 
-const changeLifecycleContent = (value, index) => {
+const changeLifecycleContent = (value, attrName) => {
   if (!panelProps.value.__lifecycle__) {
-    panelProps.value.__lifecycle__ = ['', '', '', ''];
+    panelProps.value.__lifecycle__ = {};
   }
-  panelProps.value.__lifecycle__[index] = value;
+  panelProps.value.__lifecycle__[attrName] = value;
   save();
 };
 
