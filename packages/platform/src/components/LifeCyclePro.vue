@@ -8,6 +8,7 @@
       :append-to-body="true"
     >
       <JSEditor
+        v-if="it.visiable"
         :model-value="it.modelValue"
         :attr-name="it.name"
         @update:modelValue="change"
