@@ -24,7 +24,8 @@
     "packages/runtime",
     "packages/elements",
     "packages/helper",
-    "packages/customer"
+    "packages/customer",
+    "packages/viteplugins"
   ],
   "keywords": [],
   "author": "",

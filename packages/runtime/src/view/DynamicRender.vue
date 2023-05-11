@@ -26,8 +26,8 @@ const content = ref([]);
 const updateData = async (pageId) => {
   if (pageId) {
     let res = await $request.get(`/v1/meta/get?pageId=${pageId}`);
-    if (res && res.content) {
-      content.value = JSON.parse(res.content);
+    if (res && res.code == 0 && res.data) {
+      content.value = JSON.parse(res.data.content || '');
     }
   }
 };
