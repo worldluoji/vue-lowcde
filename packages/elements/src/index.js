@@ -8,6 +8,8 @@ import ContainerComponentsIn, {
 } from './components/container';
 import store from './store';
 
+import './globalInjection.js';
+
 export default {
   BasicWebComponentsIn,
   BasicMobileComponentsIn,

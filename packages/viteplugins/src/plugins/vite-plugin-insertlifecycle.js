@@ -7,7 +7,7 @@ const fileRegex = /\.vue$/;
 const template = `
 Vue.__template{0}__(() => {
     if (p.props.__lifecycle__ && p.props.__lifecycle__['__template{0}__']) {
-      implementCodeAsync(p.props.__lifecycle__['__template{0}__']);
+      __implementCodeAsync__(p.props.__lifecycle__['__template{0}__']);
     }
 });`;
 

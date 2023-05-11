@@ -15,7 +15,6 @@
 
 <script setup>
 import { ref, watchEffect, inject } from 'vue';
-import { implementCodeAsync } from '../../../utils/ProcodeHandler.js';
 
 const $request = inject('$request');
 const p = defineProps({
@@ -39,7 +38,7 @@ const getData = async () => {
     return [];
   }
   if (p.props.interfaceType === 'ProCode') {
-    return await implementCodeAsync(p.props.code);
+    return await __implementCodeAsync__(p.props.code);
   } else {
     return await $request.get(p.props.url);
   }
