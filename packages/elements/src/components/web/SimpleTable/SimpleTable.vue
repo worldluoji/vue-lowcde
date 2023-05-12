@@ -26,9 +26,7 @@ const p = defineProps({
   }
 });
 
-/*__onBeforeMount__*/
-
-/*__onMounted__*/
+/*__lifecycles__*/
 
 const tableData = ref(null);
 

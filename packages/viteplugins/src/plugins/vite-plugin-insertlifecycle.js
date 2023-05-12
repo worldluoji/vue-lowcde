@@ -17,4 +17,6 @@ const keywords = [
   { key: '/*__onMounted__*/', values: ['onMounted'] }
 ];
 
-export default vitePluginInsertCode(fileRegex, keywords, template);
+export default function () {
+  return vitePluginInsertCode(fileRegex, keywords, template);
+}
