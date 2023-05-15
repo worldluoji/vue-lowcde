@@ -1,4 +1,4 @@
-import { request } from '@lowcode/helper';
+import { request } from '@lowcode/request';
 
 const $request = {
   get: request.get,

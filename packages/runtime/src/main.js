@@ -1,7 +1,8 @@
 import App from './App.vue';
 import router from './router/router';
 import elements from '@lowcode/elements';
-import { AtomicManager, request } from '@lowcode/helper';
+import { AtomicManager } from '@lowcode/helper';
+import { request } from '@lowcode/request';
 
 const pinia = Pinia.createPinia();
 const atomicManager = new AtomicManager();

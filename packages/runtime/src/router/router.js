@@ -1,5 +1,5 @@
 import { getAppId, getAppName } from '../utils/urlUtil';
-import { request } from '@lowcode/helper';
+import { request } from '@lowcode/request';
 const routes = [];
 
 const router = VueRouter.createRouter({

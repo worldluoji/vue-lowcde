@@ -25,7 +25,8 @@
     "packages/elements",
     "packages/helper",
     "packages/customer",
-    "packages/viteplugins"
+    "packages/viteplugins",
+    "packages/request"
   ],
   "keywords": [],
   "author": "",

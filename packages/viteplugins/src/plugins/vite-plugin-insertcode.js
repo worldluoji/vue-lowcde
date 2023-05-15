@@ -31,7 +31,6 @@ function insertCodePlugin(fileRegex, keywords, template) {
       if (!modified) {
         return null;
       }
-      console.log(333, out);
 
       // console.log('after process', out, id);
       return {

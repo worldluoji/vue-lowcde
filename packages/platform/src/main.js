@@ -2,7 +2,8 @@ import './style.css';
 import App from './PlantForm.vue';
 import router from './router/router';
 import elements from '@lowcode/elements';
-import { request, AtomicManager } from '@lowcode/helper';
+import { AtomicManager } from '@lowcode/helper';
+import { request } from '@lowcode/request';
 import DragManager from './manager/drag/DragManager.js';
 import i18n from './i18n';
 
