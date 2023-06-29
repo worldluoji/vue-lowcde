@@ -1,7 +1,7 @@
 import './style.css';
 import App from './PlantForm.vue';
 import router from './router/router';
-import elements from '@lowcode/elements';
+import '/Users/honorluo/vue-lowcode/packages/elements/dist/StandardElements/1.0.0/style.css';
 import { AtomicManager } from '@lowcode/helper';
 import { request } from '@lowcode/request';
 import DragManager from './manager/drag/DragManager.js';
@@ -12,7 +12,7 @@ const pinia = Pinia.createPinia();
 const dragManager = new DragManager();
 const atomicManager = new AtomicManager();
 
-Vue.createApp(App)
+const app = Vue.createApp(App)
   .directive('draggable', (el) => {
     // v-draggable用在选择物料上，将内部组件加上draggable属性，并监听dragstart；
     el.querySelectorAll('[data-material]').forEach((el) => {
@@ -33,12 +33,37 @@ Vue.createApp(App)
   })
   .use(router)
   .use(pinia)
-  .use(elements.BasicMobileComponentsIn)
-  .use(elements.BasicWebComponentsIn)
-  .use(elements.ContainerComponentsIn)
-  .use(elements.Panels)
   .use(request)
   .use(ElementPlus)
   .use(vant)
-  .use(i18n)
-  .mount('#app');
+  .use(i18n);
+
+const s = document.createElement('script');
+// 这里从后端获取，就可以实现指向不同的引擎
+const url = `${import.meta.env.VITE_RESOURCE_URL}`;
+s.type = 'text/javascript';
+s.src = url;
+s.onload = () => {
+  const resources = window.StandardElements;
+  app.use(resources.default.BasicMobileComponentsIn);
+  app.use(resources.default.BasicWebComponentsIn);
+  app.use(resources.default.ContainerComponentsIn);
+  app.use(resources.default.Panels);
+  app.provide('$langStore', resources.langStore);
+  app.provide('$metaStore', resources.metaStore);
+  app.provide('$canvasStore', resources.canvasStore);
+  app.provide('$currentPanelStore', resources.currentPanelStore);
+  app.provide('$containerComponentsInfo', resources.containerComponentsInfo);
+  app.provide('$basicWebComponentsInfo', resources.basicWebComponentsInfo);
+  app.provide(
+    '$basicMobileComponentsInfo',
+    resources.basicMobileComponentsInfo
+  );
+  app.mount('#app');
+};
+document.body.appendChild(s);
+
+// 动态import引入esm包的方式，会出现vue示例多个报错的情况，因此放弃了下面的方法
+// const resources = await import(
+//   `${import.meta.env.VITE_RESOURCE_URL}`
+// );

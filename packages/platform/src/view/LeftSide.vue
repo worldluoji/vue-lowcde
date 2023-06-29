@@ -16,13 +16,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
 import Material from '../components/Material.vue';
-import {
-  basicWebComponentsInfo,
-  basicMobileComponentsInfo,
-  containerComponentsInfo
-} from '@lowcode/elements';
+
+const basicWebComponentsInfo = inject('$basicWebComponentsInfo');
+const basicMobileComponentsInfo = inject('$basicMobileComponentsInfo');
+const containerComponentsInfo = inject('$containerComponentsInfo');
 
 // import { CustomerComponentsInfo as CustomerComponentsInfoLocal } from '@lowcode/customer';
 

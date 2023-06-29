@@ -7,9 +7,11 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, inject } from 'vue';
 import { Render } from '@lowcode/helper';
-import { metaStore, canvasStore } from '@lowcode/elements';
+
+const metaStore = inject('$metaStore');
+const canvasStore = inject('$canvasStore');
 
 let content = ref();
 let meta = metaStore();

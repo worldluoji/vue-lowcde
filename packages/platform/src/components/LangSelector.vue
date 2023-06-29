@@ -26,9 +26,8 @@
 
 <script setup>
 import { useI18n } from 'vue-i18n';
-import { computed } from 'vue';
-import { langStore } from '@lowcode/elements';
-
+import { computed, inject } from 'vue';
+const langStore = inject('$langStore');
 defineProps({
   effect: {
     type: String,

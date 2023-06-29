@@ -60,10 +60,12 @@ export default {
 </script> -->
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, inject } from 'vue';
 import { storeToRefs } from 'pinia';
-import { metaStore, currentPanelStore } from '@lowcode/elements';
 import LifeCyclePro from '../components/LifeCyclePro.vue';
+
+const metaStore = inject('$metaStore');
+const currentPanelStore = inject('$currentPanelStore');
 
 const meta = metaStore();
 const currentPanel = storeToRefs(currentPanelStore());

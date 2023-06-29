@@ -126,11 +126,13 @@
 </template>
 
 <script setup>
-import { metaStore, canvasStore } from '@lowcode/elements';
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
 import MetaData from './MetaData.vue';
 import TopAreaLeft from '../components/TopAreaLeft.vue';
+
+const metaStore = inject('$metaStore');
+const canvasStore = inject('$canvasStore');
 
 const props = defineProps({
   content: {

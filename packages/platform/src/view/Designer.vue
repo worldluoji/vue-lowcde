@@ -53,7 +53,6 @@ import draggable from 'vuedraggable';
 import Operation from './Operation.vue';
 import Panel from './Panel.vue';
 import LeftSide from './LeftSide.vue';
-import { metaStore, canvasStore, currentPanelStore } from '@lowcode/elements';
 import { inject } from 'vue';
 // import { CustomerComponents as CustomerComponentsLocal } from '@lowcode/customer'; // 本地脚手架定制时，设计器直接本地加载自定义组件
 
@@ -66,15 +65,26 @@ export default {
     LeftSide
     // ...CustomerComponentsLocal
   },
+  setup() {
+    // inject() can only be used inside setup() or functional components.
+    const metaStore = inject('$metaStore');
+    const canvasStore = inject('$canvasStore');
+    const currentPanelStore = inject('$currentPanelStore');
+    const canvas = canvasStore();
+    const currentPanel = currentPanelStore();
+    const meta = metaStore();
+    return {
+      meta,
+      canvas,
+      currentPanel
+    };
+  },
   data() {
     return {
       enabled: true,
       dragging: false,
       content: [],
       depMap: new Map(),
-      meta: metaStore(),
-      currentPanel: currentPanelStore(),
-      canvasStore: canvasStore(),
       canvasWidth: '987px',
       pageId: '',
       appId: '',
@@ -112,7 +122,7 @@ export default {
     this.content = this.meta.get;
     this.depMap = this.meta.getDepMap;
     this.metaId = this.meta.getId;
-    this.canvasStore.setDesign(true);
+    this.canvas.setDesign(true);
   },
   // mounted() {
   //   const s = document.createElement('script');
