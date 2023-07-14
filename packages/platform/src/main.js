@@ -39,11 +39,11 @@ const app = Vue.createApp(App)
 
 const s = document.createElement('script');
 // 这里从后端获取，就可以实现指向不同的引擎
-const url = `${import.meta.env.VITE_RESOURCE_URL}/StandardElements.umd.cjs`;
+const url = `${import.meta.env.VITE_RESOURCE_URL}/__StandardElements__.umd.cjs`;
 s.type = 'text/javascript';
 s.src = url;
 s.onload = () => {
-  const resources = window.StandardElements;
+  const resources = window.__StandardElements__;
   app.use(resources.default.BasicMobileComponentsIn);
   app.use(resources.default.BasicWebComponentsIn);
   app.use(resources.default.ContainerComponentsIn);

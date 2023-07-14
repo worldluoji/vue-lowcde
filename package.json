@@ -11,7 +11,7 @@
     "fix": "eslint --fix --ext .js,.jsx,.vue ./",
     "build:elements": "pnpm -r --filter=./packages/elements build",
     "build:custom": "pnpm -r --filter=./packages/customer build",
-    "build:engine": "pnpm build:elements && pnpm -r --filter=./packages/runtime build",
+    "build:engine": "pnpm build:elements & pnpm -r --filter=./packages/runtime build && node ./scripts/move-elments-to-runtime.js",
     "preview:engine": "pnpm -r --filter=./packages/runtime preview",
     "dev:engine": "pnpm -r --filter=./packages/runtime dev",
     "prepare": "husky install"
