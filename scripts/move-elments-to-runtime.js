@@ -5,6 +5,7 @@ const dest_dir = './packages/runtime/dist/static/__StandardElements__';
 
 cp(src_dir, dest_dir, { recursive: true }, (err) => {
   if (err) {
-    throw new Error('copy elements to runtime error', err);
+    console.error(err);
+    throw new Error('copy elements to runtime error');
   }
 });
