@@ -15,7 +15,7 @@ if (!appId) {
 
 const BASE_URL = `${import.meta.env.VITE_BASE_API_URL}`;
 const routeRes = await request.get(`/v1/page/list?appId=${appId}`, BASE_URL);
-console.log('routeRes', routeRes);
+// console.log('routeRes', routeRes);
 
 // 通过appId从后端获取路由。这里实际可以把所有路由都加载了，后续就不用再动态加，只用处理跳转登陆逻辑（权限控制）
 if (routeRes && routeRes.code == 0 && routeRes.data && routeRes.data.length) {
