@@ -19,7 +19,7 @@ const data = {
 };
 const emit = defineEmits(['change']);
 const change = () => {
-  console.log(data);
+  // console.log(data);
   emit('change', data);
 };
 </script>

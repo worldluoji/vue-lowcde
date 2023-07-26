@@ -123,7 +123,6 @@ const metaStore = Pinia.defineStore('meta', {
     },
     updateProps(currentId, value) {
       let it = this.depMap.get(currentId).value;
-      // console.log('update', currentId, value, this.depMap)
       if (it) {
         Object.assign(it.props, value);
       }
@@ -144,7 +143,7 @@ const metaStore = Pinia.defineStore('meta', {
       }
     },
     addChildren(eid, children) {
-      let e = this.depMap.get(eid).value;
+      let e = (this.depMap.get(eid) || {}).value;
       if (e) {
         if (!e.props.children) {
           e.props.children = [];
@@ -165,7 +164,7 @@ const metaStore = Pinia.defineStore('meta', {
       }
     },
     setChildren(eid, children) {
-      let e = this.depMap.get(eid).value;
+      let e = (this.depMap.get(eid) || {}).value;
       if (e) {
         e.props.children = children;
         for (let child of children) {

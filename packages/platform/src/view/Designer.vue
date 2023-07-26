@@ -18,8 +18,10 @@
                 :disabled="!enabled"
                 item-key="id"
                 ghost-class="ghost"
+                group="materia"
                 @start="dragging = true"
                 @end="dragging = false"
+                @change="change"
               >
                 <template #item="{ element, index }">
                   <div :class="[{ 'list-item': element.type !== 'container' }]">
@@ -97,10 +99,8 @@ export default {
     this.appId = this.$route.query.appId;
     let appPageIdCache = this.meta.getAppPageId;
     const realAppPageId = `${this.pageId}&${this.appId}`;
-    // console.log(1, appPageIdCache, realAppPageId);
     // 没有缓存，或者缓存的页面与当前页面不一致，就重新请求
     if (this.pageId && (!appPageIdCache || appPageIdCache !== realAppPageId)) {
-      // console.log(222, this.pageId);
       const res = await this.request.get(`/v1/meta/get?pageId=${this.pageId}`);
       if (res && res.code == 0 && res.data && res.data.id) {
         this.meta.setId(res.data.id);
@@ -124,23 +124,6 @@ export default {
     this.metaId = this.meta.getId;
     this.canvas.setDesign(true);
   },
-  // mounted() {
-  //   const s = document.createElement('script');
-  //   const url =
-  //     'http://localhost:8099/cutomerElements/1.0.0/cutomerElements.umd.cjs';
-  //   s.type = 'text/javascript';
-  //   s.src = url;
-  //   s.onload = () => {
-  //     console.log(window, window.location, window.cutomerElements);
-  //     Object.assign(
-  //       this.$.components,
-  //       window.cutomerElements.CustomerComponents
-  //     );
-  //     console.log(this.$.components);
-  //     this.$forceUpdate();
-  //   };
-  //   document.body.appendChild(s);
-  // },
   methods: {
     cancelPanel() {
       this.currentPanel.set({});
@@ -152,7 +135,6 @@ export default {
       this.canvasWidth = `${val}px`;
     },
     deleteComponent(eid) {
-      // console.log(222, eid);
       this.meta.delete(eid);
       this.content = this.meta.get;
       this.depMap = this.meta.getDepMap;
@@ -173,6 +155,14 @@ export default {
         ElementPlus.ElMessage({
           message: '保存失败，请稍后再试',
           type: 'warning'
+        });
+      }
+    },
+    change(data) {
+      // console.log(data);
+      if (data && data.added && data.added.element && data.added.element.id) {
+        this.meta.getDepMap.set(data.added.element.id, {
+          value: data.added.element
         });
       }
     }
