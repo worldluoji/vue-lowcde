@@ -1,13 +1,15 @@
 <template>
   <div v-atomicattr="props.atomicAttrs">
     <draggable
-      :list="props.children"
+      :list="children"
       :disabled="false"
       item-key="id"
       :class="'list-group'"
       ghost-class="ghost"
+      group="materia"
       @start="dragging = true"
       @end="dragging = false"
+      @change="change"
     >
       <template #item="{ element }">
         <div
@@ -35,7 +37,6 @@
 <script>
 import draggable from 'vuedraggable';
 import { metaStore, currentPanelStore } from '@lowcode/elements';
-import { v4 as uuid } from 'uuid';
 import { ref } from 'vue';
 
 export default {
@@ -54,10 +55,12 @@ export default {
       default: ''
     }
   },
-  setup() {
+  setup(props) {
     const templateColumns = ref('repeat(auto-fit, minmax(10px, 1fr))');
+    const children = ref(props.props.children);
     return {
-      templateColumns
+      templateColumns,
+      children
     };
   },
   data() {
@@ -71,30 +74,7 @@ export default {
   watch: {
     props: {
       handler(newVal) {
-        let { children, column, gap, templateColumns } = newVal;
-        // console.log('props', this.eid, children)
-        column = column ? column : 1;
-        children = children ? children : [];
-
-        const l = children.length;
-        if (l > column) {
-          let removedChildren = new Set();
-          for (let i = l - 1; i >= column; i--) {
-            removedChildren.add(children[i].id);
-          }
-          this.meta.removeChildren(this.eid, removedChildren);
-        } else if (l < column) {
-          let newChildren = [];
-          for (let i = l; i < column; i++) {
-            newChildren.push({
-              id: uuid(),
-              name: 'Blank',
-              type: 'container',
-              props: { id: uuid(), element: '', props: {} }
-            });
-          }
-          this.meta.addChildren(this.eid, newChildren);
-        }
+        let { gap, templateColumns, children } = newVal;
 
         if (gap) {
           this.gap = gap + 'px';
@@ -103,6 +83,8 @@ export default {
         if (templateColumns) {
           this.templateColumns = templateColumns;
         }
+
+        this.children.value = children;
       },
       deep: true,
       immediate: true
@@ -110,8 +92,14 @@ export default {
   },
   methods: {
     showPanel(element) {
-      console.log(123, element);
       this.currentPanel.set(element);
+    },
+    change(data) {
+      if (data && data.added && data.added.element && data.added.element.id) {
+        this.meta.getDepMap.set(data.added.element.id, {
+          value: data.added.element
+        });
+      }
     }
   }
 };
@@ -132,7 +120,7 @@ export default {
   display: grid;
   grid-template-columns: v-bind(templateColumns);
   column-gap: v-bind('gap');
-  padding: 10px 0px;
+  padding: 30px 0px;
   &:hover {
     border: 1px dashed blue;
   }
