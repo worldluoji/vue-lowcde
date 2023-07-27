@@ -15,7 +15,8 @@
         <div
           :class="[
             { 'list-group-item': true },
-            { 'text-center': !element.props.element }
+            { 'text-center': !element.props.element },
+            { selected: currentId === element.id }
           ]"
           @click.stop="showPanel(element)"
         >
@@ -70,6 +71,15 @@ export default {
       meta: metaStore(),
       gap: ''
     };
+  },
+  computed: {
+    currentId: function (newVal, oldVal) {
+      if (newVal && oldVal && newVal.id === oldVal.id) {
+        return;
+      }
+      const currentElement = this.currentPanel.get;
+      return currentElement ? currentElement.id : '';
+    }
   },
   watch: {
     props: {
@@ -135,5 +145,9 @@ export default {
 
 .text-center {
   text-align: center;
+}
+
+.selected {
+  border: 2px solid blue;
 }
 </style>

@@ -24,7 +24,12 @@
                 @change="change"
               >
                 <template #item="{ element, index }">
-                  <div :class="[{ 'list-item': element.type !== 'container' }]">
+                  <div
+                    :class="[
+                      { 'list-item': element.type !== 'container' },
+                      { selected: currentId === element.id }
+                    ]"
+                  >
                     <component
                       :is="
                         element.type === 'container'
@@ -93,6 +98,15 @@ export default {
       metaId: 0,
       request: inject('$request')
     };
+  },
+  computed: {
+    currentId: function (newVal, oldVal) {
+      if (newVal && oldVal && newVal.id === oldVal.id) {
+        return;
+      }
+      const currentElement = this.currentPanel.get;
+      return currentElement ? currentElement.id : '';
+    }
   },
   async beforeMount() {
     this.pageId = this.$route.query.pageId;
@@ -217,5 +231,9 @@ export default {
   &:hover {
     border: 1px dashed blue;
   }
+}
+
+.selected {
+  border: 2px solid blue;
 }
 </style>
