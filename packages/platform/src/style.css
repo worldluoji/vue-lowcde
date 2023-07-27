@@ -7,3 +7,7 @@
 ::after {
     box-sizing: inherit;
 }
+
+.element-selected {
+    border: 2px solid blue;
+}

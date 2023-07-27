@@ -27,7 +27,7 @@
                   <div
                     :class="[
                       { 'list-item': element.type !== 'container' },
-                      { selected: currentId === element.id }
+                      { 'element-selected': currentId === element.id }
                     ]"
                   >
                     <component
@@ -216,6 +216,7 @@ export default {
   display: flex;
   flex-direction: column;
   row-gap: 15px;
+  min-height: 100vh;
 }
 
 .ghost {
@@ -231,9 +232,5 @@ export default {
   &:hover {
     border: 1px dashed blue;
   }
-}
-
-.selected {
-  border: 2px solid blue;
 }
 </style>

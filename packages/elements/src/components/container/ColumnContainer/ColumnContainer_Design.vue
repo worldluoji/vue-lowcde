@@ -16,7 +16,7 @@
           :class="[
             { 'list-group-item': true },
             { 'text-center': !element.props.element },
-            { selected: currentId === element.id }
+            { 'element-selected': currentId === element.id }
           ]"
           @click.stop="showPanel(element)"
         >
@@ -107,7 +107,8 @@ export default {
     change(data) {
       if (data && data.added && data.added.element && data.added.element.id) {
         this.meta.getDepMap.set(data.added.element.id, {
-          value: data.added.element
+          value: data.added.element,
+          parent: this.eid
         });
       }
     }
@@ -145,9 +146,5 @@ export default {
 
 .text-center {
   text-align: center;
-}
-
-.selected {
-  border: 2px solid blue;
 }
 </style>

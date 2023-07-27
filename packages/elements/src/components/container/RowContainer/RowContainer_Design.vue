@@ -1,19 +1,22 @@
 <template>
   <div v-atomicattr="props.atomicAttrs">
     <draggable
-      :list="props.children"
+      :list="children"
       :disabled="false"
       item-key="id"
       :class="'list-group'"
       ghost-class="ghost"
+      group="materia"
       @start="dragging = true"
       @end="dragging = false"
+      @change="change"
     >
       <template #item="{ element }">
         <div
           :class="[
             { 'list-group-item': true },
-            { 'text-center': !element.props.element }
+            { 'text-center': !element.props.element },
+            { 'element-selected': currentId === element.id }
           ]"
           @click.stop="showPanel(element)"
         >
@@ -35,7 +38,6 @@
 <script>
 import draggable from 'vuedraggable';
 import { metaStore, currentPanelStore } from '@lowcode/elements';
-import { v4 as uuid } from 'uuid';
 import { ref } from 'vue';
 
 export default {
@@ -54,10 +56,12 @@ export default {
       default: ''
     }
   },
-  setup() {
+  setup(props) {
     const templateRows = ref('repeat(auto-fit, minmax(10px, 1fr))');
+    const children = ref(props.props.children);
     return {
-      templateRows
+      templateRows,
+      children
     };
   },
   data() {
@@ -68,33 +72,19 @@ export default {
       gap: ''
     };
   },
+  computed: {
+    currentId: function (newVal, oldVal) {
+      if (newVal && oldVal && newVal.id === oldVal.id) {
+        return;
+      }
+      const currentElement = this.currentPanel.get;
+      return currentElement ? currentElement.id : '';
+    }
+  },
   watch: {
     props: {
       handler(newVal) {
-        let { children, row, gap, templateRows } = newVal;
-        // console.log('props', this.eid, children)
-        row = row ? row : 1;
-        children = children ? children : [];
-
-        const l = children.length;
-        if (l > row) {
-          let removedChildren = new Set();
-          for (let i = l - 1; i >= row; i--) {
-            removedChildren.add(children[i].id);
-          }
-          this.meta.removeChildren(this.eid, removedChildren);
-        } else if (l < row) {
-          let newChildren = [];
-          for (let i = l; i < row; i++) {
-            newChildren.push({
-              id: uuid(),
-              name: 'Blank',
-              type: 'container',
-              props: { id: uuid(), element: '', props: {} }
-            });
-          }
-          this.meta.addChildren(this.eid, newChildren);
-        }
+        let { gap, templateRows, children } = newVal;
 
         if (gap) {
           this.gap = gap + 'px';
@@ -103,6 +93,8 @@ export default {
         if (templateRows) {
           this.templateRows = templateRows;
         }
+
+        this.children.value = children;
       },
       deep: true,
       immediate: true
@@ -111,6 +103,14 @@ export default {
   methods: {
     showPanel(element) {
       this.currentPanel.set(element);
+    },
+    change(data) {
+      if (data && data.added && data.added.element && data.added.element.id) {
+        this.meta.getDepMap.set(data.added.element.id, {
+          value: data.added.element,
+          parent: this.eid
+        });
+      }
     }
   }
 };
@@ -130,7 +130,7 @@ export default {
   display: grid;
   grid-template-rows: v-bind(templateRows);
   grid-template-columns: minmax(10px, 1fr);
-  padding: 10px 0px;
+  padding: 30px 0px;
   row-gap: v-bind('gap');
   &:hover {
     border: 1px dashed blue;
