@@ -32,7 +32,7 @@
             :props="element.props"
             :eid="element.id"
             :data-index="index"
-            @click="showPanel(element)"
+            @click.stop="showPanel(element)"
           ></component>
         </div>
       </template>
@@ -65,6 +65,12 @@ const p = defineProps({
     default: () => {
       return [];
     }
+  },
+  parent: {
+    type: String,
+    default: () => {
+      return null;
+    }
   }
 });
 
@@ -96,7 +102,8 @@ const change = (data) => {
   // console.log(data);
   if (data && data.added && data.added.element && data.added.element.id) {
     meta.getDepMap.set(data.added.element.id, {
-      value: data.added.element
+      value: data.added.element,
+      parent: p.parent
     });
   }
 };
