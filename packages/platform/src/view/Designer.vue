@@ -10,9 +10,8 @@
         </el-aside>
         <el-container>
           <el-main>
-            <div v-dragcontent="content" v-deps="depMap" class="drag-content">
+            <div class="drag-content">
               <draggable
-                v-dragcontent="content"
                 class="list-group"
                 :list="content"
                 :disabled="!enabled"
@@ -26,10 +25,12 @@
                 <template #item="{ element, index }">
                   <div
                     :class="[
-                      { 'list-item': element.type !== 'container' },
+                      { 'list-item': true },
+                      { 'list-item-effect': element.type !== 'container' },
                       { 'element-selected': currentId === element.id }
                     ]"
                   >
+                    <FastOperation v-show="currentId === element.id" />
                     <component
                       :is="
                         element.type === 'container'
@@ -61,6 +62,7 @@ import Operation from './Operation.vue';
 import Panel from './Panel.vue';
 import LeftSide from './LeftSide.vue';
 import { inject } from 'vue';
+import FastOperation from '../components/FastOperation.vue';
 // import { CustomerComponents as CustomerComponentsLocal } from '@lowcode/customer'; // 本地脚手架定制时，设计器直接本地加载自定义组件
 
 export default {
@@ -69,7 +71,8 @@ export default {
     draggable,
     Operation,
     Panel,
-    LeftSide
+    LeftSide,
+    FastOperation
     // ...CustomerComponentsLocal
   },
   setup() {
@@ -228,6 +231,10 @@ export default {
 }
 
 .list-item {
+  position: relative;
+}
+
+.list-item-effect {
   padding: 5px 0px;
   &:hover {
     border: 1px dashed blue;

@@ -12,8 +12,6 @@ import commonjs from 'rollup-plugin-commonjs';
 import externalGlobals from 'rollup-plugin-external-globals';
 import topLevelAwait from 'vite-plugin-top-level-await';
 
-import Icons from 'unplugin-icons/vite';
-
 import {
   vitePluginInsertLifecycle,
   vitePluginInjectLifecycleTemplate
@@ -61,10 +59,6 @@ export default () =>
       }),
       vitePluginInjectLifecycleTemplate(),
       vitePluginInsertLifecycle(),
-      Icons({
-        /* options */
-        scale: 1.2 // Scale of icons against 1em
-      }),
       ...plugins
     ],
     resolve: {
