@@ -24,6 +24,7 @@ const injectResource = (resources) => {
     '$basicMobileComponentsInfo',
     resources.basicMobileComponentsInfo
   );
+  app.provide('$DraggerLayout', resources.DraggerLayout);
 };
 
 const app = Vue.createApp(App)

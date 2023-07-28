@@ -62,7 +62,10 @@ importers:
       vant: registry.npmmirror.com/vant/4.0.11
 
   packages/elements:
-    specifiers: {}
+    specifiers:
+      '@element-plus/icons-vue': ^2.1.0
+    dependencies:
+      '@element-plus/icons-vue': registry.npmmirror.com/@element-plus/icons-vue/2.1.0
 
   packages/helper:
     specifiers: {}

@@ -31,5 +31,5 @@ if (!window.__implementCodeAsync__) {
       }
     }
   });
-  console.log('inject success..');
+  // console.log('inject success..');
 }

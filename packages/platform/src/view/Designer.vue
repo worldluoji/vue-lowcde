@@ -10,43 +10,7 @@
         </el-aside>
         <el-container>
           <el-main>
-            <div class="drag-content">
-              <draggable
-                class="list-group"
-                :list="content"
-                :disabled="!enabled"
-                item-key="id"
-                ghost-class="ghost"
-                group="materia"
-                @start="dragging = true"
-                @end="dragging = false"
-                @change="change"
-              >
-                <template #item="{ element, index }">
-                  <div
-                    :class="[
-                      { 'list-item': true },
-                      { 'list-item-effect': element.type !== 'container' },
-                      { 'element-selected': currentId === element.id }
-                    ]"
-                  >
-                    <FastOperation v-show="currentId === element.id" />
-                    <component
-                      :is="
-                        element.type === 'container'
-                          ? `${element.name}_Design`
-                          : element.name
-                      "
-                      :key="index"
-                      :props="element.props"
-                      :eid="element.id"
-                      :data-index="index"
-                      @click="showPanel(element)"
-                    ></component>
-                  </div>
-                </template>
-              </draggable>
-            </div>
+            <DraggerLayout :content="content" />
             <Panel @cancel="cancelPanel" @deleteComponent="deleteComponent" />
           </el-main>
           <!-- <el-footer>Footer</el-footer> -->
@@ -56,134 +20,91 @@
   </div>
 </template>
 
-<script>
-import draggable from 'vuedraggable';
+<script setup>
+import { useRoute } from 'vue-router';
 import Operation from './Operation.vue';
 import Panel from './Panel.vue';
 import LeftSide from './LeftSide.vue';
-import { inject } from 'vue';
-import FastOperation from '../components/FastOperation.vue';
+import { inject, ref, onBeforeMount } from 'vue';
 // import { CustomerComponents as CustomerComponentsLocal } from '@lowcode/customer'; // 本地脚手架定制时，设计器直接本地加载自定义组件
+const DraggerLayout = inject('$DraggerLayout');
 
-export default {
-  name: 'Designer',
-  components: {
-    draggable,
-    Operation,
-    Panel,
-    LeftSide,
-    FastOperation
-    // ...CustomerComponentsLocal
-  },
-  setup() {
-    // inject() can only be used inside setup() or functional components.
-    const metaStore = inject('$metaStore');
-    const canvasStore = inject('$canvasStore');
-    const currentPanelStore = inject('$currentPanelStore');
-    const canvas = canvasStore();
-    const currentPanel = currentPanelStore();
-    const meta = metaStore();
-    return {
-      meta,
-      canvas,
-      currentPanel
-    };
-  },
-  data() {
-    return {
-      enabled: true,
-      dragging: false,
-      content: [],
-      depMap: new Map(),
-      canvasWidth: '987px',
-      pageId: '',
-      appId: '',
-      metaId: 0,
-      request: inject('$request')
-    };
-  },
-  computed: {
-    currentId: function (newVal, oldVal) {
-      if (newVal && oldVal && newVal.id === oldVal.id) {
-        return;
-      }
-      const currentElement = this.currentPanel.get;
-      return currentElement ? currentElement.id : '';
-    }
-  },
-  async beforeMount() {
-    this.pageId = this.$route.query.pageId;
-    this.appId = this.$route.query.appId;
-    let appPageIdCache = this.meta.getAppPageId;
-    const realAppPageId = `${this.pageId}&${this.appId}`;
-    // 没有缓存，或者缓存的页面与当前页面不一致，就重新请求
-    if (this.pageId && (!appPageIdCache || appPageIdCache !== realAppPageId)) {
-      const res = await this.request.get(`/v1/meta/get?pageId=${this.pageId}`);
-      if (res && res.code == 0 && res.data && res.data.id) {
-        this.meta.setId(res.data.id);
-        this.meta.setAppPageId(realAppPageId);
-        if (res.data.content) {
-          this.meta.set(JSON.parse(res.data.content), true);
-        }
-      }
-    }
-    // 这里还是不一致，说明没有请求到东东，应该将缓存清空
-    appPageIdCache = this.meta.getAppPageId;
-    if (appPageIdCache !== realAppPageId) {
-      this.meta.set([]);
-      this.meta.setDepMap(new Map());
-      this.meta.setId(0);
-      this.meta.setAppPageId(realAppPageId);
-    }
+const pageId = ref('');
+const appId = ref('');
+const metaId = ref(0);
+const request = inject('$request');
+const content = ref([]);
 
-    this.content = this.meta.get;
-    this.depMap = this.meta.getDepMap;
-    this.metaId = this.meta.getId;
-    this.canvas.setDesign(true);
-  },
-  methods: {
-    cancelPanel() {
-      this.currentPanel.set({});
-    },
-    showPanel(element) {
-      this.currentPanel.set(element);
-    },
-    changeWidth(val) {
-      this.canvasWidth = `${val}px`;
-    },
-    deleteComponent(eid) {
-      this.meta.delete(eid);
-      this.content = this.meta.get;
-      this.depMap = this.meta.getDepMap;
-      this.cancelPanel();
-    },
-    async save() {
-      const res = await this.request.post('/v1/meta/save', {
-        content: JSON.stringify(this.meta.get),
-        pageId: Number(this.pageId),
-        id: this.metaId
-      });
-      if (res.code == 0) {
-        ElementPlus.ElMessage({
-          message: '保存成功',
-          type: 'success'
-        });
-      } else {
-        ElementPlus.ElMessage({
-          message: '保存失败，请稍后再试',
-          type: 'warning'
-        });
-      }
-    },
-    change(data) {
-      // console.log(data);
-      if (data && data.added && data.added.element && data.added.element.id) {
-        this.meta.getDepMap.set(data.added.element.id, {
-          value: data.added.element
-        });
+const metaStore = inject('$metaStore');
+const meta = metaStore();
+
+const $route = useRoute();
+
+onBeforeMount(async () => {
+  pageId.value = $route.query.pageId;
+  appId.value = $route.query.appId;
+  let appPageIdCache = meta.getAppPageId;
+  const realAppPageId = `${pageId.value}&${appId.value}`;
+  // 没有缓存，或者缓存的页面与当前页面不一致，就重新请求
+  if (pageId.value && (!appPageIdCache || appPageIdCache !== realAppPageId)) {
+    const res = await request.get(`/v1/meta/get?pageId=${pageId.value}`);
+    if (res && res.code == 0 && res.data && res.data.id) {
+      meta.setId(res.data.id);
+      meta.setAppPageId(realAppPageId);
+      if (res.data.content) {
+        meta.set(JSON.parse(res.data.content), true);
       }
     }
   }
+  // 这里还是不一致，说明没有请求到东东，应该将缓存清空
+  appPageIdCache = meta.getAppPageId;
+  if (appPageIdCache !== realAppPageId) {
+    meta.set([]);
+    meta.setDepMap(new Map());
+    meta.setId(0);
+    meta.setAppPageId(realAppPageId);
+  }
+
+  content.value = meta.get;
+  metaId.value = meta.getId;
+  canvas.setDesign(true);
+});
+
+const save = async () => {
+  const res = await request.post('/v1/meta/save', {
+    content: JSON.stringify(meta.get),
+    pageId: Number(pageId.value),
+    id: metaId.value
+  });
+  if (res.code == 0) {
+    ElementPlus.ElMessage({
+      message: '保存成功',
+      type: 'success'
+    });
+  } else {
+    ElementPlus.ElMessage({
+      message: '保存失败，请稍后再试',
+      type: 'warning'
+    });
+  }
+};
+
+const currentPanelStore = inject('$currentPanelStore');
+const currentPanel = currentPanelStore();
+const cancelPanel = () => {
+  currentPanel.set({});
+};
+
+const canvasStore = inject('$canvasStore');
+const canvas = canvasStore();
+const canvasWidth = ref('987px');
+const changeWidth = (val) => {
+  canvasWidth.value = `${val}px`;
+};
+
+const deleteComponent = (eid) => {
+  meta.delete(eid);
+  cancelPanel();
 };
 </script>
 
@@ -206,7 +127,7 @@ export default {
   margin-top: var(--top-white-length, 30px);
 }
 
-.drag-content {
+:deep(.drag-outer-layout) {
   width: v-bind(canvasWidth);
   min-height: 100vh;
   border: 1px solid #ddd;
@@ -214,30 +135,11 @@ export default {
   background-color: #f0f2f5;
 }
 
-.list-group {
+:deep(.drag-inner-layout) {
   width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 15px;
   min-height: 100vh;
-}
-
-.ghost {
-  opacity: 0.5;
-  background: #c8ebfb;
-}
-.not-draggable {
-  cursor: no-drop;
-}
-
-.list-item {
-  position: relative;
-}
-
-.list-item-effect {
-  padding: 5px 0px;
-  &:hover {
-    border: 1px dashed blue;
-  }
 }
 </style>

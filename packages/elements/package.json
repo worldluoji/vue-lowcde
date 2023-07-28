@@ -8,9 +8,6 @@
     "build": "vite build"
   },
   "dependencies": {
-
-  },
-  "devDependencies": {
-
+    "@element-plus/icons-vue": "^2.1.0"
   }
 }
