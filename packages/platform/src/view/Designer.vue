@@ -2,7 +2,7 @@
   <div class="designer">
     <el-container>
       <el-header>
-        <Operation :content="content" @changeWidth="changeWidth" @save="save" />
+        <Operation @changeWidth="changeWidth" @save="save" />
       </el-header>
       <el-container>
         <el-aside>
@@ -26,6 +26,7 @@ import Operation from './Operation.vue';
 import Panel from './Panel.vue';
 import LeftSide from './LeftSide.vue';
 import { inject, ref, onBeforeMount } from 'vue';
+
 // import { CustomerComponents as CustomerComponentsLocal } from '@lowcode/customer'; // 本地脚手架定制时，设计器直接本地加载自定义组件
 const DraggerLayout = inject('$DraggerLayout');
 

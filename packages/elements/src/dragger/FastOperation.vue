@@ -1,11 +1,16 @@
 <template>
   <div class="fast-operation">
-    <IConDelete />
+    <IConDelete @click.stop="deleteComponent" />
   </div>
 </template>
 
 <script setup>
 import { Delete as IConDelete } from '@element-plus/icons-vue';
+
+const emit = defineEmits(['deleteComponent']);
+const deleteComponent = () => {
+  emit('deleteComponent');
+};
 </script>
 
 <style scoped lang="scss">

@@ -20,7 +20,10 @@
           ]"
         >
           <slot>
-            <FastOperation v-show="currentId === element.id" />
+            <FastOperation
+              v-show="currentId === element.id"
+              @deleteComponent="deleteComponent"
+            />
           </slot>
           <component
             :is="
@@ -105,6 +108,29 @@ const change = (data) => {
       value: data.added.element,
       parent: p.parent
     });
+  }
+};
+
+const deleteComponent = () => {
+  if (currentId.value) {
+    ElementPlus.ElMessageBox.confirm('确认删除吗？', '删除组件', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    })
+      .then(() => {
+        meta.delete(currentId.value);
+        list.value = meta.get;
+      })
+      .catch((e) => {
+        if (e && e === 'cancel') {
+          return;
+        }
+        ElementPlus.ElMessage({
+          type: 'info',
+          message: '删除失败，请稍后再试'
+        });
+      });
   }
 };
 </script>
