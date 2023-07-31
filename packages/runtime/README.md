@@ -1,10 +1,23 @@
-# Packer打包demo
-独立工程，模拟从后端获取元数据，再转为Vue, 然后通过Vite打包
+# runtime engine
+引擎包，从后端获取元数据，渲染出页面
 
-## TODO List
+## build
+打包为独立的引擎包：
+```
+pnpm build
+```
+打包为可以内嵌到platform的静态资源：
+```
+pnpm build:inner
+```
+当然，你可以通过修改打包命令中的--base参数内嵌到别的前端工程里：
+https://cn.vitejs.dev/guide/build.html#public-base-path
+
+
+## Tips
 ### 1. 独立部署如何改造
 可以把相关配置放到 public目录下的config.json下，然后通过“请求”的方式获取。
-比如网管地址要改等等。
+比如网关地址要改等等。
 ```
 const siteMeta = await get('./config.json');
  console.log('siteMeta', siteMeta);
@@ -44,7 +57,6 @@ router.beforeEach((to) => {
         return;
     }
 
-    // console.log(222, to.name, to.fullPath, to.path);
     // 路由不存在，就根据跳转的path动态添加路由
     router.addRoute(generateRoute(to, name));
     // 触发重定向

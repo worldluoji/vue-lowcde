@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:inner": "vite build --base=/static/engine --mode=productioninner"
   },
   "devDependencies": {
     "vite-plugin-top-level-await": "^1.2.3"

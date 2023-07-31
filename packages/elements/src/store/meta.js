@@ -1,33 +1,3 @@
-// // 递归逐层查找，后续优化
-// const findById = (content, id) => {
-//   for (let e of content) {
-//     if (e.id === id) {
-//       return e
-//     } else {
-//       // 对象容纳了一个组件,比如Blank
-//       if (e.props.id && e.props.id === id) {
-//         return e.props
-//       }
-
-//       // 对象有children, 比如List容器
-//       if (e.props.children && e.props.children.length > 0) {
-//         let t = findById(e.props.children, id)
-//         if (t) {
-//           return t
-//         }
-//       }
-
-//       if (e.props.props && e.props.props.children) {
-//         let t = findById(e.props.props.children, id)
-//         if (t) {
-//           return t
-//         }
-//       }
-//     }
-//   }
-//   return null
-// }
-
 const dfsDepMap = (content, depMap, parent = null) => {
   for (let e of content) {
     depMap.set(e.id, { value: e, parent: parent });
@@ -123,7 +93,6 @@ const metaStore = Pinia.defineStore('meta', {
     },
     updateProps(currentId, value) {
       let it = this.depMap.get(currentId).value;
-      // console.log('update', currentId, value, this.depMap)
       if (it) {
         Object.assign(it.props, value);
       }
@@ -144,7 +113,7 @@ const metaStore = Pinia.defineStore('meta', {
       }
     },
     addChildren(eid, children) {
-      let e = this.depMap.get(eid).value;
+      let e = (this.depMap.get(eid) || {}).value;
       if (e) {
         if (!e.props.children) {
           e.props.children = [];
@@ -165,7 +134,7 @@ const metaStore = Pinia.defineStore('meta', {
       }
     },
     setChildren(eid, children) {
-      let e = this.depMap.get(eid).value;
+      let e = (this.depMap.get(eid) || {}).value;
       if (e) {
         e.props.children = children;
         for (let child of children) {

@@ -74,8 +74,14 @@ const $request = inject('$request');
 const appList = ref([]);
 onBeforeMount(async () => {
   const res = await $request.get('/v1/app/list');
-  // console.log(res);
-  appList.value = res;
+  if (res.code == 0) {
+    appList.value = res.data;
+  } else {
+    ElementPlus.ElMessage({
+      message: '获取应用列表失败，请稍后再试',
+      type: 'warning'
+    });
+  }
 });
 const dialogNewAppVisible = ref(false);
 
@@ -89,15 +95,15 @@ const addNewApp = async () => {
     name: form.name,
     desc: form.desc
   });
-  if (res.id) {
+  if (res.code == 0) {
     ElementPlus.ElMessage({
       message: '添加成功',
       type: 'success'
     });
-    appList.value.push(res);
+    appList.value.push(res.data);
   } else {
     ElementPlus.ElMessage({
-      message: '添加失败，请稍后再试',
+      message: res.message || '添加失败，请稍后再试',
       type: 'warning'
     });
   }

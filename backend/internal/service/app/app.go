@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -10,6 +9,7 @@ import (
 	"gorm.io/gorm"
 
 	"backend/internal/model/app"
+	"backend/internal/model/response"
 	"backend/internal/utils"
 )
 
@@ -39,10 +39,16 @@ func init() {
 	db.AutoMigrate(&AppPO{})
 }
 
+type Response response.Response
+
 func (u *AppHandler) GetAppList(c *gin.Context) {
 	var apps []AppPO
+	var res Response
 	if err := db.Find(&apps).Error; err != nil {
-		log.Fatalf("Get product error: %v", err)
+		log.Println("fail to get app list:", err)
+		res.Code = 500
+		res.Message = "fail to get app list "
+		return
 	}
 	n := len(apps)
 	u.apps = make([]AppVO, n)
@@ -54,14 +60,20 @@ func (u *AppHandler) GetAppList(c *gin.Context) {
 		}
 	}
 
-	c.JSON(http.StatusOK, u.apps)
+	res.Code = 0
+	res.Data = u.apps
+	c.JSON(http.StatusOK, res)
 }
 
 func (u *AppHandler) CreateApp(c *gin.Context) {
 	var appVO AppVO
+	var res Response
 	// 通过c.ShouldBindJSON函数，将 Body 中的 JSON 格式数据解析到指定的 Struct 中
 	if err := c.ShouldBindJSON(&appVO); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		res.Code = 400
+		res.Message = "fail to get params"
+		// gin.H{"error": err.Error()}
+		c.JSON(http.StatusBadRequest, res)
 		return
 	}
 
@@ -71,26 +83,37 @@ func (u *AppHandler) CreateApp(c *gin.Context) {
 	app.CreatedAt = time.Now()
 	if err := db.Create(app).Error; err != nil {
 		log.Printf("Create error: %v", err)
-		c.JSON(http.StatusInternalServerError, appVO)
+		res.Code = 400
+		res.Message = "fail to create App"
+		c.JSON(http.StatusInternalServerError, res)
 		return
 	}
 
 	log.Printf("Create app %s success", app.Name)
 
 	appVO.ID = app.ID
-	c.JSON(http.StatusOK, appVO)
+	res.Code = 0
+	res.Data = appVO
+	c.JSON(http.StatusOK, res)
 }
 
 func (u *AppHandler) DeleteApp(c *gin.Context) {
+	var res Response
 	id, ok := c.GetQuery("id")
 	if !ok {
-		c.JSON(http.StatusNotFound, gin.H{"error": fmt.Errorf("failed to get param")})
+		res.Code = 400
+		res.Message = "fail to get param id"
+		c.JSON(http.StatusNotFound, res)
 		return
 	}
 	if err := db.Where("id = ?", id).Delete(&AppPO{}).Error; err != nil {
 		log.Printf("Delete app error: %v", err)
-		c.JSON(http.StatusOK, "failed")
+		res.Code = 400
+		res.Message = "fail to delete app"
+		c.JSON(http.StatusOK, res)
 		return
 	}
-	c.JSON(http.StatusOK, "success")
+
+	res.Code = 0
+	c.JSON(http.StatusOK, res)
 }

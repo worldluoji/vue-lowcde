@@ -31,8 +31,8 @@ func GetApiRouter() *gin.Engine {
 	userHandler := user.NewUserHandler()
 	userHandler.InitUsers()
 
-	appHander := app.NewAppHandler()
-	pageHander := page.NewPageHandler()
+	appHandler := app.NewAppHandler()
+	pageHandler := page.NewPageHandler()
 	metaHander := meta.NewMetaHandler()
 	registryHandler := registry.NewRegistryHandler()
 
@@ -45,13 +45,15 @@ func GetApiRouter() *gin.Engine {
 		}
 		appv1 := v1.Group("/app")
 		{
-			appv1.GET("list", appHander.GetAppList)
-			appv1.POST("create", appHander.CreateApp)
+			appv1.GET("list", appHandler.GetAppList)
+			appv1.POST("create", appHandler.CreateApp)
+			appv1.DELETE("delete", appHandler.DeleteApp)
 		}
 		pagev1 := v1.Group("/page")
 		{
-			pagev1.GET("list", pageHander.GetPagesByAppId)
-			pagev1.POST("create", pageHander.CreatePage)
+			pagev1.GET("list", pageHandler.GetPagesByAppId)
+			pagev1.POST("create", pageHandler.CreatePage)
+			pagev1.DELETE("delete", pageHandler.DeletePage)
 		}
 		metaV1 := v1.Group("/meta")
 		{
@@ -62,7 +64,7 @@ func GetApiRouter() *gin.Engine {
 		{
 			registryV1.GET("list", registryHandler.GetRegistriesByAppId)
 			registryV1.POST("create", registryHandler.CreateRegistry)
-			registryV1.POST("delete", registryHandler.DeleteRegistry)
+			registryV1.DELETE("delete", registryHandler.DeleteRegistry)
 		}
 	}
 

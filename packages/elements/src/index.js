@@ -8,6 +8,10 @@ import ContainerComponentsIn, {
 } from './components/container';
 import store from './store';
 
+import Dragger from './dragger/Dragger.vue';
+
+import './globalInjection.js';
+
 export default {
   BasicWebComponentsIn,
   BasicMobileComponentsIn,
@@ -23,3 +27,5 @@ export const langStore = store.Lang;
 export const basicWebComponentsInfo = BasicWebComponentsInfo;
 export const basicMobileComponentsInfo = BasicMobileComponentsInfo;
 export const containerComponentsInfo = ContainerComponentsInfo;
+
+export const DraggerLayout = Dragger;

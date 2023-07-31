@@ -9,6 +9,7 @@ import topLevelAwait from 'vite-plugin-top-level-await';
 
 import commonjs from 'rollup-plugin-commonjs';
 import externalGlobals from 'rollup-plugin-external-globals';
+import { vitePluginInsertLifecycle } from '@lowcode/viteplugins';
 
 // 全局对象
 let globals = externalGlobals(
@@ -16,7 +17,8 @@ let globals = externalGlobals(
     vue: 'Vue',
     pinia: 'Pinia',
     'vue-router': 'VueRouter',
-    'element-plus': 'ElementPlus'
+    'element-plus': 'ElementPlus',
+    rxjs: 'RxJS'
   },
   {
     exclude: ['**/codicon.css']
@@ -51,12 +53,13 @@ export default defineConfig({
       // The function to generate import names of top-level await promise in each chunk module
       promiseImportName: (i) => `__tla_${i}`
     }),
+    vitePluginInsertLifecycle(),
     ...plugins
   ],
   build: {
     assetsDir: './static',
     rollupOptions: {
-      external: ['vue', 'pinia', 'vue-router', 'element-plus'],
+      external: ['vue', 'pinia', 'vue-router', 'element-plus', 'rxjs'],
       plugins: [commonjs(), globals]
     }
   },

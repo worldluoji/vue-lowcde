@@ -5,12 +5,9 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    
+    "build": "vite build"
   },
   "dependencies": {
-
-  },
-  "devDependencies": {
-
+    "@element-plus/icons-vue": "^2.1.0"
   }
 }

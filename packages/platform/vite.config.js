@@ -10,6 +10,12 @@ import autoprefixer from 'autoprefixer';
 
 import commonjs from 'rollup-plugin-commonjs';
 import externalGlobals from 'rollup-plugin-external-globals';
+import topLevelAwait from 'vite-plugin-top-level-await';
+
+import {
+  vitePluginInsertLifecycle,
+  vitePluginInjectLifecycleTemplate
+} from '@lowcode/viteplugins';
 
 const prefix = 'monaco-editor/esm/vs';
 
@@ -45,6 +51,14 @@ export default () =>
         // 设置目标浏览器，browserslist 配置语法
         targets: ['last 2 versions and since 2018 and > 0.5%']
       }),
+      topLevelAwait({
+        // The export name of top-level await promise for each chunk module
+        promiseExportName: '__tla',
+        // The function to generate import names of top-level await promise in each chunk module
+        promiseImportName: (i) => `__tla_${i}`
+      }),
+      vitePluginInjectLifecycleTemplate(),
+      vitePluginInsertLifecycle(),
       ...plugins
     ],
     resolve: {

@@ -26,19 +26,17 @@ const p = defineProps({
   }
 });
 
+/*__lifecycles__*/
+
 const tableData = ref(null);
 
-const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 const getData = async () => {
   // 业务卡片，从后端获取数据
   if (!p.props) {
     return [];
   }
   if (p.props.interfaceType === 'ProCode') {
-    return await (async function () {
-      // console.log('code', p.props.code)
-      return await new AsyncFunction('$request', p.props.code)($request);
-    })();
+    return await __implementCodeAsync__(p.props.code);
   } else {
     return await $request.get(p.props.url);
   }

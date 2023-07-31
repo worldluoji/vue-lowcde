@@ -6,11 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "build:app": "vite build --mode app"
+    "preview": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
     "monaco-editor": "^0.35.0",
     "vuedraggable": "^4.1.0"
+  },
+  "devDependencies": {
+    "vite-plugin-top-level-await": "^1.2.3"
   }
 }

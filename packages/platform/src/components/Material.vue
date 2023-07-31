@@ -1,23 +1,35 @@
 <template>
   <div class="list-contaienr">
-    <div v-draggable class="material-icon-list">
-      <div
-        v-for="it in p.componentsInfo"
-        :key="it.name"
-        class="material-icon"
-        :data-material="
-          it.type !== 'container' ? it.name : `${it.name}-Container`
-        "
-      >
-        <img :src="it.icon || defaultIcon" draggable="false" />
-        <p>{{ it.title }}</p>
-      </div>
-    </div>
+    <draggable
+      class="material-icon-list"
+      :list="componentsList"
+      :group="{ name: 'materia', pull: 'clone', put: false }"
+      :clone="cloneComponent"
+      item-key="name"
+    >
+      <template #item="{ element }">
+        <div
+          class="material-icon"
+          :data-material="
+            element.type !== 'container'
+              ? element.name
+              : `${element.name}-Container`
+          "
+        >
+          <img :src="element.icon || defaultIcon" draggable="false" />
+          <p>{{ element.title }}</p>
+        </div>
+      </template>
+    </draggable>
   </div>
 </template>
 
 <script setup>
+import draggable from 'vuedraggable';
 import defaultIcon from '@assets/box.png';
+import { v4 as uuid } from 'uuid';
+import { computed } from 'vue';
+
 const p = defineProps({
   componentsInfo: {
     type: Object,
@@ -25,6 +37,25 @@ const p = defineProps({
       return {};
     }
   }
+});
+
+const cloneComponent = ({ name, type }) => {
+  let opData = {
+    id: uuid(),
+    name,
+    type,
+    props: {}
+  };
+
+  if (type === 'container') {
+    opData.props.children = [];
+  }
+
+  return opData;
+};
+
+const componentsList = computed(() => {
+  return Object.values(p.componentsInfo);
 });
 </script>
 

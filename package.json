@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm -r --filter=./packages/platform dev",
-    "build": "pnpm -r --filter=./packages/platform build",
+    "build": "pnpm build:engine && pnpm -r --filter=./packages/platform build && node ./scripts/move-engine-to-platform.js",
     "preview": "pnpm -r --filter=./packages/platform preview",
     "lint": "eslint --ext .js,.jsx,.vue ./",
     "fix": "eslint --fix --ext .js,.jsx,.vue ./",
-    "build:comp": "pnpm -r --filter=./packages/customer build",
-    "build:engine": "pnpm -r --filter=./packages/runtime build",
+    "build:elements": "pnpm -r --filter=./packages/elements build",
+    "build:custom": "pnpm -r --filter=./packages/customer build",
+    "build:engine": "pnpm build:elements & pnpm -r --filter=./packages/runtime build && node ./scripts/move-elments-to-runtime.js",
     "preview:engine": "pnpm -r --filter=./packages/runtime preview",
     "dev:engine": "pnpm -r --filter=./packages/runtime dev",
     "prepare": "husky install"
@@ -24,7 +25,9 @@
     "packages/runtime",
     "packages/elements",
     "packages/helper",
-    "packages/customer"
+    "packages/customer",
+    "packages/viteplugins",
+    "packages/request"
   ],
   "keywords": [],
   "author": "",

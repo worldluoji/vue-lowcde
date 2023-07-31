@@ -22,8 +22,8 @@ const p = defineProps({
 });
 </script>
 
-<style>
-.van-nav-bar__title {
+<style scoped lang="scss">
+:deep(.van-nav-bar__title) {
   color: whitesmoke;
 }
 </style>

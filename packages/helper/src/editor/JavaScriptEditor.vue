@@ -25,6 +25,10 @@ const props = defineProps({
   modelValue: {
     type: String,
     default: ''
+  },
+  attrName: {
+    type: String,
+    default: ''
   }
 });
 
@@ -36,11 +40,16 @@ let instance;
 let jsModel;
 
 onMounted(() => {
-  jsModel = monaco.editor.createModel(
-    props.modelValue,
-    'javascript',
-    monaco.Uri.parse('ts:filename/facts.d.ts')
-  );
+  jsModel = monaco.editor.getModel(monaco.Uri.parse('ts:filename/facts.d.ts'));
+  if (!jsModel) {
+    jsModel = monaco.editor.createModel(
+      props.modelValue,
+      'javascript',
+      monaco.Uri.parse('ts:filename/facts.d.ts')
+    );
+  } else {
+    jsModel.setValue(props.modelValue);
+  }
 
   instance = monaco.editor.create(dom.value, {
     model: jsModel,
@@ -68,7 +77,7 @@ watch(props, (newVal) => {
 });
 
 const save = () => {
-  emit('update:modelValue', instance.getValue());
+  emit('update:modelValue', instance.getValue(), props.attrName);
 };
 </script>
 

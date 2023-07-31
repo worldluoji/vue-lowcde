@@ -38,6 +38,14 @@
           </div>
         </el-scrollbar>
       </el-tab-pane>
+      <el-tab-pane label="高级" name="高级">
+        <el-scrollbar height="70vh">
+          <LifeCyclePro
+            :value="lifeCycleValue"
+            @change="changeLifecycleContent"
+          />
+        </el-scrollbar>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -52,20 +60,25 @@ export default {
 </script> -->
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, inject } from 'vue';
 import { storeToRefs } from 'pinia';
-import { metaStore, currentPanelStore } from '@lowcode/elements';
+import LifeCyclePro from '../components/LifeCyclePro.vue';
+
+const metaStore = inject('$metaStore');
+const currentPanelStore = inject('$currentPanelStore');
 
 const meta = metaStore();
 const currentPanel = storeToRefs(currentPanelStore());
 const current = currentPanel.get;
 const panelProps = ref({});
+const lifeCycleValue = ref({});
 
 watch(current, (newVal) => {
   let element = meta.getElementById(newVal.id);
   if (element && element.value) {
     panelProps.value = element.value.props;
   }
+  lifeCycleValue.value = panelProps.value.__lifecycle__ || {};
 });
 
 const change = (p) => {
@@ -79,6 +92,14 @@ const change = (p) => {
 
 const save = () => {
   meta.updateProps(current.value.id, panelProps.value);
+};
+
+const changeLifecycleContent = (value, attrName) => {
+  if (!panelProps.value.__lifecycle__) {
+    panelProps.value.__lifecycle__ = {};
+  }
+  panelProps.value.__lifecycle__[attrName] = value;
+  save();
 };
 
 const emits = defineEmits(['cancel', 'deleteComponent']);

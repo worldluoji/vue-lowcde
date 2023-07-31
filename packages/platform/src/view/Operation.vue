@@ -118,7 +118,7 @@
     <template #extra>
       <div class="top-area-right">
         <el-button @click="preview">预览</el-button>
-        <MetaData :data="JSON.stringify(props.content, null, 2)" />
+        <MetaData :data="JSON.stringify(meta.get.value, null, 2)" />
         <el-button @click="save">保存</el-button>
       </div>
     </template>
@@ -126,20 +126,14 @@
 </template>
 
 <script setup>
-import { metaStore, canvasStore } from '@lowcode/elements';
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
+import { storeToRefs } from 'pinia';
 import MetaData from './MetaData.vue';
 import TopAreaLeft from '../components/TopAreaLeft.vue';
 
-const props = defineProps({
-  content: {
-    type: Array,
-    default: () => {
-      return [];
-    }
-  }
-});
+const metaStore = inject('$metaStore');
+const canvasStore = inject('$canvasStore');
 
 // 画布宽度
 const pcWidth = '987';
@@ -158,12 +152,11 @@ const setCanvasWidth = (val) => {
 };
 
 // 预览
-const meta = metaStore();
+const meta = storeToRefs(metaStore());
 const router = useRouter();
 const preview = () => {
   // params传参方式已经废弃了: https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22
   // history模式state传参数只能是非响应式数据, 所以这里转了一下，更好的方式是用pinia来存
-  meta.set(props.content);
   canvas.setWidth(canvasWidth.value);
   canvas.setDesign(false);
   router.push({

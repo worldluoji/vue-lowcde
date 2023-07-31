@@ -1,21 +1,48 @@
 import App from './App.vue';
 import router from './router/router';
-import elements from '@lowcode/elements';
-import { AtomicManager, request } from '@lowcode/helper';
+import { AtomicManager } from '@lowcode/helper';
+import { request } from '@lowcode/request';
 
 const pinia = Pinia.createPinia();
 const atomicManager = new AtomicManager();
 
-Vue.createApp(App)
+const injectResource = (resources) => {
+  app.use(resources.default.BasicMobileComponentsIn);
+  app.use(resources.default.BasicWebComponentsIn);
+  app.use(resources.default.ContainerComponentsIn);
+};
+
+const app = Vue.createApp(App)
   .directive('atomicattr', (el, binding) => {
     atomicManager.setMargin(el, binding);
   })
   .use(router)
   .use(pinia)
-  .use(elements.BasicMobileComponentsIn)
-  .use(elements.BasicWebComponentsIn)
-  .use(elements.ContainerComponentsIn)
   .use(request)
   .use(ElementPlus)
-  .use(vant)
-  .mount('#app');
+  .use(vant);
+
+if (import.meta.env.PROD) {
+  const s = document.createElement('script');
+  // 这里后面要改为从后端获取，就可以实现指向不同的引擎
+  const url = `${
+    import.meta.env.VITE_RESOURCE_URL
+  }/__StandardElements__.umd.cjs`;
+  s.type = 'text/javascript';
+  s.src = url;
+  s.onload = () => {
+    const resources = window.__StandardElements__;
+    injectResource(resources);
+    const link = document.createElement('link');
+    link.setAttribute('type', 'text/css');
+    link.setAttribute('rel', 'stylesheet');
+    link.setAttribute('href', `${import.meta.env.VITE_RESOURCE_URL}/style.css`);
+    document.head.appendChild(link);
+    app.mount('#app');
+  };
+  document.body.appendChild(s);
+} else {
+  const resources = await import('@lowcode/elements');
+  injectResource(resources);
+  app.mount('#app');
+}

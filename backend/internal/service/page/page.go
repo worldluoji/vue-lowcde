@@ -1,7 +1,6 @@
 package page
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -10,6 +9,7 @@ import (
 	"gorm.io/gorm"
 
 	"backend/internal/model/page"
+	"backend/internal/model/response"
 	"backend/internal/utils"
 )
 
@@ -39,16 +39,24 @@ func init() {
 	db.AutoMigrate(&PagePO{})
 }
 
+type Response response.Response
+
 func (u *PageHandler) GetPagesByAppId(c *gin.Context) {
+	var res Response
 	appId, ok := c.GetQuery("appId")
 	if !ok {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "fail to get appId"})
+		res.Code = 400
+		res.Message = "fail to get appId"
+		c.JSON(http.StatusBadRequest, res)
 		return
 	}
 
 	var pages []PagePO
 	if err := db.Where("appId = ?", appId).Find(&pages).Error; err != nil {
-		log.Fatalf("Get product error: %v", err)
+		res.Code = 400
+		res.Message = "Get page list error"
+		c.JSON(http.StatusBadRequest, res)
+		return
 	}
 	n := len(pages)
 	u.pages = make([]PageVO, n)
@@ -61,13 +69,18 @@ func (u *PageHandler) GetPagesByAppId(c *gin.Context) {
 		}
 	}
 
-	c.JSON(http.StatusOK, u.pages)
+	res.Code = 0
+	res.Data = u.pages
+	c.JSON(http.StatusOK, res)
 }
 
 func (u *PageHandler) CreatePage(c *gin.Context) {
+	var res Response
 	var pageVO PageVO
 	if err := c.ShouldBindJSON(&pageVO); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		res.Code = 400
+		res.Message = "Fail to get params"
+		c.JSON(http.StatusBadRequest, res)
 		return
 	}
 
@@ -79,26 +92,36 @@ func (u *PageHandler) CreatePage(c *gin.Context) {
 	page.CreatedAt = time.Now()
 	if err := db.Create(page).Error; err != nil {
 		log.Printf("Create error: %v", err)
-		c.JSON(http.StatusInternalServerError, pageVO)
+		res.Code = 400
+		res.Message = "Fail to create Page"
+		c.JSON(http.StatusInternalServerError, res)
 		return
 	}
 
 	log.Printf("Create app %s success", page.Name)
 
 	pageVO.ID = page.ID
-	c.JSON(http.StatusOK, pageVO)
+	res.Code = 0
+	res.Data = pageVO
+	c.JSON(http.StatusOK, res)
 }
 
 func (u *PageHandler) DeletePage(c *gin.Context) {
+	var res Response
+	res.Code = 0
 	id, ok := c.GetQuery("id")
 	if !ok {
-		c.JSON(http.StatusNotFound, gin.H{"error": fmt.Errorf("failed to get param")})
+		res.Code = 400
+		res.Message = "Fail to get Id"
+		c.JSON(http.StatusNotFound, res)
 		return
 	}
 	if err := db.Where("id = ?", id).Delete(&PagePO{}).Error; err != nil {
 		log.Printf("Delete page error: %v", err)
-		c.JSON(http.StatusOK, "failed")
+		res.Code = 500
+		res.Message = "Fail to delete page"
+		c.JSON(http.StatusOK, res)
 		return
 	}
-	c.JSON(http.StatusOK, "success")
+	c.JSON(http.StatusOK, res)
 }
