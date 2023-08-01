@@ -31,12 +31,15 @@ const tabPosition = ref('top');
 <style>
 .left-tabs {
   background-color: #fff;
+  position: absolute;
+  left: 60px;
+  z-index: 12;
 }
 
 .left-tabs > .el-tabs__content {
   padding: 3px;
   color: #6b778c;
-  font-size: 32px;
+  font-size: 1.5rem;
   font-weight: 600;
 }
 
