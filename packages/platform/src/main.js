@@ -18,6 +18,7 @@ const injectResource = (resources) => {
   app.provide('$metaStore', resources.metaStore);
   app.provide('$canvasStore', resources.canvasStore);
   app.provide('$currentPanelStore', resources.currentPanelStore);
+  app.provide('$modalStore', resources.modalStore);
   app.provide('$containerComponentsInfo', resources.containerComponentsInfo);
   app.provide('$basicWebComponentsInfo', resources.basicWebComponentsInfo);
   app.provide(
