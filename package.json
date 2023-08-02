@@ -13,7 +13,7 @@
     "build:elements": "npm run build --workspace=elements",
     "build:custom": "npm run build --workspace=customer",
     "build:engine": "npm run build:elements & npm run build --workspace=runtime && node ./scripts/move-elments-to-runtime.js",
-    "build:engine:single": "npm run build:single --workspace=runtime",
+    "build:engine:single": "npm run build:single --workspace=runtime && node ./scripts/move-elments-to-runtime.js",
     "preview:engine": "npm run preview --workspace=runtime preview",
     "dev:engine": "npm run dev --workspace=runtime",
     "prepare": "husky install"
