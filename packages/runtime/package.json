@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build:single": "vite build --mode=productionsingle",
     "preview": "vite preview",
-    "build:inner": "vite build --base=/static/engine --mode=productioninner"
+    "build": "vite build --base=/static/engine"
   },
   "devDependencies": {
     "vite-plugin-top-level-await": "^1.2.3"

@@ -30,9 +30,9 @@ npm run build:comp
 ```
 打包后的组件在packages/customer/dist目录下
 
-## 打包引擎包
+## 打包独立引擎包
 ```
-npm run build:engine
+npm run build:engine:single
 ```
 
 # back-end
