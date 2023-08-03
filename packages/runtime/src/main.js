@@ -33,13 +33,9 @@ if (import.meta.env.PROD) {
   s.onload = () => {
     const resources = window.__StandardElements__;
     injectResource(resources);
-    const link = document.createElement('link');
-    link.setAttribute('type', 'text/css');
-    link.setAttribute('rel', 'stylesheet');
-    link.setAttribute('href', `${import.meta.env.VITE_RESOURCE_URL}/style.css`);
-    document.head.appendChild(link);
     app.mount('#app');
   };
+
   document.body.appendChild(s);
 } else {
   const resources = await import('@lowcode/elements');
