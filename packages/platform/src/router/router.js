@@ -18,6 +18,11 @@ const routes = [
     path: '/pagelist',
     name: 'pagelist',
     component: () => import('../view/PageList.vue')
+  },
+  {
+    path: '/modallist',
+    name: 'modallist',
+    component: () => import('../view/ModalConfig.vue')
   }
 ];
 

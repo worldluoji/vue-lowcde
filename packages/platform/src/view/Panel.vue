@@ -48,6 +48,9 @@
       </el-tab-pane>
     </el-tabs>
   </div>
+  <div v-else class="panel">
+    <p class="tips">请在左侧画布中选择节点</p>
+  </div>
 </template>
 
 <!-- <script>
@@ -139,15 +142,12 @@ const activeName = ref('first');
   background-color: #fff;
   width: 300px;
   height: 100vh;
-  position: fixed;
   top: 100px;
   right: 0;
   color: #000;
   border: 1px solid #eee;
   border-top: 0;
-  border-bottom: 0;
-  padding: 12px;
-  z-index: 10;
+  padding: var(--el-main-padding, 20px);
 }
 
 .panel-tabs > .el-tabs__content {
@@ -159,5 +159,9 @@ const activeName = ref('first');
 
 .btn-group {
   margin-top: 20px;
+}
+
+.tips {
+  text-align: center;
 }
 </style>

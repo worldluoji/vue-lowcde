@@ -6,7 +6,7 @@
       </el-header>
       <el-container>
         <el-aside>
-          <LeftSide />
+          <LeftArea />
         </el-aside>
         <el-container>
           <el-main>
@@ -24,7 +24,7 @@
 import { useRoute } from 'vue-router';
 import Operation from './Operation.vue';
 import Panel from './Panel.vue';
-import LeftSide from './LeftSide.vue';
+import LeftArea from './LeftArea.vue';
 import { inject, ref, onBeforeMount } from 'vue';
 
 // import { CustomerComponents as CustomerComponentsLocal } from '@lowcode/customer'; // 本地脚手架定制时，设计器直接本地加载自定义组件
@@ -116,15 +116,14 @@ const deleteComponent = (eid) => {
 
 .el-main {
   display: flex;
-  // align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   overflow: visible;
   margin-top: var(--top-white-length, 30px);
   padding: 0 var(--el-main-padding);
 }
 
 .el-aside {
-  width: 300px;
+  width: 60px;
   margin-top: var(--top-white-length, 30px);
 }
 

@@ -23,6 +23,7 @@ export const canvasStore = store.Canvas;
 export const currentPanelStore = store.CurrentPanel;
 export const metaStore = store.Meta;
 export const langStore = store.Lang;
+export const modalStore = store.Modal;
 
 export const basicWebComponentsInfo = BasicWebComponentsInfo;
 export const basicMobileComponentsInfo = BasicMobileComponentsInfo;

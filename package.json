@@ -3,17 +3,20 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
+  "private": true,
   "scripts": {
-    "dev": "pnpm -r --filter=./packages/platform dev",
-    "build": "pnpm build:engine && pnpm -r --filter=./packages/platform build && node ./scripts/move-engine-to-platform.js",
-    "preview": "pnpm -r --filter=./packages/platform preview",
+    "dev": "npm run dev --workspace=platform",
+    "build": "npm run build:engine && npm run build --workspace=platform && node ./scripts/move-engine-to-platform.js",
+    "build:platform": "npm run build --workspace=platform",
+    "preview": "npm run preview --workspace=platform",
     "lint": "eslint --ext .js,.jsx,.vue ./",
     "fix": "eslint --fix --ext .js,.jsx,.vue ./",
-    "build:elements": "pnpm -r --filter=./packages/elements build",
-    "build:custom": "pnpm -r --filter=./packages/customer build",
-    "build:engine": "pnpm build:elements & pnpm -r --filter=./packages/runtime build && node ./scripts/move-elments-to-runtime.js",
-    "preview:engine": "pnpm -r --filter=./packages/runtime preview",
-    "dev:engine": "pnpm -r --filter=./packages/runtime dev",
+    "build:elements": "npm run build --workspace=@lowcode/elements",
+    "build:custom": "npm run build --workspace=@lowcode/customer",
+    "build:engine": "npm run build:elements & npm run build --workspace=runtime && node ./scripts/move-elments-to-runtime.js",
+    "build:engine:single": "npm run build:single --workspace=runtime && node ./scripts/move-elments-to-runtime.js",
+    "preview:engine": "npm run preview --workspace=runtime preview",
+    "dev:engine": "npm run dev --workspace=runtime",
     "prepare": "husky install"
   },
   "repository": {
@@ -43,11 +46,10 @@
     "vue": "^3.2.45"
   },
   "devDependencies": {
-    "@lowcode/elements": "workspace:*",
-    "@lowcode/helper": "workspace:*",
     "@vitejs/plugin-legacy": "^3.0.1",
     "@vitejs/plugin-vue": "^4.0.0",
     "autoprefixer": "^10.4.13",
+    "caniuse-lite": "^1.0.30001519",
     "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -62,5 +64,8 @@
     "unplugin-vue-components": "^0.22.11",
     "vite": "^4.0.0",
     "vite-plugin-chunk-split": "^0.4.7"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }

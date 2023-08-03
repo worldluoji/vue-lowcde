@@ -3,42 +3,38 @@
 # pre-end
 ## install
 ```
-pnpm install
+npm install --legacy-peer-deps
 ```
 
 ## start
 平台启动
 ```
-pnpm dev
+npm run dev
 ```
 
 ## build
 平台打包
 ```
-pnpm build
+npm run build
 ```
 
 ## preview
 平台打包后预览
 ```
-pnpm preview
+npm run preview
 ```
 
 ## 打包自定义组件
 ```
-pnpm build:comp
+npm run build:comp
 ```
 打包后的组件在packages/customer/dist目录下
 
-## 打包引擎包
+## 打包独立引擎包
 ```
-pnpm build:engine
+npm run build:engine:single
 ```
 
-## TODOs
-1. 优化容器选择组件的方式（现在是下拉列表，需优化）
-2. 弹窗公共配置（1. 组件里直接写弹窗 2. 组件留口子，平台配置弹窗，提供相关属性配置，并通过router-view路由到弹窗页）
-3. 接口配置抽象出公共配置
 # back-end
 ```
 cd backend
@@ -83,7 +79,7 @@ https://unpkg.com/rxjs@7.8.0/dist/bundles/rxjs.umd.min.js
 ```
 
 2. 如何使用运行时预览的功能
-对于本地，先 pnpm build:engine 打包引擎包, 进入dist目录，然后
+对于本地，先 npmr un build:engine 打包引擎包, 进入dist目录，然后
 ```
 http-server -p 8988
 ```

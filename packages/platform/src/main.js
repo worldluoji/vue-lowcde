@@ -18,6 +18,7 @@ const injectResource = (resources) => {
   app.provide('$metaStore', resources.metaStore);
   app.provide('$canvasStore', resources.canvasStore);
   app.provide('$currentPanelStore', resources.currentPanelStore);
+  app.provide('$modalStore', resources.modalStore);
   app.provide('$containerComponentsInfo', resources.containerComponentsInfo);
   app.provide('$basicWebComponentsInfo', resources.basicWebComponentsInfo);
   app.provide(
@@ -49,11 +50,11 @@ if (import.meta.env.PROD) {
   s.onload = () => {
     const resources = window.__StandardElements__;
     injectResource(resources);
-    const link = document.createElement('link');
-    link.setAttribute('type', 'text/css');
-    link.setAttribute('rel', 'stylesheet');
-    link.setAttribute('href', `${import.meta.env.VITE_RESOURCE_URL}/style.css`);
-    document.head.appendChild(link);
+    // const link = document.createElement('link');
+    // link.setAttribute('type', 'text/css');
+    // link.setAttribute('rel', 'stylesheet');
+    // link.setAttribute('href', `${import.meta.env.VITE_RESOURCE_URL}/style.css`);
+    // document.head.appendChild(link);
     app.mount('#app');
   };
   document.body.appendChild(s);
