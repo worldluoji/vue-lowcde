@@ -3,6 +3,7 @@ package routers
 import (
 	"backend/internal/service/app"
 	"backend/internal/service/meta"
+	"backend/internal/service/modal"
 	"backend/internal/service/page"
 	"backend/internal/service/registry"
 	"backend/internal/service/user"
@@ -35,6 +36,7 @@ func GetApiRouter() *gin.Engine {
 	pageHandler := page.NewPageHandler()
 	metaHander := meta.NewMetaHandler()
 	registryHandler := registry.NewRegistryHandler()
+	modalHandler := modal.NewModalHandler()
 
 	// 路由分组、中间件、认证
 	v1 := router.Group("/v1")
@@ -65,6 +67,12 @@ func GetApiRouter() *gin.Engine {
 			registryV1.GET("list", registryHandler.GetRegistriesByAppId)
 			registryV1.POST("create", registryHandler.CreateRegistry)
 			registryV1.DELETE("delete", registryHandler.DeleteRegistry)
+		}
+		modalV1 := v1.Group("/modal")
+		{
+			modalV1.GET("list", modalHandler.GetModalByPageId)
+			modalV1.POST("create", modalHandler.CreateModal)
+			modalV1.DELETE("delete", modalHandler.DeleteModal)
 		}
 	}
 

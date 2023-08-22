@@ -64,13 +64,21 @@
 </template>
 
 <script setup>
-import { inject, ref, reactive } from 'vue';
+import { inject, ref, reactive, onBeforeMount } from 'vue';
 import { storeToRefs } from 'pinia';
 import NotificationConfig from '../components/modalconfig/NotificationConfig.vue';
 const modalStore = inject('$modalStore');
 const modals = storeToRefs(modalStore());
 const modalList = ref((modals.get || {}).value);
 const selected = ref();
+const $request = inject('$request');
+
+const p = defineProps({
+  pageId: {
+    type: String,
+    required: true
+  }
+});
 
 const clickModal = (m) => {
   selected.value = m;
@@ -80,9 +88,42 @@ const newModalVisible = ref(false);
 const formLabelWidth = '140px';
 let newModalForm = reactive({});
 
-const addModal = () => {
-  // TODO 调用后端接口存入数据库， 并更新store
-  console.log(newModalForm);
+onBeforeMount(async () => {
+  let res = await $request.get(`/v1/modal/list?pageId=${p.pageId}`);
+  if (res && res.code == 0) {
+    modalList.value = res.data;
+  }
+});
+
+const addModal = async () => {
+  // console.log(newModalForm);
+  // 调用后端接口存入数据库， 并更新store
+  let content = newModalForm;
+  const name = newModalForm.name;
+  const type = newModalForm.type;
+  const desc = newModalForm.desc;
+  delete content.name;
+  delete content.type;
+  delete content.desc;
+  let res = await $request.post('/v1/modal/create', {
+    name: name,
+    type: type,
+    desc: desc,
+    content: JSON.stringify(content),
+    pageId: Number(p.pageId)
+  });
+  if (res && res.code == 0) {
+    modalList.value.push(res.data);
+    ElementPlus.ElMessage({
+      message: '添加成功',
+      type: 'success'
+    });
+  } else {
+    ElementPlus.ElMessage({
+      message: res.message || '添加失败，请稍后再试',
+      type: 'warning'
+    });
+  }
   newModalVisible.value = false;
   newModalForm = reactive({});
 };

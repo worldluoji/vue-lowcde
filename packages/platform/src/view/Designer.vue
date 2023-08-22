@@ -15,7 +15,7 @@
         <el-container>
           <el-main>
             <DraggerLayout v-show="tab === 'page'" :content="content" />
-            <ModalConfig v-show="tab === 'modal'" />
+            <ModalConfig v-show="tab === 'modal'" :page-id="pageId" />
             <Panel @cancel="cancelPanel" @deleteComponent="deleteComponent" />
           </el-main>
           <!-- <el-footer>Footer</el-footer> -->
