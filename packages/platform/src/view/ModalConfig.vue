@@ -21,10 +21,14 @@
         </el-card>
       </el-aside>
       <el-main>
-        <div v-if="selected" class="modal-config">
-          <div v-if="selected.type === 'notification'">notification</div>
-          <div v-if="selected.type === 'message'">message</div>
-          <div v-if="selected.type === 'dialog'">dialog</div>
+        <div class="modal-config">
+          <div v-if="!selected || !selected.type" class="else-area">
+            <span>从左侧添加或选择一个弹窗进行配置</span>
+          </div>
+          <div v-else>
+            <div v-if="selected.type === 'notification'">notification</div>
+            <div v-else-if="selected.type === 'dialog'">dialog</div>
+          </div>
         </div>
       </el-main>
     </el-container>
@@ -36,7 +40,6 @@
         <el-form-item label="类型" :label-width="formLabelWidth">
           <el-select v-model="newModalForm.type" placeholder="请选择类型">
             <el-option label="notification" value="notification" />
-            <el-option label="message" value="message" />
             <el-option label="dialog" value="dialog" />
           </el-select>
         </el-form-item>
@@ -120,5 +123,15 @@ const addModal = () => {
 }
 .dialog-footer button:first-child {
   margin-right: 10px;
+}
+
+.common-layout {
+  height: 100vh;
+  width: 987px;
+}
+.else-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

@@ -2,7 +2,11 @@
   <div class="designer">
     <el-container>
       <el-header>
-        <Operation @changeWidth="changeWidth" @save="save" />
+        <Operation
+          @changeWidth="changeWidth"
+          @save="save"
+          @changeSwitch="changeSwitch"
+        />
       </el-header>
       <el-container>
         <el-aside>
@@ -10,7 +14,8 @@
         </el-aside>
         <el-container>
           <el-main>
-            <DraggerLayout :content="content" />
+            <DraggerLayout v-show="tab === 'page'" :content="content" />
+            <ModalConfig v-show="tab === 'modal'" />
             <Panel @cancel="cancelPanel" @deleteComponent="deleteComponent" />
           </el-main>
           <!-- <el-footer>Footer</el-footer> -->
@@ -23,6 +28,7 @@
 <script setup>
 import { useRoute } from 'vue-router';
 import Operation from './Operation.vue';
+import ModalConfig from './ModalConfig.vue';
 import Panel from './Panel.vue';
 import LeftArea from './LeftArea.vue';
 import { inject, ref, onBeforeMount } from 'vue';
@@ -35,6 +41,7 @@ const appId = ref('');
 const metaId = ref(0);
 const request = inject('$request');
 const content = ref([]);
+const tab = ref('page');
 
 const metaStore = inject('$metaStore');
 const meta = metaStore();
@@ -106,6 +113,10 @@ const changeWidth = (val) => {
 const deleteComponent = (eid) => {
   meta.delete(eid);
   cancelPanel();
+};
+
+const changeSwitch = (val) => {
+  tab.value = val;
 };
 </script>
 

@@ -117,6 +117,15 @@
     </template>
     <template #extra>
       <div class="top-area-right">
+        <span class="designSwitch">
+          <el-switch
+            v-model="designSwitch"
+            class="mb-2"
+            active-text="弹窗配置"
+            inactive-text="页面编排"
+            @change="changeSwitch"
+          />
+        </span>
         <el-button @click="preview">预览</el-button>
         <MetaData :data="JSON.stringify(meta.get.value, null, 2)" />
         <el-button @click="save">保存</el-button>
@@ -141,7 +150,7 @@ const padWidth = '768';
 const mobileWidth = '375';
 const canvas = canvasStore();
 const canvasWidth = ref(canvas.getWidth || pcWidth);
-const emits = defineEmits(['changeWidth', 'save']);
+const emits = defineEmits(['changeWidth', 'save', 'changeSwitch']);
 emits('changeWidth', canvasWidth.value);
 const setCanvasWidth = (val) => {
   if (val) {
@@ -168,6 +177,15 @@ const preview = () => {
 
 const save = async () => {
   emits('save');
+};
+
+const designSwitch = ref('页面编排');
+const changeSwitch = (isOn) => {
+  if (isOn) {
+    emits('changeSwitch', 'modal');
+  } else {
+    emits('changeSwitch', 'page');
+  }
 };
 </script>
 
@@ -272,5 +290,9 @@ button {
   background-color: #fff;
   border-radius: 5px;
   border-color: var(--btn-pure-normal-border-color, #c4c6cf);
+}
+
+.designSwitch {
+  margin-right: 1rem;
 }
 </style>
