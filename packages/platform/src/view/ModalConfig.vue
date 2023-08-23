@@ -7,23 +7,31 @@
             <div class="card-header">
               <span>弹窗列表</span>
               <el-button text @click="newModalVisible = true">+</el-button>
-              <el-button v-show="selected" text @click.stop="">-</el-button>
+              <el-button v-show="selected" text @click.stop="deleteModal"
+                >-</el-button
+              >
             </div>
           </template>
-          <div
-            v-for="m in modalList"
-            :key="m.id"
-            class="text item"
-            @click="clickModal(m)"
+          <el-menu
+            v-if="selected"
+            :default-active="selected.id"
+            class="el-menu-vertical"
           >
-            {{ m.name }}
-          </div>
+            <el-menu-item
+              v-for="m in modalList"
+              :key="m.id"
+              :index="m.id"
+              @click="clickModal(m)"
+            >
+              <span>{{ m.name }}</span>
+            </el-menu-item>
+          </el-menu>
         </el-card>
       </el-aside>
       <el-main>
         <div class="modal-config">
           <div v-if="!selected || !selected.type" class="else-area">
-            <span>从左侧添加或选择一个弹窗进行配置</span>
+            <span>点击+添加弹窗</span>
           </div>
           <div v-else>
             <div v-if="selected.type === 'notification'">notification</div>
@@ -93,6 +101,10 @@ onBeforeMount(async () => {
   if (res && res.code == 0) {
     modalList.value = res.data;
   }
+
+  if (modalList.value && modalList.value.length) {
+    selected.value = modalList.value[0];
+  }
 });
 
 const addModal = async () => {
@@ -126,6 +138,29 @@ const addModal = async () => {
   }
   newModalVisible.value = false;
   newModalForm = reactive({});
+};
+
+const deleteModal = async () => {
+  if (!selected.value) {
+    ElementPlus.ElMessage({
+      message: '请先选择要删除的弹窗',
+      type: 'warning'
+    });
+    return;
+  }
+  let res = await $request.delete(`/v1/modal/delete?id=${selected.value.id}`);
+  if (res && res.code == 0) {
+    ElementPlus.ElMessage({
+      message: '删除成功',
+      type: 'success'
+    });
+    modalList.value = modalList.value.filter((m) => m.id !== selected.value.id);
+  } else {
+    ElementPlus.ElMessage({
+      message: '删除失败，请稍后再试',
+      type: 'warning'
+    });
+  }
 };
 </script>
 
@@ -174,5 +209,9 @@ const addModal = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+:deep(.el-menu) {
+  border-right: none;
 }
 </style>
