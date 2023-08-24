@@ -40,10 +40,20 @@ export default ({ mode }) =>
     plugins: [
       vue(),
       AutoImport({
-        resolvers: [ElementPlusResolver(), VantResolver()]
+        resolvers: [
+          ElementPlusResolver({
+            importStyle: 'sass'
+          }),
+          VantResolver()
+        ]
       }),
       Components({
-        resolvers: [VantResolver(), ElementPlusResolver()]
+        resolvers: [
+          ElementPlusResolver({
+            importStyle: 'sass'
+          }),
+          VantResolver()
+        ]
       })
     ],
     css: {
@@ -60,6 +70,11 @@ export default ({ mode }) =>
             ]
           })
         ]
+      },
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@use "./src/style/element/index.scss" as *;' //关键
+        }
       }
     },
     define: { 'process.env': {} }

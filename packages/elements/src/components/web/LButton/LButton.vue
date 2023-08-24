@@ -33,7 +33,7 @@ const onClick = () => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .simple-table {
   display: flex;
   justify-content: center;
