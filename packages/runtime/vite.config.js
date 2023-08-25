@@ -18,7 +18,8 @@ let globals = externalGlobals(
     pinia: 'Pinia',
     'vue-router': 'VueRouter',
     'element-plus': 'ElementPlus',
-    rxjs: 'RxJS'
+    rxjs: 'RxJS',
+    vuedraggable: 'vuedraggable'
   },
   {
     exclude: ['**/codicon.css']
@@ -59,7 +60,14 @@ export default defineConfig({
   build: {
     assetsDir: './static',
     rollupOptions: {
-      external: ['vue', 'pinia', 'vue-router', 'element-plus', 'rxjs'],
+      external: [
+        'vue',
+        'pinia',
+        'vue-router',
+        'element-plus',
+        'rxjs',
+        'vuedraggable'
+      ],
       plugins: [commonjs(), globals]
     }
   },

@@ -9,7 +9,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import { DraggerLayout } from '@lowcode/elements';
+import DraggerLayout from '../../../dragger/Dragger.vue';
 
 const p = defineProps({
   props: {

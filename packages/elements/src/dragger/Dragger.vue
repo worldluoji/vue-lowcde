@@ -4,7 +4,7 @@
       :class="p.dragInnerLayout"
       :list="list"
       :disabled="!enabled"
-      item-key="id"
+      :item-key="p.itemKey"
       ghost-class="ghost"
       group="materia"
       @start="dragging = true"
@@ -19,12 +19,10 @@
             { 'element-selected': currentId === element.id }
           ]"
         >
-          <slot>
-            <FastOperation
-              v-show="currentId === element.id"
-              @deleteComponent="deleteComponent"
-            />
-          </slot>
+          <FastOperation
+            v-show="currentId === element.id"
+            @deleteComponent="deleteComponent"
+          />
           <component
             :is="
               element.type === 'container'
@@ -74,6 +72,12 @@ const p = defineProps({
     default: () => {
       return null;
     }
+  },
+  itemKey: {
+    type: String,
+    default: () => {
+      return 'id';
+    }
   }
 });
 
@@ -102,7 +106,7 @@ const currentId = computed((newVal, oldVal) => {
 
 const meta = metaStore();
 const change = (data) => {
-  // console.log(data);
+  console.log(444, data);
   if (data && data.added && data.added.element && data.added.element.id) {
     meta.getDepMap.set(data.added.element.id, {
       value: data.added.element,

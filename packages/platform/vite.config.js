@@ -27,7 +27,8 @@ let globals = externalGlobals(
     'vue-router': 'VueRouter',
     'element-plus': 'ElementPlus',
     'vue-i18n': 'VueI18n',
-    rxjs: 'RxJS'
+    rxjs: 'RxJS',
+    vuedraggable: 'vuedraggable'
   },
   {
     exclude: ['**/codicon.css']
@@ -44,7 +45,7 @@ export default () =>
       vue(),
       chunkSplitPlugin({
         customSplitting: {
-          'utils-vendor': ['throttle-debounce', 'vuedraggable']
+          'utils-vendor': ['throttle-debounce']
         }
       }),
       legacy({
@@ -77,7 +78,8 @@ export default () =>
           'vue-router',
           'vue-i18n',
           'element-plus',
-          'rxjs'
+          'rxjs',
+          'vuedraggable'
         ],
         plugins: [commonjs(), globals],
         output: {
