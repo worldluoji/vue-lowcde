@@ -10,6 +10,11 @@ import { resolve } from 'path';
 
 import autoprefixer from 'autoprefixer';
 
+import {
+  vitePluginInsertLifecycle,
+  vitePluginInjectLifecycleTemplate
+} from '@lowcode/viteplugins';
+
 export default ({ mode }) =>
   defineConfig({
     build: {
@@ -55,7 +60,9 @@ export default ({ mode }) =>
           }),
           VantResolver()
         ]
-      })
+      }),
+      vitePluginInjectLifecycleTemplate(),
+      vitePluginInsertLifecycle()
     ],
     css: {
       postcss: {
