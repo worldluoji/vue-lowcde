@@ -64,6 +64,7 @@
     "unplugin-vue-components": "^0.22.11",
     "vite": "^4.0.0",
     "vite-plugin-chunk-split": "^0.4.7",
+    "vite-plugin-clean": "^1.0.0",
     "vite-plugin-progress": "^0.0.7"
   },
   "engines": {

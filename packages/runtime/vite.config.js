@@ -11,6 +11,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import externalGlobals from 'rollup-plugin-external-globals';
 
 import progress from 'vite-plugin-progress';
+import cleanPlugin from 'vite-plugin-clean';
 
 import { vitePluginInsertLifecycle } from '@lowcode/viteplugins';
 
@@ -56,6 +57,9 @@ export default defineConfig({
       promiseExportName: '__tla',
       // The function to generate import names of top-level await promise in each chunk module
       promiseImportName: (i) => `__tla_${i}`
+    }),
+    cleanPlugin({
+      targetFiles: ['dist']
     }),
     vitePluginInsertLifecycle(),
     ...plugins,

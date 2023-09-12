@@ -13,6 +13,7 @@ import externalGlobals from 'rollup-plugin-external-globals';
 import topLevelAwait from 'vite-plugin-top-level-await';
 
 import progress from 'vite-plugin-progress';
+import cleanPlugin from 'vite-plugin-clean';
 
 import {
   vitePluginInsertLifecycle,
@@ -59,6 +60,9 @@ export default () =>
         promiseExportName: '__tla',
         // The function to generate import names of top-level await promise in each chunk module
         promiseImportName: (i) => `__tla_${i}`
+      }),
+      cleanPlugin({
+        targetFiles: ['dist']
       }),
       vitePluginInjectLifecycleTemplate(),
       vitePluginInsertLifecycle(),

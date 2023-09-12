@@ -11,6 +11,7 @@ import { resolve } from 'path';
 import autoprefixer from 'autoprefixer';
 
 import progress from 'vite-plugin-progress';
+import cleanPlugin from 'vite-plugin-clean';
 
 import {
   vitePluginInsertLifecycle,
@@ -62,6 +63,9 @@ export default ({ mode }) =>
           }),
           VantResolver()
         ]
+      }),
+      cleanPlugin({
+        targetFiles: ['dist']
       }),
       vitePluginInjectLifecycleTemplate(),
       vitePluginInsertLifecycle(),
