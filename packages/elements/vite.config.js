@@ -10,6 +10,8 @@ import { resolve } from 'path';
 
 import autoprefixer from 'autoprefixer';
 
+import progress from 'vite-plugin-progress';
+
 import {
   vitePluginInsertLifecycle,
   vitePluginInjectLifecycleTemplate
@@ -62,7 +64,8 @@ export default ({ mode }) =>
         ]
       }),
       vitePluginInjectLifecycleTemplate(),
-      vitePluginInsertLifecycle()
+      vitePluginInsertLifecycle(),
+      progress()
     ],
     css: {
       postcss: {

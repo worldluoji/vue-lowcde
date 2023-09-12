@@ -9,6 +9,9 @@ import topLevelAwait from 'vite-plugin-top-level-await';
 
 import commonjs from 'rollup-plugin-commonjs';
 import externalGlobals from 'rollup-plugin-external-globals';
+
+import progress from 'vite-plugin-progress';
+
 import { vitePluginInsertLifecycle } from '@lowcode/viteplugins';
 
 // 全局对象
@@ -55,7 +58,8 @@ export default defineConfig({
       promiseImportName: (i) => `__tla_${i}`
     }),
     vitePluginInsertLifecycle(),
-    ...plugins
+    ...plugins,
+    progress()
   ],
   build: {
     assetsDir: './static',

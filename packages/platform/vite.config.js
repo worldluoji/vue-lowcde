@@ -12,6 +12,8 @@ import commonjs from 'rollup-plugin-commonjs';
 import externalGlobals from 'rollup-plugin-external-globals';
 import topLevelAwait from 'vite-plugin-top-level-await';
 
+import progress from 'vite-plugin-progress';
+
 import {
   vitePluginInsertLifecycle,
   vitePluginInjectLifecycleTemplate
@@ -60,7 +62,8 @@ export default () =>
       }),
       vitePluginInjectLifecycleTemplate(),
       vitePluginInsertLifecycle(),
-      ...plugins
+      ...plugins,
+      progress
     ],
     resolve: {
       alias: {
