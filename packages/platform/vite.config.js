@@ -67,7 +67,7 @@ export default () =>
       vitePluginInjectLifecycleTemplate(),
       vitePluginInsertLifecycle(),
       ...plugins,
-      progress
+      progress()
     ],
     resolve: {
       alias: {
