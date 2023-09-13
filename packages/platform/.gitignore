@@ -1,1 +1,4 @@
 /public/static/engine
+/node_modules/*
+node_modules/.progress/index.json
+!/node_modules/.progress
