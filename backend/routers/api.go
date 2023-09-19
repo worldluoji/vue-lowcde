@@ -2,6 +2,7 @@ package routers
 
 import (
 	"backend/internal/service/app"
+	"backend/internal/service/captcha"
 	"backend/internal/service/meta"
 	"backend/internal/service/modal"
 	"backend/internal/service/page"
@@ -73,6 +74,10 @@ func GetApiRouter() *gin.Engine {
 			modalV1.GET("list", modalHandler.GetModalByPageId)
 			modalV1.POST("create", modalHandler.CreateModal)
 			modalV1.DELETE("delete", modalHandler.DeleteModal)
+		}
+		captchaV1 := v1.Group("/captcha")
+		{
+			captchaV1.GET("", captcha.GetCaptcha)
 		}
 	}
 
