@@ -35,8 +35,8 @@ func GenerateCaptcha() *captchaVO.Captcha {
 	// log.Println("Generated captcha:", imageBase64)
 	log.Println(dots)
 	// thumbImageBase64 只包含要选中的字， imageBase64包含了干扰字和要选中的字
-	log.Println(thumbImageBase64)
-	log.Println(key)
+	// log.Println(thumbImageBase64)
+	// log.Println(key)
 	res.ImageBase64 = imageBase64
 	res.Key = key
 	res.ThumbImageBase64 = thumbImageBase64
