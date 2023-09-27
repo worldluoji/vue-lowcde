@@ -16,6 +16,16 @@ func GenerateCaptcha() *captchaVO.Captcha {
 	// 创建一个验证码生成器
 	capt := captcha.GetCaptcha()
 
+	capt.SetRangCheckTextLen(captcha.RangeVal{
+		Min: 4,
+		Max: 4,
+	})
+
+	capt.SetTextRangLen(captcha.RangeVal{
+		Min: 6,
+		Max: 8,
+	})
+
 	// 设置验证码的宽度和高度
 	// capt.SetImageSize(captcha.Size{Width: 150, Height: 40})
 
