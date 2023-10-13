@@ -12,6 +12,7 @@ import externalGlobals from 'rollup-plugin-external-globals';
 
 import progress from 'vite-plugin-progress';
 import cleanPlugin from 'vite-plugin-clean';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 import { vitePluginInsertLifecycle } from '@lowcode/viteplugins';
 
@@ -63,7 +64,10 @@ export default defineConfig({
     }),
     vitePluginInsertLifecycle(),
     ...plugins,
-    progress()
+    progress(),
+    visualizer({
+      open: true
+    })
   ],
   build: {
     assetsDir: './static',

@@ -12,6 +12,7 @@ import autoprefixer from 'autoprefixer';
 
 import progress from 'vite-plugin-progress';
 import cleanPlugin from 'vite-plugin-clean';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 import {
   vitePluginInsertLifecycle,
@@ -69,7 +70,10 @@ export default ({ mode }) =>
       }),
       vitePluginInjectLifecycleTemplate(),
       vitePluginInsertLifecycle(),
-      progress()
+      progress(),
+      visualizer({
+        open: true
+      })
     ],
     css: {
       postcss: {

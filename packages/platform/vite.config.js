@@ -14,6 +14,7 @@ import topLevelAwait from 'vite-plugin-top-level-await';
 
 import progress from 'vite-plugin-progress';
 import cleanPlugin from 'vite-plugin-clean';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 import {
   vitePluginInsertLifecycle,
@@ -67,7 +68,10 @@ export default () =>
       vitePluginInjectLifecycleTemplate(),
       vitePluginInsertLifecycle(),
       ...plugins,
-      progress()
+      progress(),
+      visualizer({
+        open: true
+      })
     ],
     resolve: {
       alias: {
