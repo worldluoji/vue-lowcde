@@ -16,7 +16,8 @@ import { visualizer } from 'rollup-plugin-visualizer';
 
 import {
   vitePluginInsertLifecycle,
-  vitePluginInjectLifecycleTemplate
+  vitePluginInjectLifecycleTemplate,
+  vitePluginStrip
 } from '@lowcode/viteplugins';
 
 export default ({ mode }) =>
@@ -73,6 +74,10 @@ export default ({ mode }) =>
       progress(),
       visualizer({
         open: true
+      }),
+      vitePluginStrip({
+        debugger: true,
+        functions: ['console.*', 'assert.*']
       })
     ],
     css: {

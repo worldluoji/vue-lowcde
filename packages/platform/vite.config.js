@@ -18,7 +18,8 @@ import { visualizer } from 'rollup-plugin-visualizer';
 
 import {
   vitePluginInsertLifecycle,
-  vitePluginInjectLifecycleTemplate
+  vitePluginInjectLifecycleTemplate,
+  vitePluginStrip
 } from '@lowcode/viteplugins';
 
 const prefix = 'monaco-editor/esm/vs';
@@ -71,6 +72,10 @@ export default () =>
       progress(),
       visualizer({
         open: true
+      }),
+      vitePluginStrip({
+        debugger: true,
+        functions: ['console.*', 'assert.*']
       })
     ],
     resolve: {

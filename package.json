@@ -46,6 +46,7 @@
     "vue": "^3.2.45"
   },
   "devDependencies": {
+    "@rollup/plugin-strip": "^3.0.3",
     "@vitejs/plugin-legacy": "^3.0.1",
     "@vitejs/plugin-vue": "^4.0.0",
     "autoprefixer": "^10.4.13",

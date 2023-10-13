@@ -14,7 +14,10 @@ import progress from 'vite-plugin-progress';
 import cleanPlugin from 'vite-plugin-clean';
 import { visualizer } from 'rollup-plugin-visualizer';
 
-import { vitePluginInsertLifecycle } from '@lowcode/viteplugins';
+import {
+  vitePluginInsertLifecycle,
+  vitePluginStrip
+} from '@lowcode/viteplugins';
 
 // 全局对象
 let globals = externalGlobals(
@@ -67,6 +70,10 @@ export default defineConfig({
     progress(),
     visualizer({
       open: true
+    }),
+    vitePluginStrip({
+      debugger: true,
+      functions: ['console.*', 'assert.*']
     })
   ],
   build: {
