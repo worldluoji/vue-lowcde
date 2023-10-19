@@ -1,8 +1,11 @@
 package captchautil
 
 import (
+	"encoding/json"
 	"errors"
+	"fmt"
 	"log"
+	"strconv"
 	"strings"
 
 	captchaVO "backend/internal/model/captcha"
@@ -121,6 +124,8 @@ func GenerateCaptcha(captchaLen int, imageWidth, imageHeight int) (*captchaVO.Ca
 	// 这里只是简单地将验证码字符串打印到控制台，仅用于演示目的
 	// log.Println("Generated captcha:", imageBase64)
 	log.Println(dots)
+	bytes, _ := json.Marshal(dots)
+	cache[key] = string(bytes)
 	// thumbImageBase64 只包含要选中的字， imageBase64包含了干扰字和要选中的字
 	// log.Println(thumbImageBase64)
 	// log.Println(key)
@@ -129,4 +134,44 @@ func GenerateCaptcha(captchaLen int, imageWidth, imageHeight int) (*captchaVO.Ca
 	res.ThumbImageBase64 = thumbImageBase64
 
 	return res, nil
+}
+
+func CheckCaptcha(key, dots string) bool {
+	cacheData, ok := cache[key]
+	if !ok {
+		return false
+	}
+
+	src := strings.Split(dots, ",")
+
+	var dct map[int]captcha.CharDot
+	if err := json.Unmarshal([]byte(cacheData), &dct); err != nil {
+		return false
+	}
+
+	chkRet := false
+	if (len(dct) * 2) == len(src) {
+		for i, dot := range dct {
+			j := i * 2
+			k := i*2 + 1
+			sx, _ := strconv.ParseFloat(fmt.Sprintf("%v", src[j]), 64)
+			sy, _ := strconv.ParseFloat(fmt.Sprintf("%v", src[k]), 64)
+
+			// 检测点位置
+			// chkRet = captcha.CheckPointDist(int64(sx), int64(sy), int64(dot.Dx), int64(dot.Dy), int64(dot.Width), int64(dot.Height))
+
+			// 校验点的位置,在原有的区域上添加额外边距进行扩张计算区域,不推荐设置过大的padding
+			// 例如：文本的宽和高为30，校验范围x为10-40，y为15-45，此时扩充5像素后校验范围宽和高为40，则校验范围x为5-45，位置y为10-50
+			chkRet = captcha.CheckPointDistWithPadding(int64(sx), int64(sy), int64(dot.Dx), int64(dot.Dy), int64(dot.Width), int64(dot.Height), 5)
+			if !chkRet {
+				break
+			}
+		}
+	}
+
+	if chkRet {
+		// 通过校验
+		return true
+	}
+	return false
 }

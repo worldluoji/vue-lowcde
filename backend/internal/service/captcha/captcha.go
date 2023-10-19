@@ -58,3 +58,22 @@ func GetCaptcha(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, res)
 	}
 }
+
+func CheckCaptcha(c *gin.Context) {
+	var checkVO captchaModel.SimpleCaptchaCheckVO
+	var res Response
+	if err := c.ShouldBindJSON(&checkVO); err != nil {
+		res.Code = 1
+		res.Message = "fail to process request params"
+		// gin.H{"error": err.Error()}
+		c.JSON(http.StatusBadRequest, res)
+		return
+	}
+	if ok := captchaUtil.CheckCaptcha(checkVO.Key, checkVO.CheckCode); ok {
+		res.Data = true
+	} else {
+		res.Data = false
+	}
+	res.Code = 0
+	c.JSON(http.StatusOK, res)
+}
